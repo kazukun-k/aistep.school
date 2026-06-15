@@ -1,0 +1,283 @@
+---
+import { getCollection } from 'astro:content';
+
+// 公開されている記事を取得
+const allArticles = await getCollection('articles', ({ data }) => {
+  return data.isPublished;
+});
+
+// 日付の降順でソートし、最新の3件を取得
+const latestArticles = allArticles
+  .sort((a, b) => b.data.publishDate.getTime() - a.data.publishDate.getTime())
+  .slice(0, 3);
+
+// astro.config.mjs の base 設定を取得 (例: "/" または "/blog/")
+const baseUrl = import.meta.env.BASE_URL;
+
+// canonical URL の生成
+const canonicalURL = new URL(baseUrl, Astro.site || 'https://example.com').toString();
+---
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>生成AIStepSchool - 生成AI実践オンライン教室 & メディア</title>
+  <meta name="description" content="生成AI初心者専門のオンライン教室と、プロンプトや業務効率化に役立つお役立ちメディアを一体化したホームページです。">
+  <link rel="canonical" href={canonicalURL} />
+  <!-- OGP Tags -->
+  <meta property="og:title" content="生成AIStepSchool - 生成AI実践オンライン教室 & メディア" />
+  <meta property="og:description" content="生成AI初心者専門のオンライン教室と、プロンプトや業務効率化に役立つお役立ちメディアを一体化したホームページです。" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content={canonicalURL} />
+  <meta property="og:image" content={new URL(`${baseUrl}images/instructor_avatar.png`, Astro.site || 'https://example.com').toString()} />
+  <meta property="og:site_name" content="生成AIStepSchool" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col font-sans">
+  <header class="border-b border-slate-200 bg-white/95 backdrop-blur sticky top-0 z-50 shadow-sm">
+    <div class="max-w-6xl mx-auto px-4 py-4 flex flex-row justify-between items-center gap-4">
+      <a href={baseUrl} class="text-lg sm:text-xl font-black bg-gradient-to-r from-indigo-600 via-purple-600 to-cyan-600 bg-clip-text text-transparent tracking-tight shrink-0">
+        生成AIStepSchool
+      </a>
+      <nav class="flex gap-3 sm:gap-6 text-xs sm:text-sm font-semibold items-center overflow-x-auto no-scrollbar py-1">
+        <a href={baseUrl} class="text-indigo-600 font-semibold shrink-0">Home</a>
+        <a href={`${baseUrl}articles`} class="hover:text-indigo-600 text-slate-600 transition-colors shrink-0">Articles</a>
+        <a href={`${baseUrl}course`} class="px-3 py-1.5 sm:px-4 sm:py-1.5 rounded-full bg-gradient-to-r from-indigo-600 to-cyan-600 text-white font-semibold text-[10px] sm:text-xs shadow-md shadow-indigo-600/10 hover:opacity-90 transition-opacity shrink-0">AI School</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="flex-grow max-w-6xl w-full mx-auto px-4 py-12">
+    <!-- ヒーローセクション (HPメインビジュアル) -->
+    <div class="py-20 px-6 md:px-12 rounded-3xl bg-gradient-to-b from-indigo-50/50 via-white to-white border border-indigo-100/60 relative overflow-hidden mb-20 shadow-sm">
+      <div class="absolute -top-40 -left-40 w-96 h-96 bg-indigo-200/20 rounded-full filter blur-3xl"></div>
+      <div class="absolute -bottom-40 -right-40 w-96 h-96 bg-cyan-200/20 rounded-full filter blur-3xl"></div>
+      
+      <div class="max-w-3xl relative">
+        <span class="px-3.5 py-1 text-xs font-bold rounded-full bg-indigo-50 text-indigo-600 border border-indigo-100/80 tracking-wider uppercase mb-6 inline-block">
+          AIメディア × 初心者教室
+        </span>
+        <h1 class="text-4xl md:text-6xl font-black tracking-tight text-slate-900 mb-6 leading-tight">
+          知識ゼロから始める<br />
+          <span class="bg-gradient-to-r from-indigo-600 via-purple-600 to-cyan-600 bg-clip-text text-transparent">実践的なAI活用法</span>
+        </h1>
+        <p class="text-slate-600 text-lg md:text-xl mb-10 leading-relaxed">
+          当サイトは、生成AI初心者に向けたお役立ち情報メディアと、
+          プロンプトを体系的に学べるオンラインマンツーマン指導教室を運営しています。
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4">
+          <a href={`${baseUrl}course`} class="px-8 py-4 rounded-full bg-gradient-to-r from-indigo-600 to-cyan-600 font-bold text-white shadow-lg shadow-indigo-600/20 hover:opacity-90 transition-opacity text-center">
+            生成AI実践教室を詳しく見る
+          </a>
+          <a href="#articles" class="px-8 py-4 rounded-full bg-white border border-slate-200 hover:border-slate-300 hover:bg-slate-50 font-semibold text-slate-700 transition-colors text-center shadow-sm">
+            ノウハウ記事を読む
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- AI教室の概要紹介セクション -->
+    <section class="mb-24 py-12 border-y border-slate-200/80">
+      <div class="grid md:grid-cols-2 gap-12 items-center">
+        <div>
+          <span class="text-cyan-600 text-xs font-bold tracking-wider uppercase block mb-2">Our School</span>
+          <h2 class="text-3xl font-bold text-slate-900 mb-6">生成AI初心者専門のオンライン教室</h2>
+          <p class="text-slate-600 leading-relaxed mb-6">
+            「生成AIツールを入れたものの何に使えばいいか分からない」「思った通りの回答が得られない」というAI初心者の方に、マンツーマンレッスンや隔週のオンライン講座でプロンプトのコツをお教えします。
+          </p>
+          <ul class="space-y-3 mb-8">
+            <li class="flex items-center gap-2 text-sm text-slate-700 font-medium">
+              <span class="text-indigo-600 font-bold">✔</span> じっくり学べるマンツーマン指導（初心者・個別コース）
+            </li>
+            <li class="flex items-center gap-2 text-sm text-slate-700 font-medium">
+              <span class="text-indigo-600 font-bold">✔</span> 無理なく続けられる隔週火曜の継続コースもご用意
+            </li>
+            <li class="flex items-center gap-2 text-sm text-slate-700 font-medium">
+              <span class="text-indigo-600 font-bold">✔</span> 実務や日常の作業を効率化するプロンプト技術が身につく
+            </li>
+          </ul>
+          <a href={`${baseUrl}course`} class="text-indigo-600 hover:text-indigo-500 font-bold flex items-center gap-1">
+            カリキュラムと料金体系はこちら &rarr;
+          </a>
+        </div>
+        <div class="p-8 rounded-3xl bg-white border border-slate-200/80 shadow-sm relative overflow-hidden">
+          <div class="absolute -right-20 -bottom-20 w-60 h-60 bg-indigo-50/50 rounded-full filter blur-2xl z-0 pointer-events-none"></div>
+          <div class="relative z-10">
+            <h3 class="text-xl font-bold text-slate-900 mb-6">こんな方におすすめです</h3>
+            <div class="space-y-4 text-sm text-slate-600 font-normal">
+              <div class="flex gap-3 items-start">
+                <span class="text-lg">👩‍💻</span>
+                <p>メール作成や要約などの事務作業を効率化したい会社員の方</p>
+              </div>
+              <div class="flex gap-3 items-start">
+                <span class="text-lg">✍</span>
+                <p>ブログ記事の下書きやSNSの文章をAIで自動化したい発信者の方</p>
+              </div>
+              <div class="flex gap-3 items-start">
+                <span class="text-lg">🤖</span>
+                <p>最新のテクノロジーを学習して、キャリアアップを目指したい初心者の方</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 受講生の声セクション -->
+    <section class="mb-24 py-16 border-t border-slate-200/80">
+      <span class="text-cyan-600 text-xs font-bold tracking-wider uppercase block text-center mb-2">Testimonials</span>
+      <h2 class="text-3xl font-bold text-slate-900 text-center mb-16">受講生の声</h2>
+      <div class="grid md:grid-cols-3 gap-8">
+        <!-- 声 1 -->
+        <div class="bg-white p-8 rounded-3xl border border-slate-200/80 shadow-sm flex flex-col justify-between hover:shadow-md transition-shadow relative">
+          <div class="text-4xl text-indigo-200 absolute top-4 right-6 font-serif">“</div>
+          <div>
+            <span class="text-xs font-bold text-indigo-600 bg-indigo-50 border border-indigo-100 px-2.5 py-1 rounded-md mb-4 inline-block">初めての生成AI / 受講生</span>
+            <p class="text-slate-700 text-sm leading-relaxed mb-6 font-normal">
+              「本当に受講してよかったです。これまで生成AIに興味はありつつも、何から始めればいいか分かりませんでしたが、基本的な使い方がしっかり理解できました。これからももっと活用していきたいです。」
+            </p>
+          </div>
+          <div class="border-t border-slate-100 pt-4">
+            <span class="text-sm font-bold text-slate-900 block">受講生 Aさん</span>
+            <span class="text-xs text-slate-500">受講プラン：初心者コース（全3回）</span>
+          </div>
+        </div>
+
+        <!-- 声 2 -->
+        <div class="bg-white p-8 rounded-3xl border border-slate-200/80 shadow-sm flex flex-col justify-between hover:shadow-md transition-shadow relative">
+          <div class="text-4xl text-cyan-200 absolute top-4 right-6 font-serif">“</div>
+          <div>
+            <span class="text-xs font-bold text-cyan-600 bg-cyan-50 border border-cyan-100 px-2.5 py-1 rounded-md mb-4 inline-block">優しいマンツーマン指導 / 受講生</span>
+            <p class="text-slate-700 text-sm leading-relaxed mb-6 font-normal">
+              「講師の方がとても優しく、パソコン操作が苦手な私でも、ペースを合わせて丁寧に進めてくれました。置いてきぼりにされることなく安心して受講できました。」
+            </p>
+          </div>
+          <div class="border-t border-slate-100 pt-4">
+            <span class="text-sm font-bold text-slate-900 block">受講生 Kさん</span>
+            <span class="text-xs text-slate-500">受講プラン：個別コース（マンツーマン相談）</span>
+          </div>
+        </div>
+
+        <!-- 声 3 -->
+        <div class="bg-white p-8 rounded-3xl border border-slate-200/80 shadow-sm flex flex-col justify-between hover:shadow-md transition-shadow relative">
+          <div class="text-4xl text-indigo-200 absolute top-4 right-6 font-serif">“</div>
+          <div>
+            <span class="text-xs font-bold text-indigo-600 bg-indigo-50 border border-indigo-100 px-2.5 py-1 rounded-md mb-4 inline-block">安心の受講料と内容 / 受講生</span>
+            <p class="text-slate-700 text-sm leading-relaxed mb-6 font-normal">
+              「これから必須になるスキルだと思いスクールを探していましたが、他と比べて受講料が手頃だったので申し込みました。正直、安すぎて内容が少し不安でしたが、実際は非常に分かりやすく大満足の内容でした。」
+            </p>
+          </div>
+          <div class="border-t border-slate-100 pt-4">
+            <span class="text-sm font-bold text-slate-900 block">受講生 Mさん</span>
+            <span class="text-xs text-slate-500">受講プラン：火曜日コース（月額）</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 最新記事セクション -->
+    <section id="articles" class="scroll-mt-20">
+      <div class="flex justify-between items-end mb-10">
+        <div>
+          <h2 class="text-3xl font-bold tracking-tight text-slate-900">新着のお役立ち記事</h2>
+          <p class="text-sm text-slate-500 mt-1">プロンプト集やツールの解説、最新情報をお届けします</p>
+        </div>
+        <a href={`${baseUrl}articles`} class="text-indigo-600 hover:text-indigo-500 text-sm font-semibold flex items-center gap-1 group">
+          すべての記事 
+          <span class="group-hover:translate-x-1 transition-transform">&rarr;</span>
+        </a>
+      </div>
+
+      {latestArticles.length === 0 ? (
+        <div class="text-center py-16 border border-dashed border-slate-200 rounded-2xl bg-white shadow-sm">
+          <p class="text-slate-500">公開されている記事はありません。</p>
+        </div>
+      ) : (
+        <div class="grid md:grid-cols-3 gap-8">
+          {latestArticles.map(article => (
+            <article class="bg-white border border-slate-200 rounded-2xl overflow-hidden hover:border-indigo-300 hover:shadow-md transition-all flex flex-col group shadow-sm">
+              <a href={`${baseUrl}articles/${article.slug}`} class="block aspect-video overflow-hidden">
+                <img 
+                  src={article.data.eyecatch} 
+                  alt={article.data.title}
+                  class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                  loading="lazy"
+                />
+              </a>
+              <div class="p-6 flex flex-col flex-grow">
+                <div class="flex items-center gap-3 mb-3">
+                  <span class="px-2.5 py-0.5 text-xs font-semibold rounded-full bg-indigo-50 text-indigo-600 border border-indigo-100">
+                    {article.data.category}
+                  </span>
+                  <time class="text-xs text-slate-500">
+                    {article.data.publishDate.toLocaleDateString('ja-JP', { year: 'numeric', month: '2-digit', day: '2-digit' })}
+                  </time>
+                </div>
+                <h3 class="text-lg font-bold mb-2 line-clamp-2 text-slate-900 group-hover:text-indigo-600 transition-colors">
+                  <a href={`${baseUrl}articles/${article.slug}`}>
+                    {article.data.title}
+                  </a>
+                </h3>
+                <p class="text-slate-600 text-sm line-clamp-3 mb-4 flex-grow font-normal leading-relaxed">
+                  {article.data.description}
+                </p>
+                <a href={`${baseUrl}articles/${article.slug}`} class="text-indigo-600 hover:text-indigo-500 text-sm font-semibold inline-flex items-center gap-1 group-link">
+                  続きを読む <span class="transition-transform group-hover:translate-x-1">&rarr;</span>
+                </a>
+              </div>
+            </article>
+          ))}
+        </div>
+      )}
+    </section>
+
+    <!-- 末尾CTAセクション -->
+    <section class="mt-20 py-16 px-6 md:px-12 rounded-3xl bg-gradient-to-br from-indigo-900 via-slate-900 to-slate-950 text-white relative overflow-hidden text-center shadow-lg">
+      <div class="absolute top-0 right-0 w-96 h-96 bg-indigo-500/10 rounded-full filter blur-3xl"></div>
+      <div class="absolute -bottom-20 -left-20 w-80 h-80 bg-cyan-500/10 rounded-full filter blur-2xl"></div>
+      
+      <div class="max-w-2xl mx-auto relative z-10">
+        <span class="px-3 py-1 text-[10px] font-bold tracking-widest uppercase rounded-full bg-indigo-500/20 text-indigo-300 border border-indigo-400/20 mb-6 inline-block">
+          Free Consultation
+        </span>
+        <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight mb-4 leading-tight">
+          まずは無料相談で、<br />あなたの課題を聞かせてください
+        </h2>
+        <p class="text-slate-300 text-sm md:text-base mb-10 leading-relaxed font-normal">
+          「自分にどのプランが合っているか分からない」「実務のこの作業を効率化できるか知りたい」など、どのような疑問でも結構です。講師がお一人ずつ丁寧にお答えします。
+        </p>
+        
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a href="mailto:aistep.school@gmail.com?subject=%E3%80%90%E3%81%8A%E5%95%8F%E3%81%84%E5%90%88%E3%82%8F%E3%81%9B%E3%83%BB%E7%84%A1%E6%96%99%E7%9B%B8%E8%AB%8B%E3%80%91%E3%83%9B%E3%83%BC%E3%83%A0%E3%83%9A%E3%83%BC%E3%82%B8%E3%82%88%E3%82%8A" 
+             class="px-8 py-4 rounded-full bg-gradient-to-r from-indigo-600 to-cyan-600 hover:opacity-90 font-bold text-white transition-opacity inline-flex items-center justify-center gap-2 shadow-lg shadow-indigo-600/15">
+            <svg fill="none" height="18" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="18">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+              <polyline points="22,6 12,13 2,6"></polyline>
+            </svg>
+            メールでお問い合わせを送る
+          </a>
+          <a href={`${baseUrl}course`} 
+             class="px-8 py-4 rounded-full bg-white/10 border border-white/20 hover:bg-white/20 transition-colors font-bold text-white text-center">
+            プラン・料金をもう一度見る
+          </a>
+        </div>
+        <p class="text-xs text-slate-400 mt-4 font-normal">
+          または直接こちらまで: aistep.school@gmail.com
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <!-- フッター -->
+  <footer class="border-t border-slate-200 bg-white py-12 text-center text-slate-500 text-sm mt-20 shadow-inner">
+    <div class="max-w-6xl mx-auto px-4">
+      <p>&copy; {new Date().getFullYear()} 生成AIStepSchool. Built with Astro & Tailwind CSS.</p>
+    </div>
+  </footer>
+</body>
+</html>

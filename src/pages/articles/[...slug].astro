@@ -1,0 +1,177 @@
+---
+import { getCollection } from 'astro:content';
+
+// 動的ルートのパス一覧を生成
+export async function getStaticPaths() {
+  const articles = await getCollection('articles', ({ data }) => {
+    // 公開中（isPublished: true）の記事のみをビルド対象とする
+    return data.isPublished;
+  });
+
+  return articles.map((article) => ({
+    params: { slug: article.slug },
+    props: { article },
+  }));
+}
+
+// 記事データをPropsから取得
+const { article } = Astro.props;
+const { Content } = await article.render();
+const { title, description, category, publishDate, updateDate, eyecatch } = article.data;
+
+const baseUrl = import.meta.env.BASE_URL;
+
+// canonical URL: astro.config.mjs の site と現在のパスから生成
+const canonicalURL = new URL(Astro.url.pathname, Astro.site || 'https://example.com').toString();
+---
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{title} - 生成AIStepSchool</title>
+  <meta name="description" content={description || `${title}の詳細ページ。`} />
+  <link rel="canonical" href={canonicalURL} />
+  <!-- OGP Tags -->
+  <meta property="og:title" content={`${title} - 生成AIStepSchool`} />
+  <meta property="og:description" content={description || `${title}の詳細ページ。`} />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content={canonicalURL} />
+  <meta property="og:image" content={new URL(eyecatch, Astro.site || 'https://example.com').toString()} />
+  <meta property="og:site_name" content="生成AIStepSchool" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col font-sans">
+  <header class="border-b border-slate-200 bg-white/95 backdrop-blur sticky top-0 z-50 shadow-sm">
+    <div class="max-w-6xl mx-auto px-4 py-4 flex flex-row justify-between items-center gap-4">
+      <a href={baseUrl} class="text-lg sm:text-xl font-black bg-gradient-to-r from-indigo-600 via-purple-600 to-cyan-600 bg-clip-text text-transparent tracking-tight shrink-0">
+        生成AIStepSchool
+      </a>
+      <nav class="flex gap-3 sm:gap-6 text-xs sm:text-sm font-semibold items-center overflow-x-auto no-scrollbar py-1">
+        <a href={baseUrl} class="hover:text-indigo-600 text-slate-600 transition-colors shrink-0">Home</a>
+        <a href={`${baseUrl}articles`} class="hover:text-indigo-600 text-slate-600 transition-colors shrink-0">Articles</a>
+        <a href={`${baseUrl}course`} class="px-3 py-1.5 sm:px-4 sm:py-1.5 rounded-full bg-gradient-to-r from-indigo-600 to-cyan-600 text-white font-semibold text-[10px] sm:text-xs shadow-md shadow-indigo-600/10 hover:opacity-90 transition-opacity shrink-0">AI School</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- メインコンテンツ -->
+  <main class="flex-grow max-w-4xl w-full mx-auto px-4 py-12">
+    <!-- 戻るリンク -->
+    <a href={`${baseUrl}articles`} class="inline-flex items-center text-sm text-slate-500 hover:text-indigo-600 mb-8 transition-colors group">
+      <span class="mr-1 group-hover:-translate-x-1 transition-transform">&larr;</span> 記事一覧へ戻る
+    </a>
+
+    <!-- 記事ヘッダー -->
+    <header class="mb-8">
+      <div class="flex items-center gap-3 mb-4">
+        <span class="px-2.5 py-0.5 text-xs font-semibold rounded-full bg-indigo-50 text-indigo-600 border border-indigo-100">
+          {category}
+        </span>
+        <div class="flex gap-4 text-xs text-slate-500">
+          <time datetime={publishDate.toISOString()}>
+            投稿日: {publishDate.toLocaleDateString('ja-JP')}
+          </time>
+          {updateDate && (
+            <time datetime={updateDate.toISOString()}>
+              更新日: {updateDate.toLocaleDateString('ja-JP')}
+            </time>
+          )}
+        </div>
+      </div>
+      <h1 class="text-3xl md:text-5xl font-extrabold leading-tight text-slate-900 mb-6">
+        {title}
+      </h1>
+      {description && (
+        <p class="text-slate-655 text-lg border-l-2 border-indigo-600 pl-4 py-1 mb-8 leading-relaxed font-normal">
+          {description}
+        </p>
+      )}
+      
+      <!-- アイキャッチ画像 -->
+      <div class="aspect-video w-full rounded-2xl overflow-hidden border border-slate-200 shadow-sm">
+        <img 
+          src={eyecatch} 
+          alt={title}
+          class="w-full h-full object-cover"
+        />
+      </div>
+    </header>
+
+    <!-- 記事本文 -->
+    <article class="prose prose-slate prose-indigo max-w-none prose-headings:font-bold prose-headings:text-slate-900 prose-a:text-indigo-600 hover:prose-a:text-indigo-500 prose-img:rounded-2xl leading-relaxed text-slate-700 mb-16">
+      <Content />
+    </article>
+
+    <!-- 記事下部スクール案内CTAバナー -->
+    <div class="p-8 rounded-3xl bg-gradient-to-br from-indigo-50/60 to-cyan-50/40 border border-indigo-100/80 shadow-sm relative overflow-hidden mb-12">
+      <div class="absolute -right-20 -bottom-20 w-60 h-60 bg-indigo-200/10 rounded-full filter blur-2xl"></div>
+      <div class="relative z-10 flex flex-col md:flex-row items-center justify-between gap-8">
+        <div class="max-w-xl text-center md:text-left">
+          <span class="px-2.5 py-1 text-[10px] font-bold tracking-widest uppercase rounded-md bg-indigo-100 text-indigo-700 border border-indigo-200/50 mb-3 inline-block">
+            AI School
+          </span>
+          <h3 class="text-xl font-bold text-slate-900 mb-2">生成AIを「見る」側から「使いこなす」側へ</h3>
+          <p class="text-slate-600 text-sm leading-relaxed font-normal">
+            当校では、ChatGPTやClaude、Geminiなど主要なテキスト生成AIの具体的な使い方から実務への応用方法まで、マンツーマンでじっくり指導します。まずは自分だけの活用法を見つける「無料相談」へお気軽にどうぞ。
+          </p>
+        </div>
+        <div class="shrink-0 w-full md:w-auto">
+          <a href={`${baseUrl}course`} class="w-full md:w-auto px-6 py-3.5 rounded-full bg-gradient-to-r from-indigo-600 to-cyan-600 text-white font-bold text-center shadow-md shadow-indigo-600/15 hover:opacity-90 transition-opacity block">
+            受講プランを詳しく見る
+          </a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- フッター -->
+  <footer class="border-t border-slate-200 bg-white py-12 text-center text-slate-500 text-sm mt-20 shadow-inner">
+    <div class="max-w-6xl mx-auto px-4">
+      <p>&copy; {new Date().getFullYear()} 生成AIStepSchool. Built with Astro & Tailwind CSS.</p>
+    </div>
+  </footer>
+
+  <!-- コードブロック用コピーボタン挿入スクリプト -->
+  <script>
+    const codeBlocks = document.querySelectorAll('pre');
+
+    codeBlocks.forEach((block) => {
+      block.style.position = 'relative';
+      block.classList.add('group');
+
+      const copyButton = document.createElement('button');
+      copyButton.className = 'absolute right-3 top-3 px-3 py-1.5 rounded-lg text-xs font-bold bg-white hover:bg-slate-50 text-slate-600 border border-slate-200 shadow-sm transition-all cursor-pointer opacity-0 group-hover:opacity-100 focus:opacity-100';
+      copyButton.innerText = 'コピー';
+
+      copyButton.addEventListener('click', async () => {
+        const codeElement = block.querySelector('code');
+        const codeText = codeElement ? codeElement.innerText : '';
+
+        try {
+          await navigator.clipboard.writeText(codeText);
+          
+          copyButton.innerText = 'コピー完了！';
+          copyButton.classList.remove('bg-white', 'text-slate-600', 'border-slate-200', 'shadow-sm');
+          copyButton.classList.add('bg-cyan-50', 'text-cyan-600', 'border-cyan-100');
+
+          setTimeout(() => {
+            copyButton.innerText = 'コピー';
+            copyButton.classList.remove('bg-cyan-50', 'text-cyan-600', 'border-cyan-100');
+            copyButton.classList.add('bg-white', 'text-slate-600', 'border-slate-200', 'shadow-sm');
+          }, 2000);
+        } catch (err) {
+          console.error('コピーに失敗しました:', err);
+          copyButton.innerText = 'エラー';
+        }
+      });
+
+      block.appendChild(copyButton);
+    });
+  </script>
+</body>
+</html>

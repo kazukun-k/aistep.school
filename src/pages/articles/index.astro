@@ -1,0 +1,171 @@
+---
+import { getCollection } from 'astro:content';
+
+// 公開されているすべての記事を取得
+const articles = await getCollection('articles', ({ data }) => {
+  return data.isPublished;
+});
+
+// 日付の降順（最新順）にソート
+const sortedArticles = articles.sort(
+  (a, b) => b.data.publishDate.getTime() - a.data.publishDate.getTime()
+);
+
+// 動的フィルター用カテゴリリスト
+const categories = ["すべて", "生成AI初心者", "業務効率化", "プロンプト"];
+const baseUrl = import.meta.env.BASE_URL;
+
+// canonical URL の生成
+const canonicalURL = new URL(`${baseUrl}articles`, Astro.site || 'https://example.com').toString();
+---
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>記事一覧 - 生成AIStepSchool</title>
+  <meta name="description" content="生成AIStepSchoolで公開されているすべての記事一覧です。カテゴリでの絞り込みが可能です。">
+  <link rel="canonical" href={canonicalURL} />
+  <!-- OGP Tags -->
+  <meta property="og:title" content="記事一覧 - 生成AIStepSchool" />
+  <meta property="og:description" content="生成AIStepSchoolで公開されているすべての記事一覧です。カテゴリでの絞り込みが可能です。" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content={canonicalURL} />
+  <meta property="og:image" content={new URL(`${baseUrl}images/instructor_avatar.png`, Astro.site || 'https://example.com').toString()} />
+  <meta property="og:site_name" content="生成AIStepSchool" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col font-sans">
+  <header class="border-b border-slate-200 bg-white/95 backdrop-blur sticky top-0 z-50 shadow-sm">
+    <div class="max-w-6xl mx-auto px-4 py-4 flex flex-row justify-between items-center gap-4">
+      <a href={baseUrl} class="text-lg sm:text-xl font-black bg-gradient-to-r from-indigo-600 via-purple-600 to-cyan-600 bg-clip-text text-transparent tracking-tight shrink-0">
+        生成AIStepSchool
+      </a>
+      <nav class="flex gap-3 sm:gap-6 text-xs sm:text-sm font-semibold items-center overflow-x-auto no-scrollbar py-1">
+        <a href={baseUrl} class="hover:text-indigo-600 text-slate-600 transition-colors shrink-0">Home</a>
+        <a href={`${baseUrl}articles`} class="text-indigo-600 font-semibold shrink-0">Articles</a>
+        <a href={`${baseUrl}course`} class="px-3 py-1.5 sm:px-4 sm:py-1.5 rounded-full bg-gradient-to-r from-indigo-600 to-cyan-600 text-white font-semibold text-[10px] sm:text-xs shadow-md shadow-indigo-600/10 hover:opacity-90 transition-opacity shrink-0">AI School</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="flex-grow max-w-6xl w-full mx-auto px-4 py-12">
+    <!-- ページ見出し -->
+    <div class="mb-8 border-b border-slate-200 pb-6">
+      <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight text-slate-900">お役立ち記事一覧</h1>
+      <p class="text-slate-500 mt-2">AIのノウハウをカテゴリ別に見る</p>
+    </div>
+
+    <!-- 絞り込みカテゴリボタン -->
+    <div class="flex flex-wrap gap-3 mb-10">
+      {categories.map((cat, index) => (
+        <button 
+          data-filter-btn={cat}
+          class={`px-5 py-2.5 rounded-full text-sm font-bold border transition-all cursor-pointer ${
+            index === 0 
+            ? "bg-gradient-to-r from-indigo-600 to-cyan-600 text-white border-transparent shadow-md shadow-indigo-600/10" 
+            : "bg-white text-slate-600 border-slate-200 hover:border-slate-300 hover:bg-slate-50 shadow-sm"
+          }`}
+        >
+          {cat}
+        </button>
+      ))}
+    </div>
+
+    <!-- グリッドリスト -->
+    {sortedArticles.length === 0 ? (
+      <div class="text-center py-20 border border-dashed border-slate-200 rounded-2xl bg-white shadow-sm">
+        <p class="text-slate-500">記事が見つかりませんでした。</p>
+      </div>
+    ) : (
+      <div class="grid md:grid-cols-3 gap-8" id="articles-container">
+        {sortedArticles.map(article => (
+          <article 
+            data-category={article.data.category}
+            data-article-card
+            class="bg-white border border-slate-200 rounded-2xl overflow-hidden hover:border-indigo-300 hover:shadow-md transition-all duration-300 transform flex flex-col group shadow-sm"
+          >
+            <a href={`${baseUrl}articles/${article.slug}`} class="block aspect-video overflow-hidden">
+              <img 
+                src={article.data.eyecatch} 
+                alt={article.data.title}
+                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                loading="lazy"
+              />
+            </a>
+            <div class="p-6 flex flex-col flex-grow">
+              <div class="flex items-center gap-3 mb-3">
+                <span class="px-2.5 py-0.5 text-xs font-semibold rounded-full bg-indigo-50 text-indigo-600 border border-indigo-100">
+                  {article.data.category}
+                </span>
+                <time class="text-xs text-slate-500">
+                  {article.data.publishDate.toLocaleDateString('ja-JP', { year: 'numeric', month: '2-digit', day: '2-digit' })}
+                </time>
+              </div>
+              <h2 class="text-lg font-bold mb-2 line-clamp-2 text-slate-900 group-hover:text-indigo-600 transition-colors">
+                <a href={`${baseUrl}articles/${article.slug}`}>
+                  {article.data.title}
+                </a>
+              </h2>
+              <p class="text-slate-600 text-sm line-clamp-3 mb-4 flex-grow font-normal leading-relaxed">
+                {article.data.description}
+              </p>
+              <a href={`${baseUrl}articles/${article.slug}`} class="text-indigo-600 hover:text-indigo-500 text-sm font-semibold inline-flex items-center gap-1 group-link">
+                続きを読む <span class="transition-transform group-hover:translate-x-1">&rarr;</span>
+              </a>
+            </div>
+          </article>
+        ))}
+      </div>
+    )}
+  </main>
+
+  <!-- フッター -->
+  <footer class="border-t border-slate-200 bg-white py-12 text-center text-slate-500 text-sm mt-20 shadow-inner">
+    <div class="max-w-6xl mx-auto px-4">
+      <p>&copy; {new Date().getFullYear()} 生成AIStepSchool. Built with Astro & Tailwind CSS.</p>
+    </div>
+  </footer>
+
+  <!-- リアルタイム絞り込みスクリプト -->
+  <script>
+    const buttons = document.querySelectorAll('[data-filter-btn]');
+    const articles = document.querySelectorAll('[data-article-card]');
+
+    buttons.forEach(button => {
+      button.addEventListener('click', () => {
+        const filter = button.getAttribute('data-filter-btn');
+
+        // ボタンのスタイル切り替え（ライトモード用に修正）
+        buttons.forEach(btn => {
+          btn.classList.remove('bg-gradient-to-r', 'from-indigo-600', 'to-cyan-600', 'text-white', 'border-transparent', 'shadow-md', 'shadow-indigo-600/10');
+          btn.classList.add('bg-white', 'text-slate-600', 'border-slate-200', 'shadow-sm');
+        });
+        button.classList.add('bg-gradient-to-r', 'from-indigo-600', 'to-cyan-600', 'text-white', 'border-transparent', 'shadow-md', 'shadow-indigo-600/10');
+        button.classList.remove('bg-white', 'text-slate-600', 'border-slate-200', 'shadow-sm');
+
+        // 記事のフェードアウト・イン処理
+        articles.forEach(article => {
+          const category = article.getAttribute('data-category');
+
+          if (filter === 'すべて' || category === filter) {
+            article.classList.remove('hidden');
+            setTimeout(() => {
+              article.classList.remove('opacity-0', 'scale-95');
+            }, 10);
+          } else {
+            article.classList.add('opacity-0', 'scale-95');
+            setTimeout(() => {
+              article.classList.add('hidden');
+            }, 300);
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>

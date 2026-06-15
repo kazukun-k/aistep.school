@@ -1,0 +1,530 @@
+---
+const baseUrl = import.meta.env.BASE_URL;
+
+// 環境変数から決済リンクを取得（未設定時のフォールバックとしてサンクスページ等に設定）
+const payBeginner = import.meta.env.PUBLIC_PAY_BEGINNER || `${baseUrl}course/thanks?plan=beginner`;
+const payTuesday = import.meta.env.PUBLIC_PAY_TUESDAY || `${baseUrl}course/thanks?plan=tuesday`;
+const payIndividual = import.meta.env.PUBLIC_PAY_INDIVIDUAL || `${baseUrl}course/thanks?plan=individual`;
+
+// canonical URL の生成
+const canonicalURL = new URL(`${baseUrl}course`, Astro.site || 'https://example.com').toString();
+---
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>コース・料金案内 | 生成AI実践オンライン教室 - 生成AIStepSchool</title>
+  <meta name="description" content="初心者向け生成AIオンライン教室のコース案内と料金プラン。複数人向けコースから個別マンツーマンまで。">
+  <link rel="canonical" href={canonicalURL} />
+  <!-- OGP Tags -->
+  <meta property="og:title" content="コース・料金案内 | 生成AI実践オンライン教室 - 生成AIStepSchool" />
+  <meta property="og:description" content="初心者向け生成AIオンライン教室のコース案内と料金プラン。複数人向けコースから個別マンツーマンまで。" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content={canonicalURL} />
+  <meta property="og:image" content={new URL(`${baseUrl}images/instructor_avatar.png`, Astro.site || 'https://example.com').toString()} />
+  <meta property="og:site_name" content="生成AIStepSchool" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col font-sans">
+  <header class="border-b border-slate-200 bg-white/95 backdrop-blur sticky top-0 z-50 shadow-sm">
+    <div class="max-w-6xl mx-auto px-4 py-4 flex flex-row justify-between items-center gap-4">
+      <a href={baseUrl} class="text-lg sm:text-xl font-black bg-gradient-to-r from-indigo-600 via-purple-600 to-cyan-600 bg-clip-text text-transparent tracking-tight shrink-0">
+        生成AIStepSchool
+      </a>
+      <nav class="flex gap-3 sm:gap-6 text-xs sm:text-sm font-semibold items-center overflow-x-auto no-scrollbar py-1">
+        <a href={baseUrl} class="hover:text-indigo-600 text-slate-600 transition-colors shrink-0">Home</a>
+        <a href={`${baseUrl}articles`} class="hover:text-indigo-600 text-slate-600 transition-colors shrink-0">Articles</a>
+        <a href={`${baseUrl}course`} class="px-3 py-1.5 sm:px-4 sm:py-1.5 rounded-full bg-gradient-to-r from-indigo-600 to-cyan-600 text-white font-semibold text-[10px] sm:text-xs shadow-md shadow-indigo-600/10 hover:opacity-90 transition-opacity shrink-0">AI School</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="flex-grow">
+    <!-- ヒーローセクション -->
+    <section class="relative py-20 overflow-hidden border-b border-slate-200 bg-white">
+      <div class="absolute -top-40 -left-40 w-96 h-96 bg-indigo-100/30 rounded-full filter blur-3xl"></div>
+      <div class="absolute top-20 right-0 w-96 h-96 bg-cyan-100/30 rounded-full filter blur-3xl"></div>
+
+      <div class="max-w-4xl mx-auto text-center px-4 relative">
+        <span class="px-3.5 py-1 text-xs font-bold rounded-full bg-indigo-50 text-indigo-600 border border-indigo-100 tracking-wider uppercase mb-6 inline-block">
+          自分に合わせた学び方を選べる
+        </span>
+        <h1 class="text-4xl md:text-5xl font-black tracking-tight text-slate-900 mb-6 leading-tight">
+          コース ＆ 料金プラン
+        </h1>
+        <p class="text-slate-600 text-base md:text-lg max-w-2xl mx-auto leading-relaxed">
+          生成AIの基礎を一から学べるコースから、毎週無理なく習慣化できるプラン、ピンポイントで課題を解決する個別コースまで、ご自身の学習目的とライフスタイルに合わせてお選びいただけます。
+        </p>
+      </div>
+    </section>
+
+    <!-- 料金表セクション -->
+    <section class="py-20 border-b border-slate-200/80 relative">
+      <div class="max-w-6xl mx-auto px-4">
+        <h2 class="text-3xl font-bold text-slate-900 text-center mb-16">選べる3つの受講プラン</h2>
+        <div class="grid lg:grid-cols-3 gap-8 items-stretch">
+          
+          <!-- プラン1: 初心者コース -->
+          <div class="p-8 rounded-3xl bg-white border border-slate-200 flex flex-col justify-between hover:border-indigo-300 hover:shadow-md transition-all shadow-sm">
+            <div>
+              <div class="flex justify-between items-start mb-4">
+                <span class="px-2.5 py-1 text-xs font-bold rounded-md bg-indigo-50 text-indigo-600 border border-indigo-100">全3回セット</span>
+              </div>
+              <h3 class="text-2xl font-bold text-slate-900 mb-2">初心者コース<br /><span class="text-slate-500 text-sm font-medium">（初めての生成AI）</span></h3>
+              <p class="text-slate-600 text-xs mb-6 font-normal leading-relaxed">生成AIの基本から対話のルールまでをマンツーマンで体系的にマスターする入門コース</p>
+              
+              <div class="mb-6 border-y border-slate-100 py-4 space-y-2">
+                <div class="flex justify-between text-sm">
+                  <span class="text-slate-500">受講形式</span>
+                  <span class="text-indigo-600 font-bold">マンツーマン（1対1）</span>
+                </div>
+                <div class="flex justify-between text-sm">
+                  <span class="text-slate-500">使用ツール</span>
+                  <span class="text-slate-700 font-semibold">Google Meet</span>
+                </div>
+                <div class="flex justify-between text-sm">
+                  <span class="text-slate-500">回数 / 時間</span>
+                  <span class="text-slate-700 font-semibold">全3回（マンツーマン）</span>
+                </div>
+              </div>
+
+              <div class="mb-8">
+                <span class="text-3xl font-black text-slate-900">¥15,000</span>
+                <span class="text-slate-500 text-xs">（税込・一括）</span>
+              </div>
+
+              <ul class="space-y-3 text-slate-600 text-sm mb-8 font-normal">
+                <li class="flex gap-2"><span class="text-indigo-600 font-bold">✔</span> 生成AIの導入から対話の基礎</li>
+                <li class="flex gap-2"><span class="text-indigo-600 font-bold">✔</span> 役立つプロンプトの基本公式</li>
+                <li class="flex gap-2"><span class="text-indigo-600 font-bold">✔</span> 日常で使える便利な活用レシピ</li>
+                <li class="flex gap-2"><span class="text-indigo-600 font-bold">✔</span> 全3回の講義資料をプレゼント</li>
+              </ul>
+            </div>
+            <a href={payBeginner} class="w-full py-3.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 font-bold text-center text-white transition-colors block shadow-sm shadow-indigo-600/10">
+              このコースに申し込む
+            </a>
+          </div>
+
+          <!-- プラン2: 火曜日コース -->
+          <div class="p-8 rounded-3xl bg-gradient-to-b from-indigo-50/40 via-white to-white border border-indigo-200 flex flex-col justify-between relative shadow-md shadow-indigo-500/5 hover:border-indigo-400 hover:shadow-lg transition-all">
+            <div class="absolute -top-3.5 right-6 px-3 py-1 rounded-full bg-gradient-to-r from-indigo-600 to-cyan-600 text-xs font-bold text-white uppercase tracking-wider shadow-sm">
+              一番人気・習慣化
+            </div>
+            <div>
+              <div class="flex justify-between items-start mb-4">
+                <span class="px-2.5 py-1 text-xs font-bold rounded-md bg-cyan-50 text-cyan-600 border border-cyan-100">月額サブスク</span>
+              </div>
+              <h3 class="text-2xl font-bold text-slate-900 mb-2">火曜日コース<br /><span class="text-slate-500 text-sm font-medium">（隔週ショートレッスン）</span></h3>
+              <p class="text-slate-600 text-xs mb-6 font-normal leading-relaxed">月2回の隔週レッスンと質問会で、AI活用を日常に定着させるプラン</p>
+              
+              <div class="mb-6 border-y border-slate-100 py-4 space-y-2">
+                <div class="flex justify-between text-sm">
+                  <span class="text-slate-500">受講形式</span>
+                  <span class="text-slate-700 font-semibold">複数人向け（隔週・月2回）</span>
+                </div>
+                <div class="flex justify-between text-sm">
+                  <span class="text-slate-500">開催時間</span>
+                  <span class="text-cyan-600 font-bold">隔週火曜 20:00 〜 20:45</span>
+                </div>
+                <div class="flex justify-between text-sm">
+                  <span class="text-slate-500">使用ツール</span>
+                  <span class="text-slate-700 font-semibold">Google Meet</span>
+                </div>
+              </div>
+
+              <div class="mb-8">
+                <span class="text-3xl font-black text-slate-900">¥6,000</span>
+                <span class="text-slate-500 text-xs">（税込 / 月額）</span>
+              </div>
+
+              <ul class="space-y-3 text-slate-600 text-sm mb-8 font-normal">
+                <li class="flex gap-2"><span class="text-cyan-600 font-bold">✔</span> 「第1・3週」と「第2・4週」の2コース制</li>
+                <li class="flex gap-2"><span class="text-cyan-600 font-bold">✔</span> 最新のAIトレンドや機能を隔週で解説</li>
+                <li class="flex gap-2"><span class="text-cyan-600 font-bold">✔</span> その場で疑問を解消する質問タイム</li>
+                <li class="flex gap-2"><span class="text-cyan-600 font-bold">✔</span> アーカイブ動画視聴可能（見逃し配信）</li>
+              </ul>
+            </div>
+            <div>
+              <a href={payTuesday} class="w-full py-3.5 rounded-xl bg-gradient-to-r from-indigo-600 to-cyan-600 font-bold text-center text-white shadow-md shadow-indigo-600/20 hover:opacity-90 transition-opacity block mb-2">
+                このコースに申し込む
+              </a>
+              <p class="text-slate-500 text-[10px] text-center leading-normal">
+                ※月額自動引き落としとなります。解約はいつでも可能です。
+              </p>
+            </div>
+          </div>
+
+          <!-- プラン3: 個別コース -->
+          <div class="p-8 rounded-3xl bg-white border border-slate-200 flex flex-col justify-between hover:border-indigo-300 hover:shadow-md transition-all shadow-sm">
+            <div>
+              <div class="flex justify-between items-start mb-4">
+                <span class="px-2.5 py-1 text-xs font-bold rounded-md bg-cyan-50 text-cyan-600 border border-cyan-100">1回都度予約</span>
+              </div>
+              <h3 class="text-2xl font-bold text-slate-900 mb-2">個別コース<br /><span class="text-slate-500 text-sm font-medium">（マンツーマン相談）</span></h3>
+              <p class="text-slate-600 text-xs mb-6 font-normal leading-relaxed">自分の実務課題やプロンプトの活用法をピンポイントで解決するプラン</p>
+              
+              <div class="mb-6 border-y border-slate-100 py-4 space-y-2">
+                <div class="flex justify-between text-sm">
+                  <span class="text-slate-500">受講形式</span>
+                  <span class="text-slate-700 font-semibold">マンツーマン（1対1）</span>
+                </div>
+                <div class="flex justify-between text-sm">
+                  <span class="text-slate-500">時間</span>
+                  <span class="text-slate-700 font-semibold">1回 45分（事前予約制）</span>
+                </div>
+                <div class="flex justify-between text-sm">
+                  <span class="text-slate-500">使用ツール</span>
+                  <span class="text-slate-700 font-semibold">Google Meet</span>
+                </div>
+              </div>
+
+              <div class="mb-8">
+                <span class="text-3xl font-black text-slate-900">¥5,000</span>
+                <span class="text-slate-500 text-xs">（税込 / 1回）</span>
+              </div>
+
+              <ul class="space-y-3 text-slate-600 text-sm mb-8 font-normal">
+                <li class="flex gap-2"><span class="text-cyan-600 font-bold">✔</span> あなたの業務に合わせた実践指導</li>
+                <li class="flex gap-2"><span class="text-cyan-600 font-bold">✔</span> 業務効率化のためのプロンプト設計指導</li>
+                <li class="flex gap-2"><span class="text-cyan-600 font-bold">✔</span> 周りを気にせず何でも質問可能</li>
+                <li class="flex gap-2"><span class="text-cyan-600 font-bold">✔</span> 受講期間中は個別の質問に回答</li>
+              </ul>
+            </div>
+            <a href={payIndividual} class="w-full py-3.5 rounded-xl bg-white border border-slate-350 hover:bg-slate-50 font-bold text-center text-slate-700 hover:text-slate-800 transition-all block shadow-sm">
+              このコースに申し込む
+            </a>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- 受講フローセクション -->
+    <section class="py-20 bg-white border-b border-slate-200/80">
+      <div class="max-w-5xl mx-auto px-4">
+        <h2 class="text-3xl font-bold text-slate-900 text-center mb-4">受講までの流れ</h2>
+        <p class="text-center text-slate-500 mb-16 max-w-xl mx-auto text-sm">決済からレッスン当日までのシンプルなステップです。</p>
+
+        <div class="grid md:grid-cols-3 gap-8 relative">
+          <!-- Step 1 -->
+          <div class="p-8 rounded-2xl bg-slate-50 border border-slate-200/60 flex flex-col items-center text-center relative z-10">
+            <div class="w-12 h-12 rounded-full bg-indigo-50 text-indigo-600 border border-indigo-100 flex items-center justify-center font-bold text-lg mb-6 shadow-sm">
+              Step 1
+            </div>
+            <h3 class="text-lg font-bold text-slate-900 mb-3">希望のコースを選んで決済</h3>
+            <p class="text-slate-655 text-sm leading-relaxed font-normal">
+              プラン一覧からご希望のコースを選んで決済を行います。<br />
+              ※月額コースはPayPal等での自動引落となります。
+            </p>
+          </div>
+
+          <!-- Step 2 -->
+          <div class="p-8 rounded-2xl bg-slate-50 border border-slate-200/60 flex flex-col items-center text-center relative z-10">
+            <div class="w-12 h-12 rounded-full bg-purple-50 text-purple-600 border border-purple-100 flex items-center justify-center font-bold text-lg mb-6 shadow-sm">
+              Step 2
+            </div>
+            <h3 class="text-lg font-bold text-slate-900 mb-3">受講案内メールの受信</h3>
+            <p class="text-slate-655 text-sm leading-relaxed font-normal">
+              決済完了時の画面または登録したメールアドレスに、講義用のGoogle Meetリンクが届きます。<br />
+              （個別コースの場合は日時予約用のカレンダーリンクが届きます）
+            </p>
+          </div>
+
+          <!-- Step 3 -->
+          <div class="p-8 rounded-2xl bg-slate-50 border border-slate-200/60 flex flex-col items-center text-center relative z-10">
+            <div class="w-12 h-12 rounded-full bg-cyan-50 text-cyan-600 border border-cyan-100 flex items-center justify-center font-bold text-lg mb-6 shadow-sm">
+              Step 3
+            </div>
+            <h3 class="text-lg font-bold text-slate-900 mb-3">当日、Meetに参加</h3>
+            <p class="text-slate-655 text-sm leading-relaxed font-normal">
+              レッスン日時になりましたら、お送りしたGoogle MeetのURLをクリックして参加するだけ。パソコンやスマホから手軽に受講できます。
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- お問い合わせ（よくある質問） -->
+    <section class="py-20 bg-slate-50">
+      <div class="max-w-3xl mx-auto px-4">
+        <h2 class="text-3xl font-bold text-slate-900 text-center mb-12">よくある質問 (FAQ)</h2>
+        <div class="space-y-4">
+          <!-- Q1 -->
+          <details class="group p-6 rounded-2xl bg-white border border-slate-200/80 [&_summary::-webkit-details-marker]:hidden shadow-sm">
+            <summary class="flex justify-between items-center font-bold text-slate-800 hover:text-indigo-600 transition-colors cursor-pointer list-none select-none">
+              <span>Q1. 全くの初心者でPC操作もおぼつかないのですが、受講できますか？</span>
+              <span class="transition group-open:rotate-180">
+                <svg fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="24" class="text-slate-400">
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              </span>
+            </summary>
+            <p class="text-slate-600 text-sm leading-relaxed mt-4 pt-4 border-t border-slate-100">
+              はい、大歓迎です。生成AIツールの初期登録から基本的な使い方まで、マンツーマンまたは分かりやすいステップで丁寧にお教えしますので安心してご参加ください。
+            </p>
+          </details>
+
+          <!-- Q2 -->
+          <details class="group p-6 rounded-2xl bg-white border border-slate-200/80 [&_summary::-webkit-details-marker]:hidden shadow-sm">
+            <summary class="flex justify-between items-center font-bold text-slate-800 hover:text-indigo-600 transition-colors cursor-pointer list-none select-none">
+              <span>Q2. スマートフォンやタブレットだけでも受講できますか？</span>
+              <span class="transition group-open:rotate-180">
+                <svg fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="24" class="text-slate-400">
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              </span>
+            </summary>
+            <p class="text-slate-600 text-sm leading-relaxed mt-4 pt-4 border-t border-slate-100">
+              はい、受講可能です。ただし、実際の業務効率化やプロンプトの編集作業などはパソコン（Windows/Mac）で行う方がスムーズなため、パソコンでの受講を推奨しております。
+            </p>
+          </details>
+
+          <!-- Q3 -->
+          <details class="group p-6 rounded-2xl bg-white border border-slate-200/80 [&_summary::-webkit-details-marker]:hidden shadow-sm">
+            <summary class="flex justify-between items-center font-bold text-slate-800 hover:text-indigo-600 transition-colors cursor-pointer list-none select-none">
+              <span>Q3. 初心者コース、火曜日コース、個別コースのどれを選べば良いですか？</span>
+              <span class="transition group-open:rotate-180">
+                <svg fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="24" class="text-slate-400">
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              </span>
+            </summary>
+            <p class="text-slate-600 text-sm leading-relaxed mt-4 pt-4 border-t border-slate-100">
+              基礎から体系的に学びたい方は「初心者コース（マンツーマン）」、習慣的に学び最新トレンドを追いたい方は「火曜日コース」、ピンポイントでご自身の業務課題を解決したい方は「個別コース」がおすすめです。
+            </p>
+          </details>
+
+          <!-- Q4 -->
+          <details class="group p-6 rounded-2xl bg-white border border-slate-200/80 [&_summary::-webkit-details-marker]:hidden shadow-sm">
+            <summary class="flex justify-between items-center font-bold text-slate-800 hover:text-indigo-600 transition-colors cursor-pointer list-none select-none">
+              <span>Q4. 初心者コースは完全マンツーマン（1対1）ですか？</span>
+              <span class="transition group-open:rotate-180">
+                <svg fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="24" class="text-slate-400">
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              </span>
+            </summary>
+            <p class="text-slate-600 text-sm leading-relaxed mt-4 pt-4 border-t border-slate-100">
+              はい、初心者コースはすべて講師と1対1のマンツーマンレッスンとなっており、他の受講生を気にすることなくご自身のペースで学ぶことができます。
+            </p>
+          </details>
+
+          <!-- Q5 -->
+          <details class="group p-6 rounded-2xl bg-white border border-slate-200/80 [&_summary::-webkit-details-marker]:hidden shadow-sm">
+            <summary class="flex justify-between items-center font-bold text-slate-800 hover:text-indigo-600 transition-colors cursor-pointer list-none select-none">
+              <span>Q5. 火曜日コースの「第1・3週」と「第2・4週」はどのような違いがありますか？</span>
+              <span class="transition group-open:rotate-180">
+                <svg fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="24" class="text-slate-400">
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              </span>
+            </summary>
+            <p class="text-slate-600 text-sm leading-relaxed mt-4 pt-4 border-t border-slate-100">
+              レッスンの開催週が異なります（隔週・月2回）。第1・3火曜日に参加する「第1・3週コース」と、第2・4火曜日に参加する「第2・4週コース」の2コースがありますので、ご都合の良い方をお選びください。
+            </p>
+          </details>
+
+          <!-- Q6 -->
+          <details class="group p-6 rounded-2xl bg-white border border-slate-200/80 [&_summary::-webkit-details-marker]:hidden shadow-sm">
+            <summary class="flex justify-between items-center font-bold text-slate-800 hover:text-indigo-600 transition-colors cursor-pointer list-none select-none">
+              <span>Q6. 火曜日コースの「第1・3週」と「第2・4週」を両方受講することは可能ですか？</span>
+              <span class="transition group-open:rotate-180">
+                <svg fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="24" class="text-slate-400">
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              </span>
+            </summary>
+            <p class="text-slate-600 text-sm leading-relaxed mt-4 pt-4 border-t border-slate-100">
+              各週で講義内容は同じになりますが、それでもよろしければ可能です。毎週受講することで、AI活用をより早く習慣化させることにも繋がります。
+            </p>
+          </details>
+
+          <!-- Q7 -->
+          <details class="group p-6 rounded-2xl bg-white border border-slate-200/80 [&_summary::-webkit-details-marker]:hidden shadow-sm">
+            <summary class="flex justify-between items-center font-bold text-slate-800 hover:text-indigo-600 transition-colors cursor-pointer list-none select-none">
+              <span>Q7. 講義で扱う生成AIツールは何ですか？</span>
+              <span class="transition group-open:rotate-180">
+                <svg fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="24" class="text-slate-400">
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              </span>
+            </summary>
+            <p class="text-slate-600 text-sm leading-relaxed mt-4 pt-4 border-t border-slate-100">
+              GoogleのGeminiを使用します。
+            </p>
+          </details>
+
+          <!-- Q8 -->
+          <details class="group p-6 rounded-2xl bg-white border border-slate-200/80 [&_summary::-webkit-details-marker]:hidden shadow-sm">
+            <summary class="flex justify-between items-center font-bold text-slate-800 hover:text-indigo-600 transition-colors cursor-pointer list-none select-none">
+              <span>Q8. 有料版（ChatGPT Plusなど）の契約は必須ですか？</span>
+              <span class="transition group-open:rotate-180">
+                <svg fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="24" class="text-slate-400">
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              </span>
+            </summary>
+            <p class="text-slate-600 text-sm leading-relaxed mt-4 pt-4 border-t border-slate-100">
+              いいえ、必須ではありません。無料版でも十分に学習・活用いただけます。有料版のメリットについても講義内で解説しますので、必要性を感じてから契約いただく形で問題ありません。
+            </p>
+          </details>
+
+          <!-- Q9 -->
+          <details class="group p-6 rounded-2xl bg-white border border-slate-200/80 [&_summary::-webkit-details-marker]:hidden shadow-sm">
+            <summary class="flex justify-between items-center font-bold text-slate-800 hover:text-indigo-600 transition-colors cursor-pointer list-none select-none">
+              <span>Q9. レッスンはどうやって行われますか？</span>
+              <span class="transition group-open:rotate-180">
+                <svg fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="24" class="text-slate-400">
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              </span>
+            </summary>
+            <p class="text-slate-600 text-sm leading-relaxed mt-4 pt-4 border-t border-slate-100">
+              オンラインビデオ通話ツールの「Google Meet」を使用して行います。事前にURLをお送りしますので、クリックするだけでパソコンやスマートフォンから簡単にご参加いただけます。
+            </p>
+          </details>
+
+          <!-- Q10 -->
+          <details class="group p-6 rounded-2xl bg-white border border-slate-200/80 [&_summary::-webkit-details-marker]:hidden shadow-sm">
+            <summary class="flex justify-between items-center font-bold text-slate-800 hover:text-indigo-600 transition-colors cursor-pointer list-none select-none">
+              <span>Q10. 急用で受講できなくなった場合、振替やアーカイブ視聴はありますか？</span>
+              <span class="transition group-open:rotate-180">
+                <svg fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="24" class="text-slate-400">
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              </span>
+            </summary>
+            <p class="text-slate-600 text-sm leading-relaxed mt-4 pt-4 border-t border-slate-100">
+              火曜日コースはすべての回でアーカイブ動画を配信しますので、見逃しても後から学習可能です。マンツーマンの初心者コースおよび個別コースは、レッスン24時間前までのご連絡で別日程への振り替えが可能です。
+            </p>
+          </details>
+
+          <!-- Q11 -->
+          <details class="group p-6 rounded-2xl bg-white border border-slate-200/80 [&_summary::-webkit-details-marker]:hidden shadow-sm">
+            <summary class="flex justify-between items-center font-bold text-slate-800 hover:text-indigo-600 transition-colors cursor-pointer list-none select-none">
+              <span>Q11. 支払い方法には何がありますか？</span>
+              <span class="transition group-open:rotate-180">
+                <svg fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="24" class="text-slate-400">
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              </span>
+            </summary>
+            <p class="text-slate-600 text-sm leading-relaxed mt-4 pt-4 border-t border-slate-100">
+              火曜日コースはPayPalのみとなりますが、初心者コースと個別コースについてはPayPay（ペイペイ）でのお支払いも可能です。
+            </p>
+          </details>
+
+          <!-- Q12 -->
+          <details class="group p-6 rounded-2xl bg-white border border-slate-200/80 [&_summary::-webkit-details-marker]:hidden shadow-sm">
+            <summary class="flex justify-between items-center font-bold text-slate-800 hover:text-indigo-600 transition-colors cursor-pointer list-none select-none">
+              <span>Q12. 初心者コース（全3回）は分割払いが可能ですか？</span>
+              <span class="transition group-open:rotate-180">
+                <svg fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="24" class="text-slate-400">
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              </span>
+            </summary>
+            <p class="text-slate-600 text-sm leading-relaxed mt-4 pt-4 border-t border-slate-100">
+              恐れ入りますが、初心者コースは一括でのお支払いのみとなっております。分割での決済をご希望の場合は、決済側のカード会社へ直接分割払いの申請をお願いします。
+            </p>
+          </details>
+
+          <!-- Q13 -->
+          <details class="group p-6 rounded-2xl bg-white border border-slate-200/80 [&_summary::-webkit-details-marker]:hidden shadow-sm">
+            <summary class="flex justify-between items-center font-bold text-slate-800 hover:text-indigo-600 transition-colors cursor-pointer list-none select-none">
+              <span>Q13. 火曜日コース（月額サブスク）の解約はいつでもできますか？解約手数料などはかかりますか？</span>
+              <span class="transition group-open:rotate-180">
+                <svg fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="24" class="text-slate-400">
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              </span>
+            </summary>
+            <p class="text-slate-600 text-sm leading-relaxed mt-4 pt-4 border-t border-slate-100">
+              はい、いつでも自由に解約いただけます。違約金や解約手数料などは一切発生いたしません。決済プラットフォーム（PayPal等）から簡単に定期購読を解除できます。
+            </p>
+          </details>
+
+          <!-- Q14 -->
+          <details class="group p-6 rounded-2xl bg-white border border-slate-200/80 [&_summary::-webkit-details-marker]:hidden shadow-sm">
+            <summary class="flex justify-between items-center font-bold text-slate-800 hover:text-indigo-600 transition-colors cursor-pointer list-none select-none">
+              <span>Q14. 領収書や請求書は発行してもらえますか？</span>
+              <span class="transition group-open:rotate-180">
+                <svg fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="24" class="text-slate-400">
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              </span>
+            </summary>
+            <p class="text-slate-600 text-sm leading-relaxed mt-4 pt-4 border-t border-slate-100">
+              はい、PDF形式での領収書・請求書の発行が可能です。お支払い完了後、お気軽にお問い合わせメールまたは事務局の宛て先まで、希望される宛名と但し書きをご連絡ください。なお、当スクールはインボイス（適格請求書）制度には対応しておりません。
+            </p>
+          </details>
+
+          <!-- Q15 -->
+          <details class="group p-6 rounded-2xl bg-white border border-slate-200/80 [&_summary::-webkit-details-marker]:hidden shadow-sm">
+            <summary class="flex justify-between items-center font-bold text-slate-800 hover:text-indigo-600 transition-colors cursor-pointer list-none select-none">
+              <span>Q15. 受講にあたって年齢制限はありますか？シニアでも受講できますか？</span>
+              <span class="transition group-open:rotate-180">
+                <svg fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="24" class="text-slate-400">
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              </span>
+            </summary>
+            <p class="text-slate-600 text-sm leading-relaxed mt-4 pt-4 border-t border-slate-100">
+              年齢制限はございません。当教室には10代から70代の方まで幅広い年齢層の方が在籍しており、シニアの方もご自身のペースで楽しく学ばれています。
+            </p>
+          </details>
+
+          <!-- Q16 -->
+          <details class="group p-6 rounded-2xl bg-white border border-slate-200/80 [&_summary::-webkit-details-marker]:hidden shadow-sm">
+            <summary class="flex justify-between items-center font-bold text-slate-800 hover:text-indigo-600 transition-colors cursor-pointer list-none select-none">
+              <span>Q16. グループで受講は可能ですか？</span>
+              <span class="transition group-open:rotate-180">
+                <svg fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="24" class="text-slate-400">
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              </span>
+            </summary>
+            <p class="text-slate-600 text-sm leading-relaxed mt-4 pt-4 border-t border-slate-100">
+              はい、グループでの受講も可能です。また、企業様への導入研修などをご希望の場合にはお問い合わせください。
+            </p>
+          </details>
+        </div>
+
+        <!-- お問い合わせボタン（強化版CTAバナー） -->
+        <div class="mt-16 p-8 md:p-12 rounded-3xl bg-gradient-to-br from-indigo-900 via-slate-900 to-slate-950 text-white relative overflow-hidden text-center shadow-lg">
+          <div class="absolute top-0 right-0 w-80 h-80 bg-indigo-500/10 rounded-full filter blur-3xl"></div>
+          <div class="absolute -bottom-20 -left-20 w-60 h-60 bg-cyan-500/10 rounded-full filter blur-2xl"></div>
+          
+          <div class="relative z-10 max-w-xl mx-auto">
+            <h3 class="text-2xl font-bold mb-3">グループ受講・企業研修のご相談はこちら</h3>
+            <p class="text-slate-300 text-sm mb-8 leading-relaxed font-normal">
+              複数名でのご受講や、特定の業務に特化したオリジナルカリキュラム、法人向けの研修実施なども柔軟に対応いたします。料金や開催形式のお見積りなど、お気軽にお問い合わせください。
+            </p>
+            <a href="mailto:aistep.school@gmail.com?subject=%E3%80%90%E3%81%8A%E5%95%8F%E3%81%84%E5%90%88%E3%82%8F%E3%81%9B%E3%80%91%E3%82%B0%E3%83%AB%E3%83%BC%E3%83%97%E5%8F%97%E8%AC%9B%E3%83%BB%E4%BC%81%E6%A5%AF%E7%A0%94%E4%BF%AE%E7%AD%89%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6" 
+               class="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-gradient-to-r from-indigo-600 via-purple-600 to-cyan-600 text-white font-bold shadow-lg shadow-indigo-600/20 hover:opacity-90 transition-opacity">
+              <svg fill="none" height="20" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="20" class="text-white">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                <polyline points="22,6 12,13 2,6"></polyline>
+              </svg>
+              お問い合わせメールを送る
+            </a>
+            <p class="text-[11px] text-slate-400 mt-4 font-normal">宛先: aistep.school@gmail.com</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- フッター -->
+  <footer class="border-t border-slate-200 bg-white py-12 text-center text-slate-500 text-sm shadow-inner">
+    <div class="max-w-6xl mx-auto px-4">
+      <p>&copy; {new Date().getFullYear()} 生成AIStepSchool. Built with Astro & Tailwind CSS.</p>
+    </div>
+  </footer>
+</body>
+</html>
