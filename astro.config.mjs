@@ -8,7 +8,13 @@ const siteUrl = process.env.SITE_URL || 'https://example.com';
 
 // サブディレクトリ配下（例: /blog）で配信するためのベースパス
 // 環境変数 BASE_PATH から取得し、デフォルトはルート（/）
-const basePath = process.env.BASE_PATH || '/';
+let basePath = process.env.BASE_PATH || '/';
+if (!basePath.startsWith('/')) {
+  basePath = '/' + basePath;
+}
+if (!basePath.endsWith('/')) {
+  basePath = basePath + '/';
+}
 
 // 環境変数によって出力先ディレクトリ（outDir）を調整する仕組み（必要に応じてカスタマイズ可能）
 const outDir = process.env.OUT_DIR || 'dist';
