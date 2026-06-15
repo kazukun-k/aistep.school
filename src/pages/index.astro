@@ -203,7 +203,7 @@ const canonicalURL = new URL(baseUrl, Astro.site || 'https://example.com').toStr
             <article class="bg-white border border-slate-200 rounded-2xl overflow-hidden hover:border-indigo-300 hover:shadow-md transition-all flex flex-col group shadow-sm">
               <a href={`${baseUrl}articles/${article.slug}`} class="block aspect-video overflow-hidden">
                 <img 
-                  src={article.data.eyecatch} 
+                  src={`${baseUrl}${article.data.eyecatch.replace(/^\//, '')}`} 
                   alt={article.data.title}
                   class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                   loading="lazy"

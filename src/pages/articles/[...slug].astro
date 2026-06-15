@@ -37,7 +37,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site || 'https://example.
   <meta property="og:description" content={description || `${title}の詳細ページ。`} />
   <meta property="og:type" content="article" />
   <meta property="og:url" content={canonicalURL} />
-  <meta property="og:image" content={new URL(eyecatch, Astro.site || 'https://example.com').toString()} />
+  <meta property="og:image" content={new URL(`${baseUrl}${eyecatch.replace(/^\//, '')}`, Astro.site || 'https://example.com').toString()} />
   <meta property="og:site_name" content="生成AIStepSchool" />
   <meta name="twitter:card" content="summary_large_image" />
   <!-- Google Fonts -->
@@ -95,7 +95,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site || 'https://example.
       <!-- アイキャッチ画像 -->
       <div class="aspect-video w-full rounded-2xl overflow-hidden border border-slate-200 shadow-sm">
         <img 
-          src={eyecatch} 
+          src={`${baseUrl}${eyecatch.replace(/^\//, '')}`} 
           alt={title}
           class="w-full h-full object-cover"
         />

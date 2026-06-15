@@ -1,10 +1,10 @@
 ---
 const baseUrl = import.meta.env.BASE_URL;
 
-// 環境変数から決済リンクを取得（未設定時のフォールバックとしてサンクスページ等に設定）
-const payBeginner = import.meta.env.PUBLIC_PAY_BEGINNER || `${baseUrl}course/thanks?plan=beginner`;
-const payTuesday = import.meta.env.PUBLIC_PAY_TUESDAY || `${baseUrl}course/thanks?plan=tuesday`;
-const payIndividual = import.meta.env.PUBLIC_PAY_INDIVIDUAL || `${baseUrl}course/thanks?plan=individual`;
+// 環境変数から決済リンクを取得（未設定時のフォールバックとして実際のGoogleフォームURLを設定）
+const payBeginner = import.meta.env.PUBLIC_PAY_BEGINNER || 'https://forms.gle/JJrR2ppZ5xfUf2vz8';
+const payTuesday = import.meta.env.PUBLIC_PAY_TUESDAY || 'https://forms.gle/if28YWFMBq9XmAJt9';
+const payIndividual = import.meta.env.PUBLIC_PAY_INDIVIDUAL || 'https://forms.gle/6Z7GiQSCXWqcCcuL8';
 
 // canonical URL の生成
 const canonicalURL = new URL(`${baseUrl}course`, Astro.site || 'https://example.com').toString();

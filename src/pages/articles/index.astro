@@ -91,7 +91,7 @@ const canonicalURL = new URL(`${baseUrl}articles`, Astro.site || 'https://exampl
           >
             <a href={`${baseUrl}articles/${article.slug}`} class="block aspect-video overflow-hidden">
               <img 
-                src={article.data.eyecatch} 
+                src={`${baseUrl}${article.data.eyecatch.replace(/^\//, '')}`} 
                 alt={article.data.title}
                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                 loading="lazy"
