@@ -32,7 +32,7 @@ async function main() {
 title: "週刊生成AIニュースまとめ（${yyyy}年${mm}月${dd}日版）"
 description: "今週（${startDateStr}〜${endDateStr}）に発表された生成AIに関する主要ニュースを、初心者向けに要約してお届けします。"
 category: "生成AI初心者"
-publishDate: "${dateStr}T08:00:00+09:00"
+publishDate: "${dateStr}T07:00:00+09:00"
 eyecatch: "/images/weekly-news-eyecatch.png"
 isPublished: true
 ---
@@ -112,7 +112,7 @@ Google検索ツールを使って、過去1週間（${startDateStr}〜${endDateS
 title: "${title}"
 description: "${description}"
 category: "生成AI初心者"
-publishDate: "${dateStr}T08:00:00+09:00"
+publishDate: "${dateStr}T07:00:00+09:00"
 eyecatch: "/images/weekly-news-eyecatch.png"
 isPublished: true
 ---
