@@ -2,8 +2,9 @@
 import { getCollection } from 'astro:content';
 
 // 公開されているすべての記事を取得
+const currentDate = new Date();
 const articles = await getCollection('articles', ({ data }) => {
-  return data.isPublished;
+  return data.isPublished && data.publishDate <= currentDate;
 });
 
 // 日付の降順（最新順）にソート
