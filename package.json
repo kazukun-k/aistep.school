@@ -21,5 +21,8 @@
   },
   "devDependencies": {
     "typescript": "^5.4.5"
+  },
+  "optionalDependencies": {
+    "@napi-rs/canvas-linux-x64-gnu": "^0.1.53"
   }
 }

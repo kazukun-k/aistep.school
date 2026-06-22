@@ -25,7 +25,9 @@ jobs:
           cache: "npm"
 
       - name: Install dependencies
-        run: npm ci
+        run: |
+          npm ci
+          npm install @napi-rs/canvas-linux-x64-gnu
 
       - name: Run news generation script
         run: node scripts/generate-weekly-news.cjs
