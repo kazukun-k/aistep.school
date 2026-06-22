@@ -1,9 +1,11 @@
-name: Generate Weekly AI News Summary
+name: Generate Daily AI Article
 
 on:
-  # Run at 6:00 AM JST on Friday (21:00 UTC on Thursday)
+  # Run at 6:00 AM JST (21:00 UTC on previous day)
+  # Schedule: Sunday, Monday, Tuesday, Wednesday, Friday, Saturday at 21:00 UTC
+  # (Corresponds to Monday, Tuesday, Wednesday, Thursday, Saturday, Sunday mornings JST)
   schedule:
-    - cron: '0 21 * * 4'
+    - cron: '0 21 * * 0,1,2,3,5,6'
   # Allow manual trigger from the Actions tab
   workflow_dispatch:
 
@@ -27,8 +29,8 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Run news generation script
-        run: node scripts/generate-weekly-news.cjs
+      - name: Run daily article generation script
+        run: node scripts/generate-daily-article.cjs
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
 
@@ -38,7 +40,7 @@ jobs:
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git add src/content/articles/ public/images/
           if ! git diff --cached --quiet; then
-            git commit -m "auto: publish weekly AI news summary"
+            git commit -m "auto: publish daily AI article"
             git push origin main
           else
             echo "No new article generated or changes detected."

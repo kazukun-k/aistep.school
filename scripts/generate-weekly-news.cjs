@@ -1,6 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const { GoogleGenerativeAI } = require("@google/generative-ai");
+const { generateEyecatch } = require('./utils/image-generator.cjs');
 
 async function main() {
   const apiKey = process.env.GEMINI_API_KEY;
@@ -33,7 +34,7 @@ title: "週刊生成AIニュースまとめ（${yyyy}年${mm}月${dd}日版）"
 description: "今週（${startDateStr}〜${endDateStr}）に発表された生成AIに関する主要ニュースを、初心者向けに要約してお届けします。"
 category: "生成AI初心者"
 publishDate: "${dateStr}T07:00:00+09:00"
-eyecatch: "/images/weekly-news-eyecatch.png"
+eyecatch: "/images/weekly-ai-news-${dateStr}.png"
 isPublished: true
 ---
 
@@ -54,6 +55,14 @@ AIの自動投稿やスケジューリング機能により、ブログの更新
     const outputFilePath = path.join(outputDir, `weekly-ai-news-${dateStr}.md`);
     fs.writeFileSync(outputFilePath, mockContent, 'utf8');
     console.log(`[MOCK] Successfully generated article: ${outputFilePath}`);
+
+    // Generate mock image
+    try {
+      const imgPath = path.join(__dirname, '..', 'public', 'images', `weekly-ai-news-${dateStr}.png`);
+      await generateEyecatch('生成AI初心者', 'テスト用AIニュース\n週刊まとめ版！', imgPath);
+    } catch (err) {
+      console.error("Failed to generate mock eyecatch image:", err);
+    }
     return;
   }
 
@@ -82,6 +91,9 @@ Google検索ツールを使って、過去1週間（${startDateStr}〜${endDateS
 3. 全体のまとめ（これからの展望や、初心者が今すぐ試せることなど）
 
 【重要ルール】
+- 記事のテキスト本文を出力する前に、記事のアイキャッチ画像（白いカード付き）に記載する、タイトルを要約した短いキャッチコピー（サブ見出しとメイン見出しの2行）を、必ず以下の形式で一番最初の行に出力してください。
+  [EYECATCH_TEXT: 1行目の短い見出し\\n2行目の大きなメインタイトル]
+  例：[EYECATCH_TEXT: 今週の生成AI\\n重大ニュースまとめ！]
 - 初心者向けに、専門用語（マルチモーダル、API、LLMなど）を適宜分かりやすくかみ砕いて説明してください。
 - 出力は純粋なマークダウンテキストのみとしてください。冒頭や末尾に「承知しました」「この記事はいかがでしょうか」といった不要な応答テキストは含めないでください。
 - マークダウンをコードブロック（\`\`\`markdown ... \`\`\`）で囲まないでください。
@@ -91,10 +103,9 @@ Google検索ツールを使って、過去1週間（${startDateStr}〜${endDateS
   try {
     console.log("Generating weekly AI news summary via Gemini API...");
     const result = await model.generateContent(prompt);
-    let bodyText = result.response.text();
+    let bodyText = result.response.text().trim();
 
     // Clean up response if the model accidentally wrapped it in code block
-    bodyText = bodyText.trim();
     if (bodyText.startsWith("```markdown")) {
       bodyText = bodyText.substring(11).trim();
     } else if (bodyText.startsWith("```")) {
@@ -104,8 +115,17 @@ Google検索ツールを使って、過去1週間（${startDateStr}〜${endDateS
       bodyText = bodyText.substring(0, bodyText.length - 3).trim();
     }
 
+    // Extract catchphrase for image generation
+    let catchphrase = "今週の生成AI\n重大ニュース！";
+    const eyecatchMatch = bodyText.match(/^\[EYECATCH_TEXT:\s*([\s\S]+?)\]/);
+    if (eyecatchMatch) {
+      catchphrase = eyecatchMatch[1].trim();
+      bodyText = bodyText.replace(/^\[EYECATCH_TEXT:\s*[\s\S]+?\]/, '').trim();
+    }
+
     const title = `週刊生成AIニュースまとめ（${yyyy}年${mm}月${dd}日版）`;
     const description = `今週（${startDateStr}〜${endDateStr}）に発表された生成AIに関する主要ニュースを、初心者向けに要約してお届けします。`;
+    const eyecatchFileName = `weekly-ai-news-${dateStr}.png`;
 
     // Construct the full Markdown content with Astro frontmatter
     const fileContent = `---
@@ -113,7 +133,7 @@ title: "${title}"
 description: "${description}"
 category: "生成AI初心者"
 publishDate: "${dateStr}T07:00:00+09:00"
-eyecatch: "/images/weekly-news-eyecatch.png"
+eyecatch: "/images/${eyecatchFileName}"
 isPublished: true
 ---
 
@@ -125,10 +145,20 @@ ${bodyText}
       fs.mkdirSync(outputDir, { recursive: true });
     }
 
+    // 1. Write the Markdown article
     const outputFilePath = path.join(outputDir, `weekly-ai-news-${dateStr}.md`);
     fs.writeFileSync(outputFilePath, fileContent, 'utf8');
-
     console.log(`Successfully generated article: ${outputFilePath}`);
+
+    // 2. Generate the unique eyecatch image
+    const imgOutputPath = path.join(__dirname, '..', 'public', 'images', eyecatchFileName);
+    try {
+      console.log(`Generating unique eyecatch image with text: "${catchphrase.replace('\n', ' ')}"`);
+      await generateEyecatch("生成AI初心者", catchphrase, imgOutputPath);
+    } catch (imageError) {
+      console.error("Failed to generate custom eyecatch image, fallback to default:", imageError);
+    }
+
   } catch (error) {
     console.error("Error generating weekly news article:", error);
     process.exit(1);
