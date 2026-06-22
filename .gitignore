@@ -19,6 +19,3 @@ pnpm-debug.log*
 # system files
 .DS_Store
 Thumbs.db
-
-# generated resources (fonts and backgrounds)
-scripts/resources/

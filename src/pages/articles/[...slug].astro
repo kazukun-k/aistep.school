@@ -3,10 +3,9 @@ import { getCollection } from 'astro:content';
 
 // 動的ルートのパス一覧を生成
 export async function getStaticPaths() {
-  const currentDate = new Date();
   const articles = await getCollection('articles', ({ data }) => {
-    // 公開中（isPublished: true）かつ未来日ではない記事のみをビルド対象とする
-    return data.isPublished && data.publishDate <= currentDate;
+    // 公開中（isPublished: true）の記事のみをビルド対象とする
+    return data.isPublished;
   });
 
   return articles.map((article) => ({

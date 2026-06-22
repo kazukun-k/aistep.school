@@ -4,9 +4,6 @@ on:
   # Trigger the workflow on push to the main branch
   push:
     branches: [ main ]
-  # Run at 7:00 AM and 7:00 PM JST (22:00 and 10:00 UTC)
-  schedule:
-    - cron: '0 10,22 * * *'
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
