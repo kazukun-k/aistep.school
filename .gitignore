@@ -11,6 +11,9 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 
+# generated resources (fonts and backgrounds)
+scripts/resources/fonts/
+
 # environment variables
 .env
 .env.production
