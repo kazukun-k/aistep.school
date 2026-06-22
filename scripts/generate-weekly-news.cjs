@@ -69,7 +69,7 @@ AIの自動投稿やスケジューリング機能により、ブログの更新
   const genAI = new GoogleGenerativeAI(apiKey);
   // Using gemini-1.5-flash as it supports search grounding
   const model = genAI.getGenerativeModel({
-    model: "gemini-1.5-flash",
+    model: "gemini-1.5-flash-latest",
     tools: [{ googleSearch: {} }],
   });
 
