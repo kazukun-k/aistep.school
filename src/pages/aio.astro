@@ -355,25 +355,59 @@ const canonicalURL = new URL(baseUrl, Astro.site || 'https://aistepschool.com').
                         </div>
 
                         <!-- SLIDE 7: Monthly Maintenance (ホームページ修整、保守料) -->
-                        <div id="slide-7" class="grid grid-cols-12 gap-8 h-full items-center hidden">
-                            <div class="col-span-7 space-y-5">
-                                <p class="text-lg text-emerald-400 font-medium">納品して終わりではありません。変化し続けるAI基準に寄り添い続けます</p>
-                                <ul class="text-sm space-y-2.5 text-slate-300 font-normal">
-                                    <li class="flex items-center gap-2">🔹 <strong>納品ホームページの即時修正</strong>（営業時間の急な変更や新メニュー追加など）</li>
-                                    <li class="flex items-center gap-2">🔹 <strong>AIのアルゴリズム変更対策</strong>（Googleや主要AIの評価基準アップデートへの自動追従）</li>
-                                    <li class="flex items-center gap-2">🔹 <strong>MEO・地図情報の定例パトロール更新</strong>（AIが活動中店舗と認識する状態を維持）</li>
-                                </ul>
-                            </div>
-                            <div class="col-span-5 bg-indigo-950/30 border border-indigo-500/20 rounded-2xl p-6 text-center space-y-4">
-                                <span class="bg-indigo-900/80 text-indigo-300 text-xs px-3 py-1 rounded-full font-bold">月額運用サポート料</span>
-                                <div class="text-3xl font-black text-emerald-400 font-sans">毎月 年商の 0.1 %</div>
-                                <div class="bg-slate-900/80 p-3 rounded-lg border border-slate-800">
-                                    <p class="text-[11px] text-slate-400 font-medium">現在の年商での月額費用：</p>
-                                    <p class="text-2xl font-extrabold text-white mt-1 plan3-price-display font-sans">5,000円 / 月</p>
-                                </div>
-                                <p class="text-[10px] text-slate-500 leading-relaxed text-left font-normal">
-                                    ※最低金額5,000円（税込）/月となります。売上が上がった時のみ、私たちの手数料も連動するフェアな一蓮托生（いちれんたくしょう）プランです。
+                        <div id="slide-7" class="grid grid-cols-12 gap-5 h-full items-center hidden">
+                            <div class="col-span-4 space-y-3">
+                                <p class="text-base text-emerald-400 font-medium leading-relaxed">変化し続けるAI基準に寄り添い、HPの「加点」と「保守」を行います</p>
+                                <p class="text-[11px] text-slate-400 leading-relaxed font-normal">
+                                    納品後のアルゴリズム変更への自動追従や、日々の店舗情報の更新をお任せいただくことで、AI推奨の優位性を半永久的に維持します。
                                 </p>
+                                <div class="bg-indigo-950/40 border border-indigo-900/30 p-3 rounded-xl">
+                                    <p class="text-[10px] text-emerald-300 leading-relaxed font-normal">
+                                        💡 <strong>おすすめ</strong><br />
+                                        両方を組み合わせた「フルサポートパック（月額：年間売上の0.3%）」での運用が最も効果が高く推奨されます。
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="col-span-8 grid grid-cols-2 gap-4">
+                                <!-- 保守（守り） -->
+                                <div class="bg-indigo-950/20 border border-slate-800 p-4 rounded-xl flex flex-col justify-between relative hover:border-slate-700 transition-all">
+                                    <div>
+                                        <div class="flex justify-between items-center mb-2">
+                                            <span class="text-xs font-bold text-slate-300">🛠️ 守りの対策</span>
+                                            <span class="bg-indigo-900/50 text-indigo-300 text-[10px] px-2 py-0.5 rounded font-bold">月額保守</span>
+                                        </div>
+                                        <h5 class="text-base font-bold text-white mb-1">月額保守パック</h5>
+                                        <div class="text-2xl font-black text-emerald-400 my-1 font-sans plan3-price-display">5,000円</div>
+                                        <p class="text-[10px] text-slate-400 mb-3 font-normal">年商の 0.1%（最低5,000円/月）</p>
+                                        <p class="text-[10px] text-slate-355 leading-relaxed font-normal mb-1"><strong>【スタンス】減点を防ぐ</strong></p>
+                                        <ul class="text-[10px] text-slate-400 space-y-1 font-normal">
+                                            <li>・営業時間やメニューの随時微修正</li>
+                                            <li>・AI評価基準アップデートへの自動追従</li>
+                                            <li>・サーバー保守、エラー管理、マップ更新</li>
+                                        </ul>
+                                    </div>
+                                    <div class="mt-4 pt-2 border-t border-slate-900 text-[9px] text-slate-500 font-normal">「お店の鍵を閉め看板を綺麗に保つ管理」</div>
+                                </div>
+
+                                <!-- コラム（攻め） -->
+                                <div class="bg-emerald-950/10 border border-emerald-900/20 p-4 rounded-xl flex flex-col justify-between relative hover:border-emerald-800 transition-all">
+                                    <div>
+                                        <div class="flex justify-between items-center mb-2">
+                                            <span class="text-xs font-bold text-emerald-400">✍️ 攻めの対策</span>
+                                            <span class="bg-emerald-905/40 text-emerald-300 text-[10px] px-2 py-0.5 rounded font-bold">集客強化</span>
+                                        </div>
+                                        <h5 class="text-base font-bold text-white mb-1">AI集客コラム運用パック</h5>
+                                        <div class="text-2xl font-black text-emerald-400 my-1 font-sans plan4-price-display">10,000円</div>
+                                        <p class="text-[10px] text-slate-400 mb-3 font-normal">年商の 0.2%（最低10,000円/月）</p>
+                                        <p class="text-[10px] text-emerald-355 leading-relaxed font-normal mb-1"><strong>【スタンス】加点を狙う</strong></p>
+                                        <ul class="text-[10px] text-slate-400 space-y-1 font-normal">
+                                            <li>・毎月4回のAIO特化型コラム執筆・投稿</li>
+                                            <li>・AIが拾いやすいキーワードの拡張</li>
+                                            <li>・地域トレンドに合わせた文脈設計</li>
+                                        </ul>
+                                    </div>
+                                    <div class="mt-4 pt-2 border-t border-emerald-900/20 text-[9px] text-emerald-500 font-normal">「お店の前で毎日新しいチラシを配る営業」</div>
+                                </div>
                             </div>
                         </div>
 
@@ -428,35 +462,60 @@ const canonicalURL = new URL(baseUrl, Astro.site || 'https://aistepschool.com').
                                     <span>2億円</span>
                                 </div>
                             </div>
-                            <div class="col-span-8 space-y-3">
-                                <div class="bg-indigo-950/40 p-4 rounded-xl border border-indigo-500/20 flex justify-between items-center">
+                            <div class="col-span-8 space-y-2 overflow-y-auto pr-1" style="max-height: 480px;">
+                                <!-- 既存HP最適化 -->
+                                <div class="bg-indigo-950/30 px-4 py-2 rounded-xl border border-indigo-500/10 flex justify-between items-center">
                                     <div>
-                                        <p class="text-xs text-indigo-400 font-bold">【既存HPあり】ホームページ最適化 (1%)</p>
-                                        <p class="text-xs text-slate-400 mt-1 font-normal">現在のHPをAI対策。洗い出し、追加・編集、納品までコミット。</p>
+                                        <p class="text-[11px] text-indigo-300 font-bold">【既存HPあり】ホームページ最適化 (1%)</p>
+                                        <p class="text-[9px] text-slate-400 font-normal">現在のHPをAIフレンドリーにリニューアル (AIO納品パック)</p>
                                     </div>
                                     <div class="text-right">
-                                        <p class="text-2xl font-extrabold text-emerald-400 plan1-price-display font-sans">30万円</p>
-                                        <p class="text-[10px] text-slate-500 font-normal">(年間総売上1%)</p>
+                                        <p class="text-lg font-black text-emerald-400 plan1-price-display font-sans">30万円</p>
+                                        <p class="text-[8px] text-slate-500 font-normal">(一括)</p>
                                     </div>
                                 </div>
-                                <div class="bg-indigo-950/40 p-4 rounded-xl border border-indigo-500/20 flex justify-between items-center">
+                                <!-- 新規HP制作 -->
+                                <div class="bg-indigo-950/30 px-4 py-2 rounded-xl border border-indigo-500/10 flex justify-between items-center">
                                     <div>
-                                        <p class="text-xs text-emerald-400 font-bold">【新規制作】AI特化型HP完全構築 (3%)</p>
-                                        <p class="text-xs text-slate-400 mt-1 font-normal">AIが一番好む構造で完璧な公式サイトをフルスクラッチで制作。</p>
+                                        <p class="text-[11px] text-emerald-400 font-bold">【新規HP制作】AI特化型HP完全構築 (3%)</p>
+                                        <p class="text-[9px] text-slate-400 font-normal">AI推奨規格に完全対応した独立路面店公式サイトの新規制作</p>
                                     </div>
                                     <div class="text-right">
-                                        <p class="text-2xl font-extrabold text-emerald-400 plan2-price-display font-sans">90万円</p>
-                                        <p class="text-[10px] text-slate-500 font-normal">(年間総売上3%)</p>
+                                        <p class="text-lg font-black text-emerald-400 plan2-price-display font-sans">90万円</p>
+                                        <p class="text-[8px] text-slate-500 font-normal">(一括)</p>
                                     </div>
                                 </div>
-                                <div class="bg-indigo-950/40 p-4 rounded-xl border border-indigo-500/20 flex justify-between items-center">
+                                <!-- 月額保守 -->
+                                <div class="bg-indigo-950/30 px-4 py-2 rounded-xl border border-indigo-500/10 flex justify-between items-center">
                                     <div>
-                                        <p class="text-xs text-slate-400 font-bold">【月額運用】ホームページ修正・保守 (0.1% / 月)</p>
-                                        <p class="text-xs text-slate-400 mt-1 font-normal">AIアップデート対応・HP情報の随時修正（最低金額5,000円）</p>
+                                        <p class="text-[11px] text-slate-300 font-bold">【月額運用】月額保守パック (0.1% / 月)</p>
+                                        <p class="text-[9px] text-slate-400 font-normal">情報の正しさを保ち、AI検索での減点を防ぐ (最低5,000円/月)</p>
                                     </div>
                                     <div class="text-right">
-                                        <p class="text-2xl font-extrabold text-white plan3-price-display font-sans">5,000円 / 月</p>
-                                        <p class="text-[10px] text-slate-500 font-normal">(年商0.1%の月割、最低5,000円保証)</p>
+                                        <p class="text-lg font-black text-white plan3-price-display font-sans">5,000円 / 月</p>
+                                        <p class="text-[8px] text-slate-500 font-normal">(毎月)</p>
+                                    </div>
+                                </div>
+                                <!-- コラム運用 -->
+                                <div class="bg-[#0f1d18] px-4 py-2 rounded-xl border border-emerald-900/20 flex justify-between items-center">
+                                    <div>
+                                        <p class="text-[11px] text-emerald-400 font-bold">【月額運用】AI集客コラム運用パック (0.2% / 月)</p>
+                                        <p class="text-[9px] text-slate-400 font-normal">月4回のAIO特化型コラム投稿でAIの加点を狙う (最低10,000円/月)</p>
+                                    </div>
+                                    <div class="text-right">
+                                        <p class="text-lg font-black text-emerald-400 plan4-price-display font-sans">10,000円 / 月</p>
+                                        <p class="text-[8px] text-slate-500 font-normal">(毎月)</p>
+                                    </div>
+                                </div>
+                                <!-- フルサポート -->
+                                <div class="bg-gradient-to-r from-emerald-950/20 to-teal-950/20 px-4 py-2 rounded-xl border border-emerald-500/20 flex justify-between items-center shadow-lg shadow-emerald-950/10">
+                                    <div>
+                                        <p class="text-[11px] text-emerald-300 font-black">【月額運用】フルサポートパック (0.3% / 月)</p>
+                                        <p class="text-[9px] text-slate-350 font-normal">保守＋コラム運用の最強プラン。相乗効果最大 (最低15,000円/月)</p>
+                                    </div>
+                                    <div class="text-right">
+                                        <p class="text-lg font-black text-emerald-300 plan5-price-display font-sans">15,000円 / 月</p>
+                                        <p class="text-[8px] text-slate-500 font-normal">(毎月・おすすめ)</p>
                                     </div>
                                 </div>
                             </div>
@@ -551,6 +610,14 @@ const canonicalURL = new URL(baseUrl, Astro.site || 'https://aistepschool.com').
         const calculated = (rev * 0.001) / 12;
         return Math.max(calculated, 5000); // 最低月額5,000円
     };
+    const calcPlan4Monthly = (rev) => {
+        const calculated = (rev * 0.002) / 12;
+        return Math.max(calculated, 10000); // 最低月額10,000円
+    };
+    const calcPlan5Monthly = (rev) => {
+        const calculated = (rev * 0.003) / 12;
+        return Math.max(calculated, 15000); // 最低月額15,000円
+    };
 
     // -------------------------------------------------------------
     // DOM要素の参照
@@ -599,14 +666,20 @@ const canonicalURL = new URL(baseUrl, Astro.site || 'https://aistepschool.com').
         const p1 = calcPlan1(revenue);
         const p2 = calcPlan2(revenue);
         const p3 = calcPlan3Monthly(revenue);
+        const p4 = calcPlan4Monthly(revenue);
+        const p5 = calcPlan5Monthly(revenue);
 
         const p1Formatted = formatYen(p1);
         const p2Formatted = formatYen(p2);
         const p3Formatted = formatYen(p3) + ' / 月';
+        const p4Formatted = formatYen(p4) + ' / 月';
+        const p5Formatted = formatYen(p5) + ' / 月';
 
         document.querySelectorAll('.plan1-price-display').forEach(el => el.innerText = p1Formatted);
         document.querySelectorAll('.plan2-price-display').forEach(el => el.innerText = p2Formatted);
         document.querySelectorAll('.plan3-price-display').forEach(el => el.innerText = p3Formatted);
+        document.querySelectorAll('.plan4-price-display').forEach(el => el.innerText = p4Formatted);
+        document.querySelectorAll('.plan5-price-display').forEach(el => el.innerText = p5Formatted);
     }
 
     // 各スライダーのイベント紐付け
