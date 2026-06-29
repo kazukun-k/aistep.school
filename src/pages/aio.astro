@@ -1,0 +1,762 @@
+---
+// src/pages/aio.astro
+const baseUrl = import.meta.env.BASE_URL;
+const canonicalURL = new URL(baseUrl, Astro.site || 'https://aistepschool.com').toString();
+---
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI店舗集客プラン (AIO) - 生成AIStepSchool</title>
+  <meta name="description" content="AI検索時代（ChatGPT、Gemini、SearchGPT）の店舗集客・MEO・ホームページ最適化（AIO）のご提案。成果コミット型の店舗支援プラン。">
+  <link rel="canonical" href={canonicalURL} />
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=Noto+Sans+JP:wght@400;550;700;900&family=Plus+Jakarta+Sans:wght@700;800&display=swap" rel="stylesheet">
+  <style>
+    .slide-body {
+        font-family: 'Noto Sans JP', 'Plus Jakarta Sans', sans-serif;
+    }
+    /* スライダーカスタム */
+    input[type="range"]::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background: #10b981;
+        cursor: pointer;
+        box-shadow: 0 0 8px rgba(16, 185, 129, 0.6);
+    }
+    /* 横スクロールバーの非表示 */
+    ::-webkit-scrollbar {
+        width: 6px;
+        height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+        background: #0f172a;
+    }
+    ::-webkit-scrollbar-thumb {
+        background: #334155;
+        border-radius: 3px;
+    }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col font-sans">
+  <header class="border-b border-slate-200 bg-white/95 backdrop-blur sticky top-0 z-50 shadow-sm">
+    <div class="max-w-6xl mx-auto px-4 py-4 flex flex-row justify-between items-center gap-4">
+      <a href={baseUrl} class="text-lg sm:text-xl font-black bg-gradient-to-r from-indigo-600 via-purple-600 to-cyan-600 bg-clip-text text-transparent tracking-tight shrink-0">
+        生成AIStepSchool
+      </a>
+      <nav class="flex gap-2 sm:gap-4 text-xs sm:text-sm font-semibold items-center overflow-x-auto no-scrollbar py-1">
+        <a href={baseUrl} class="hover:text-indigo-600 text-slate-600 transition-colors shrink-0">Home</a>
+        <a href={`${baseUrl}articles`} class="hover:text-indigo-600 text-slate-600 transition-colors shrink-0">Articles</a>
+        <a href={`${baseUrl}course`} class="hover:text-indigo-600 text-slate-600 transition-colors shrink-0">AI School</a>
+        <a href={`${baseUrl}aio`} class="px-3 py-1.5 sm:px-4 sm:py-1.5 rounded-full bg-gradient-to-r from-emerald-600 to-teal-500 text-white font-semibold text-[10px] sm:text-xs shadow-md shadow-emerald-600/10 hover:opacity-90 transition-opacity shrink-0">AI店舗集客</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- スライドメイン領域 -->
+  <div class="flex-grow w-full bg-[#0b0f19] text-[#f1f5f9] select-none flex flex-col justify-between overflow-x-hidden min-h-[calc(100vh-73px)] slide-body">
+    
+    <!-- 1. 常駐型ヘッダー -->
+    <header class="bg-[#060913]/90 backdrop-blur border-b border-slate-900 px-4 md:px-8 py-3 flex items-center justify-between z-40">
+        <div class="flex items-center gap-2">
+            <span class="bg-gradient-to-r from-emerald-500 to-teal-600 text-slate-950 text-[10px] md:text-xs px-2.5 py-1 rounded font-black tracking-wider shadow">AIO PROPOSAL</span>
+            <h2 class="text-xs md:text-sm font-bold text-slate-200 tracking-wide hidden sm:block">AIO店舗集客プラン提案書</h2>
+        </div>
+
+        <!-- 想定年商シミュレーターコントロール (デスクトップ版) -->
+        <div class="hidden lg:flex items-center gap-4 bg-slate-900/90 border border-slate-800 px-4 py-1.5 rounded-xl shadow-inner">
+            <!-- Calculator SVG -->
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-slate-400"><rect width="16" height="20" x="4" y="2" rx="2"/><line x1="8" x2="16" y1="6" y2="6"/><line x1="16" x2="16" y1="14" y2="18"/><path d="M16 10h.01"/><path d="M12 10h.01"/><path d="M8 10h.01"/><path d="M12 14h.01"/><path d="M8 14h.01"/><path d="M12 18h.01"/><path d="M8 18h.01"/></svg>
+            <div class="text-xs text-slate-400">
+                想定年商: 
+                <span id="desktop-revenue-text" class="text-emerald-400 font-black text-sm ml-2 mr-3 bg-slate-950 px-2 py-0.5 rounded">
+                    3,000万円
+                </span>
+            </div>
+            <input 
+                type="range" 
+                min="10000000" 
+                max="200000000" 
+                step="1000000"
+                value="30000000" 
+                id="desktop-revenue-slider"
+                class="w-32 h-1.5 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-emerald-500"
+            />
+        </div>
+
+        <!-- スマホ・タブレット用コンパクト価格表示 ＆ 設定展開ボタン -->
+        <div class="flex lg:hidden items-center gap-2">
+            <div class="bg-slate-950 border border-slate-800 px-3 py-1 rounded-lg text-right">
+                <span class="text-[10px] text-slate-500 block">設定年商</span>
+                <span id="mobile-compact-revenue-text" class="text-xs font-bold text-emerald-400">3,000万円</span>
+            </div>
+            <button 
+                id="mobile-settings-btn" 
+                class="p-2 bg-slate-900 hover:bg-slate-800 border border-slate-800 rounded-lg text-slate-300 transition-colors cursor-pointer"
+            >
+                <!-- Settings SVG -->
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.1a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
+            </button>
+        </div>
+    </header>
+
+    <!-- モバイル用：引き出し式シミュレーター設定パネル -->
+    <div id="mobile-settings-panel" class="hidden lg:hidden bg-slate-950/95 border-b border-slate-800 px-6 py-4 space-y-4 shadow-2xl z-30">
+        <div class="flex items-center justify-between">
+            <div class="flex items-center gap-2 text-sm font-bold text-slate-200">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-slate-450"><rect width="16" height="20" x="4" y="2" rx="2"/><line x1="8" x2="16" y1="6" y2="6"/><line x1="16" x2="16" y1="14" y2="18"/><path d="M16 10h.01"/><path d="M12 10h.01"/><path d="M8 10h.01"/><path d="M12 14h.01"/><path d="M8 14h.01"/><path d="M12 18h.01"/><path d="M8 18h.01"/></svg>
+                <span>想定年商をリアルタイム調整</span>
+            </div>
+            <span id="mobile-revenue-text" class="text-sm font-black text-emerald-400 bg-slate-900 px-3 py-1 rounded border border-slate-800">
+                3,000万円
+            </span>
+        </div>
+        <input 
+            type="range" 
+            min="10000000" 
+            max="200000000" 
+            step="1000000"
+            value="30000000" 
+            id="mobile-revenue-slider"
+            class="w-full h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-emerald-500"
+        />
+        <div class="flex justify-between text-[10px] text-slate-500">
+            <span>1,000万円</span>
+            <span>1億円</span>
+            <span>2億円</span>
+        </div>
+    </div>
+
+    <!-- 2. スライドメインエリア -->
+    <main class="flex-grow w-full flex items-center justify-center overflow-hidden p-2 sm:p-4">
+        <div class="w-full h-full flex items-center justify-center relative">
+            
+            <!-- 仮想デザイン領域 (1024x576) をスケールトランスフォーム -->
+            <div 
+                id="slide-container"
+                class="bg-[#070b14] border border-slate-900 rounded-2xl flex flex-col justify-between overflow-hidden shadow-2xl relative transition-all duration-300"
+                style="width: 1024px; height: 576px; flex-shrink: 0;"
+            >
+                <!-- スライドインナーコンテンツ -->
+                <div class="flex-grow p-10 flex flex-col justify-between h-full">
+                    
+                    <!-- 常駐ヘッダー（表紙以外） -->
+                    <div id="slide-header-bar" class="border-b border-slate-800/80 pb-4 mb-4 flex justify-between items-center hidden">
+                        <h3 class="text-2xl font-black text-white flex items-center gap-3">
+                            <span id="slide-number-badge" class="bg-emerald-500 text-slate-950 text-xs font-bold w-6 h-6 rounded-full flex items-center justify-center">1</span>
+                            <span id="slide-title-text">スライドタイトル</span>
+                        </h3>
+                        <span id="slide-progress-text" class="text-xs text-slate-500 tracking-widest font-mono uppercase">Page 1 of 10</span>
+                    </div>
+                    
+                    <div class="flex-grow relative h-full">
+                        
+                        <!-- SLIDE 0: 表紙 -->
+                        <div id="slide-0" class="flex flex-col justify-between h-full text-center py-4">
+                            <div class="text-emerald-400 font-bold tracking-widest text-sm uppercase">Paradigm Shift of Local Search 2026</div>
+                            <div class="my-auto space-y-6">
+                                <h1 class="text-5xl font-black tracking-tight leading-snug text-white">
+                                    AI検索時代を生き抜く、<br />
+                                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-indigo-400">新しい店舗集客</span>のご提案
+                                </h1>
+                                <p class="text-xl text-slate-300 max-w-2xl mx-auto font-normal leading-relaxed">
+                                    スマホの「探し方」の激変に合わせた、<br />リスクを最小限に抑える「成果コミット型」店舗支援プラン
+                                </p>
+                            </div>
+                            <div class="text-xs text-slate-500 border-t border-slate-800/80 pt-4 flex justify-between">
+                                <span>※パソコン・スマホ完全自動フィット対応</span>
+                                <span>AIO（AI検索最適化）のご案内</span>
+                            </div>
+                        </div>
+
+                        <!-- SLIDE 1: スマホの「探し方」が激変しています -->
+                        <div id="slide-1" class="grid grid-cols-12 gap-8 h-full items-center hidden">
+                            <div class="col-span-7 space-y-6">
+                                <h3 class="text-2xl font-bold text-emerald-400">キーワードを並める検索から、AIへの相談へ</h3>
+                                <p class="text-slate-300 text-lg leading-relaxed font-normal">
+                                    これまでは「地域＋業種」の単語羅列で探されていましたが、今はユーザーがスマホに直接「シチュエーション」や「要望」を話しかけてお店を探す時代にシフトしています。
+                                </p>
+                                <div class="bg-slate-800/80 border border-slate-700/50 p-5 rounded-xl space-y-3 shadow-inner">
+                                    <p class="text-xs text-slate-400 font-bold tracking-wider">▼ 検索パターンの大変化</p>
+                                    <p class="text-sm text-slate-400"><span class="text-slate-500 line-through">昔の検索：新宿 美容室 子連れ</span></p>
+                                    <p class="text-lg text-white font-extrabold flex items-center gap-2">
+                                        <span class="text-emerald-400 font-black">AI検索：</span>「近くで子どもが落ち着ける、駐車場のある美容室を教えて」
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="col-span-5 bg-indigo-950/40 border border-indigo-900/30 rounded-2xl p-6 text-center space-y-4">
+                                <div class="text-6xl font-black text-emerald-400">約 60%</div>
+                                <div class="text-lg font-bold text-white">ゼロクリック検索の衝撃</div>
+                                <p class="text-xs text-slate-400 leading-relaxed text-left font-normal">
+                                    AIが検索画面で最善のお店を1つ教えて解決してしまうため、ユーザーが店舗ホームページのリンクを一切クリックせずに検索を終わらせる割合が6割に迫っています。
+                                </p>
+                                <div class="text-[10px] text-slate-500 text-right">出典：Semrush社 AI検索行動分析データ</div>
+                            </div>
+                        </div>
+
+                        <!-- SLIDE 2: AIはあなたのお店を「どこ」で判断しているか？ -->
+                        <div id="slide-2" class="grid grid-cols-12 gap-6 h-full items-center hidden">
+                            <div class="col-span-5 bg-slate-800/40 border border-slate-700/30 p-6 rounded-2xl space-y-4">
+                                <div class="text-xs font-bold text-indigo-400 tracking-wider">AIアルゴリズム分析の最新データ</div>
+                                <h4 class="text-xl font-bold text-white leading-snug">
+                                    マップ登録（MEO）だけでは、もうAI上位に表示されません。
+                                </h4>
+                                <p class="text-xs text-slate-400 leading-relaxed font-normal">
+                                    これまでのマップ対策（Googleビジネスプロフィールの登録のみ）がAI推薦に与える影響度はわずか12%に暴落しました。AIは店舗の真実性を探すため、より信頼性の高い情報を探りに行きます。
+                                </p>
+                                <div class="text-[10px] text-slate-500 text-right">出典：Whitespark社 2026年最新ランキング要因レポート</div>
+                            </div>
+                            <div class="col-span-7 grid grid-cols-2 gap-4">
+                                <div class="bg-gradient-to-br from-indigo-900/30 to-indigo-950/50 border border-indigo-500/20 p-5 rounded-xl flex flex-col justify-between">
+                                    <div class="text-xs font-bold text-indigo-400 uppercase">最重要ソース</div>
+                                    <h5 class="text-lg font-bold text-white my-1">① ホームページの記述内容</h5>
+                                    <div class="text-4xl font-extrabold text-indigo-400 my-2 font-sans">24%</div>
+                                    <p class="text-[11px] text-slate-400 leading-relaxed font-normal">AIが最も信用するのは、店舗公式サイト内の「HTML構造」と「具体的な文章」です。</p>
+                                </div>
+                                <div class="bg-gradient-to-br from-emerald-900/20 to-emerald-950/40 border border-emerald-500/20 p-5 rounded-xl flex flex-col justify-between">
+                                    <div class="text-xs font-bold text-emerald-400 uppercase">信頼の証明</div>
+                                    <h5 class="text-lg font-bold text-white my-1">② お客様の口コミ・評価</h5>
+                                    <div class="text-4xl font-extrabold text-emerald-400 my-2 font-sans">16%</div>
+                                    <p class="text-[11px] text-slate-400 leading-relaxed font-normal">直近3ヶ月以内の具体的な「キーワード（文脈）」を含んだ口コミがAIを動かします。</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- SLIDE 3: ポータルサイトと自社ホームページの違い -->
+                        <div id="slide-3" class="grid grid-cols-2 gap-8 h-full items-center hidden">
+                            <div class="bg-slate-800/40 border border-slate-700/30 rounded-2xl p-6 space-y-4">
+                                <div class="flex items-center gap-2">
+                                    <span class="bg-slate-700 text-white text-xs px-2.5 py-1 rounded-full font-bold">モール型</span>
+                                    <h4 class="text-lg font-bold text-white">ビューティーパーク・予約サイト等</h4>
+                                </div>
+                                <p class="text-3xl font-black text-slate-400">「ショッピングモールの1枠」</p>
+                                <p class="text-sm text-slate-300 leading-relaxed font-normal">
+                                    モールが決めた共通のフォーマット、共通のサイズの枠の中に、お店の情報を当てはめている状態。AI向けに裏側の「HTML構造のプチ改善」を自分たちで行うことは不可能です。
+                                </p>
+                            </div>
+                            <div class="bg-indigo-950/30 border border-indigo-500/20 rounded-2xl p-6 space-y-4">
+                                <div class="flex items-center gap-2">
+                                    <span class="bg-emerald-500 text-slate-950 text-xs px-2.5 py-1 rounded-full font-bold">路面店型</span>
+                                    <h4 class="text-lg font-bold text-emerald-400">AIに最適化した自社ホームページ</h4>
+                                </div>
+                                <p class="text-3xl font-black text-emerald-400">「独立した自分だけの路面店」</p>
+                                <p class="text-sm text-slate-300 leading-relaxed font-normal">
+                                    看板から店内のこだわり、AIが一番読み取りやすい「1対1のFAQ（よくある質問）」をすべて自分たちの自由自在に配置可能。AIに「地域でおすすめの店舗」として最速で認識されます。
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- SLIDE 4: 成果に連動する、新しい店舗支援料金プラン -->
+                        <div id="slide-4" class="grid grid-cols-12 gap-6 h-full items-center hidden">
+                            <div class="col-span-5 space-y-4 pr-4">
+                                <h3 class="text-2xl font-bold text-white">お店の規模に寄り添うパートナーシップ</h3>
+                                <p class="text-sm text-slate-300 leading-relaxed font-normal">
+                                    一方的な高額固定費はいただきません。現在のお店の実績（年商）に基づいた「パーセンテージ」で決定される、フェアで一切のリスクのない成果コミット型のプランです。
+                                </p>
+                                <div class="bg-indigo-950/50 border border-indigo-900/30 p-4 rounded-xl space-y-2">
+                                    <p class="text-xs text-slate-400 font-bold">💡 なぜこの価格設定ができるのか？</p>
+                                    <p class="text-xs text-indigo-300 leading-relaxed font-normal">
+                                        ポータルサイトに毎月高い広告枠を買い続けるのではなく、お店自身のサイトをAI検索（AIO）に適応させることで、中長期的に集客コストを極限まで削減できるからです。
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="col-span-7 grid grid-cols-2 gap-4">
+                                <div class="bg-slate-800/60 p-5 rounded-xl border border-slate-700/50 flex flex-col justify-between">
+                                    <div class="text-xs font-bold text-indigo-400">既存ホームページあり</div>
+                                    <h4 class="text-base font-bold text-white">ホームページ最適化プラン</h4>
+                                    <div class="text-3xl font-black text-emerald-400 my-2 font-sans">年間売上の 1%</div>
+                                    <p class="text-[11px] text-slate-400 leading-relaxed font-normal">現在のHPの弱点を洗い出し、AIが認識できるテキストと裏側構造へ最適化。</p>
+                                </div>
+                                <div class="bg-slate-800/60 p-5 rounded-xl border border-slate-700/50 flex flex-col justify-between">
+                                    <div class="text-xs font-bold text-emerald-400">ホームページなし</div>
+                                    <h4 class="text-base font-bold text-white">AI特化型HP完全構築プラン</h4>
+                                    <div class="text-3xl font-black text-emerald-400 my-2 font-sans">年間売上の 3%</div>
+                                    <p class="text-[11px] text-slate-400 leading-relaxed font-normal">AI検索から最優先でおすすめされるための、受け皿となる公式サイトを新規制作。</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- SLIDE 5: Option 1 (既存HP AIO納品パック) -->
+                        <div id="slide-5" class="grid grid-cols-12 gap-8 h-full items-center hidden">
+                            <div class="col-span-7 space-y-5">
+                                <p class="text-lg text-emerald-400 font-medium">すでにお持ちのホームページを、AIが好む最強のカルテにリニューナル</p>
+                                <div class="space-y-3">
+                                    <div class="flex items-start gap-3">
+                                        <span class="bg-indigo-900/50 text-indigo-400 text-xs w-6 h-6 rounded-full flex items-center justify-center font-bold mt-1">1</span>
+                                        <div>
+                                            <p class="font-bold text-white text-sm">ホームページAI健康診断（エゴグラム診断）</p>
+                                            <p class="text-xs text-slate-400 font-normal">現在AIからどのように見えているかを一目でグラフ可視化します。</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-start gap-3">
+                                        <span class="bg-indigo-900/50 text-indigo-400 text-xs w-6 h-6 rounded-full flex items-center justify-center font-bold mt-1">2</span>
+                                        <div>
+                                            <p class="font-bold text-white text-sm">足りない項目・ボトルネックの洗い出し</p>
+                                            <p class="text-xs text-slate-400 font-normal">AIが読み取れない画像メニュー、Q&A対策の不足などを特定します。</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-start gap-3">
+                                        <span class="bg-indigo-900/50 text-indigo-400 text-xs w-6 h-6 rounded-full flex items-center justify-center font-bold mt-1">3</span>
+                                        <div>
+                                            <p class="font-bold text-white text-sm">不足項目・HTML構造の追加および編集作業</p>
+                                            <p class="text-xs text-slate-400 font-normal">画像の中の文字を全てAIが認識できるテキストへ書き換えます。</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-span-5 bg-indigo-950/30 border border-indigo-500/20 rounded-2xl p-6 text-center space-y-4">
+                                <span class="bg-indigo-900/80 text-indigo-300 text-xs px-3 py-1 rounded-full font-bold">納品パック価格</span>
+                                <div class="text-4xl font-black text-emerald-400 font-sans">年商の 1 %</div>
+                                <div class="bg-slate-900/80 p-3 rounded-lg border border-slate-800">
+                                    <p class="text-[11px] text-slate-400">現在の設定年商でシミュレート：</p>
+                                    <p class="text-2xl font-extrabold text-white mt-1 plan1-price-display font-sans">30万円</p>
+                                </div>
+                                <p class="text-[11px] text-slate-500 leading-relaxed text-left font-normal">
+                                    ※既存ホームページを活かすため、無駄に新規制作費を払う必要はありません。今のHPをAI推奨規格に生まれ変わらせます。
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- SLIDE 6: Option 2 (AI特化型HP完全構築パック) -->
+                        <div id="slide-6" class="grid grid-cols-12 gap-8 h-full items-center hidden">
+                            <div class="col-span-7 space-y-5">
+                                <p class="text-lg text-emerald-400 font-medium">ポータルサイトの枠（共通ブース）から、あなただけの「美しい路面店」へ</p>
+                                <p class="text-sm text-slate-300 leading-relaxed font-normal">
+                                    AI検索に100%最適化された、完全にオリジナルな店舗公式サイトを構築します。AIが地域で一番おすすめしたくなるデータ構造をすべて標準装備。
+                                </p>
+                                <div class="grid grid-cols-2 gap-4 text-xs text-slate-300">
+                                    <div class="bg-slate-800/40 p-3 rounded-lg border border-slate-700/20">
+                                        <p class="font-bold text-white mb-1">✔ AI専用構造化HTML</p>
+                                        <p class="text-slate-400 text-[11px] font-normal">AIロボットが最も深く正確にお店のこだわりを読み込めます。</p>
+                                    </div>
+                                    <div class="bg-slate-800/40 p-3 rounded-lg border border-slate-700/20">
+                                        <p class="font-bold text-white mb-1">✔ 1対1FAQ（よくある質問）</p>
+                                        <p class="text-slate-400 text-[11px] font-normal">ユーザーの具体的なシチュエーション相談にマッチする文章を構築。</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-span-5 bg-indigo-950/30 border border-indigo-500/20 rounded-2xl p-6 text-center space-y-4">
+                                <span class="bg-indigo-900/80 text-indigo-300 text-xs px-3 py-1 rounded-full font-bold">完全新規HP構築価格</span>
+                                <div class="text-4xl font-black text-emerald-400 font-sans">年商の 3 %</div>
+                                <div class="bg-slate-900/80 p-3 rounded-lg border border-slate-800">
+                                    <p class="text-[11px] text-slate-400">現在の設定年商でシミュレート：</p>
+                                    <p class="text-2xl font-extrabold text-white mt-1 plan2-price-display font-sans">90万円</p>
+                                </div>
+                                <p class="text-[11px] text-slate-500 leading-relaxed text-left font-normal">
+                                    ※ポータルサイトの高い掲載プランを払い続ける必要はもうありません。集客の自走に最も貢献する強力なデジタル資産となります。
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- SLIDE 7: Monthly Maintenance (ホームページ修整、保守料) -->
+                        <div id="slide-7" class="grid grid-cols-12 gap-8 h-full items-center hidden">
+                            <div class="col-span-7 space-y-5">
+                                <p class="text-lg text-emerald-400 font-medium">納品して終わりではありません。変化し続けるAI基準に寄り添い続けます</p>
+                                <ul class="text-sm space-y-2.5 text-slate-300 font-normal">
+                                    <li class="flex items-center gap-2">🔹 <strong>納品ホームページの即時修正</strong>（営業時間の急な変更や新メニュー追加など）</li>
+                                    <li class="flex items-center gap-2">🔹 <strong>AIのアルゴリズム変更対策</strong>（Googleや主要AIの評価基準アップデートへの自動追従）</li>
+                                    <li class="flex items-center gap-2">🔹 <strong>MEO・地図情報の定例パトロール更新</strong>（AIが活動中店舗と認識する状態を維持）</li>
+                                </ul>
+                            </div>
+                            <div class="col-span-5 bg-indigo-950/30 border border-indigo-500/20 rounded-2xl p-6 text-center space-y-4">
+                                <span class="bg-indigo-900/80 text-indigo-300 text-xs px-3 py-1 rounded-full font-bold">月額運用サポート料</span>
+                                <div class="text-3xl font-black text-emerald-400 font-sans">毎月 年商の 0.1 %</div>
+                                <div class="bg-slate-900/80 p-3 rounded-lg border border-slate-800">
+                                    <p class="text-[11px] text-slate-400 font-medium">現在の年商での月額費用：</p>
+                                    <p class="text-2xl font-extrabold text-white mt-1 plan3-price-display font-sans">5,000円 / 月</p>
+                                </div>
+                                <p class="text-[10px] text-slate-500 leading-relaxed text-left font-normal">
+                                    ※最低金額5,000円（税込）/月となります。売上が上がった時のみ、私たちの手数料も連動するフェアな一蓮托生（いちれんたくしょう）プランです。
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- SLIDE 8: AI Education (生成AI活用・自走コンサル) -->
+                        <div id="slide-8" class="grid grid-cols-12 gap-8 h-full items-center hidden">
+                            <div class="col-span-7 space-y-5">
+                                <p class="text-lg text-emerald-400 font-medium">外部の業者に任せっきりにせず、自社でAIを使いこなす能力を手に入れる</p>
+                                <p class="text-sm text-slate-300 leading-relaxed font-normal">
+                                    ChatGPTをはじめとする最新生成AIツールを用いて、日々の「AIが好むQ&A」の量産や、お客様の「口コミへの神返信」をスタッフ自身が2分で返せるようになる実技指導を行います。
+                                </p>
+                                <div class="bg-amber-950/20 border border-amber-500/20 p-4 rounded-xl text-xs text-amber-200 font-normal">
+                                    💡 <strong>理解度に合わせて使える都度申込制：</strong><br />
+                                    パソコンのスキルは人それぞれです。「全〇回パッケージ」に縛られず、足りないときに1回単位で都度お申し込みをいただけます。
+                                </div>
+                            </div>
+                            <div class="col-span-5 bg-indigo-950/30 border border-indigo-500/20 rounded-2xl p-6 text-center space-y-4">
+                                <span class="bg-amber-500 text-slate-950 text-xs px-3 py-1 rounded-full font-bold">1回完結型 実践塾 (2時間)</span>
+                                <div class="text-3xl font-black text-amber-400 font-sans">33,000円<span class="text-xs text-slate-300 font-normal">（税込） / 回</span></div>
+                                <p class="text-[11px] text-slate-400 leading-relaxed text-left font-normal">
+                                    ・AIでのQ&A自動生産テンプレートプレゼント<br />
+                                    ・口コミへの爆速返信プロンプト伝授<br />
+                                    ・パソコンをお持ち込みのワークショップ指導可能
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- SLIDE 9: Interactive Simulator -->
+                        <div id="slide-9" class="grid grid-cols-12 gap-6 h-full items-center hidden">
+                            <div class="col-span-4 bg-slate-800/60 p-6 rounded-2xl border border-slate-700/50 space-y-6">
+                                <h4 class="text-lg font-bold text-white flex items-center gap-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-slate-400"><rect width="16" height="20" x="4" y="2" rx="2"/><line x1="8" x2="16" y1="6" y2="6"/><line x1="16" x2="16" y1="14" y2="18"/><path d="M16 10h.01"/><path d="M12 10h.01"/><path d="M8 10h.01"/><path d="M12 14h.01"/><path d="M8 14h.01"/><path d="M12 18h.01"/><path d="M8 18h.01"/></svg>
+                                    年商を設定する
+                                </h4>
+                                <div class="space-y-2">
+                                    <p class="text-xs text-slate-400 font-normal">スライダーまたは入力で調整してください：</p>
+                                    <div id="sim-revenue-text" class="text-2xl font-black text-emerald-400 text-center bg-slate-900/80 p-3 rounded-lg font-sans">
+                                        3,000万円
+                                    </div>
+                                </div>
+                                <input 
+                                    type="range" 
+                                    min="10000000" 
+                                    max="200000000" 
+                                    step="1000000"
+                                    value="30000000" 
+                                    id="sim-revenue-slider"
+                                    class="w-full h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-emerald-500"
+                                />
+                                <div class="flex justify-between text-[10px] text-slate-500 font-normal">
+                                    <span>1,000万円</span>
+                                    <span>1億円</span>
+                                    <span>2億円</span>
+                                </div>
+                            </div>
+                            <div class="col-span-8 space-y-3">
+                                <div class="bg-indigo-950/40 p-4 rounded-xl border border-indigo-500/20 flex justify-between items-center">
+                                    <div>
+                                        <p class="text-xs text-indigo-400 font-bold">【既存HPあり】ホームページ最適化 (1%)</p>
+                                        <p class="text-xs text-slate-400 mt-1 font-normal">現在のHPをAI対策。洗い出し、追加・編集、納品までコミット。</p>
+                                    </div>
+                                    <div class="text-right">
+                                        <p class="text-2xl font-extrabold text-emerald-400 plan1-price-display font-sans">30万円</p>
+                                        <p class="text-[10px] text-slate-500 font-normal">(年間総売上1%)</p>
+                                    </div>
+                                </div>
+                                <div class="bg-indigo-950/40 p-4 rounded-xl border border-indigo-500/20 flex justify-between items-center">
+                                    <div>
+                                        <p class="text-xs text-emerald-400 font-bold">【新規制作】AI特化型HP完全構築 (3%)</p>
+                                        <p class="text-xs text-slate-400 mt-1 font-normal">AIが一番好む構造で完璧な公式サイトをフルスクラッチで制作。</p>
+                                    </div>
+                                    <div class="text-right">
+                                        <p class="text-2xl font-extrabold text-emerald-400 plan2-price-display font-sans">90万円</p>
+                                        <p class="text-[10px] text-slate-500 font-normal">(年間総売上3%)</p>
+                                    </div>
+                                </div>
+                                <div class="bg-indigo-950/40 p-4 rounded-xl border border-indigo-500/20 flex justify-between items-center">
+                                    <div>
+                                        <p class="text-xs text-slate-400 font-bold">【月額運用】ホームページ修正・保守 (0.1% / 月)</p>
+                                        <p class="text-xs text-slate-400 mt-1 font-normal">AIアップデート対応・HP情報の随時修正（最低金額5,000円）</p>
+                                    </div>
+                                    <div class="text-right">
+                                        <p class="text-2xl font-extrabold text-white plan3-price-display font-sans">5,000円 / 月</p>
+                                        <p class="text-[10px] text-slate-500 font-normal">(年商0.1%の月割、最低5,000円保証)</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- 各スライド内のフッター(表紙以外) -->
+                <div id="slide-footer-bar" class="px-10 py-3 bg-[#03060c] border-t border-slate-950 flex justify-between items-center text-[10px] text-slate-500 hidden">
+                    <span>© 2026 AI Search Optimization (AIO) Support</span>
+                    <span class="text-slate-400">※PCの場合はキーボードの左右矢印キー「←」「→」でも切り替え可能です。</span>
+                </div>
+            </div>
+            
+        </div>
+    </main>
+
+    <!-- 3. コントロールフッター -->
+    <footer class="bg-[#060913] border-t border-slate-900 px-4 md:px-8 py-3 flex justify-between items-center z-45">
+        <!-- ドットインジケーター（スマホなど狭い幅では非表示にして重なりを避ける） -->
+        <div id="dot-indicators-container" class="hidden sm:flex gap-1.5">
+            <!-- JSで10個のドットを制御 -->
+        </div>
+
+        <!-- ページ数表示 ＆ ナビゲーションボタン -->
+        <div class="w-full sm:w-auto flex items-center justify-between sm:justify-end gap-3">
+            <button 
+                id="prev-slide-btn"
+                class="flex items-center gap-1.5 px-4 py-2 rounded-xl border border-slate-800 text-xs font-bold transition-all cursor-pointer bg-slate-900 text-white hover:bg-slate-800"
+            >
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg> 戻る
+            </button>
+            
+            <span id="page-num-display" class="text-slate-300 font-mono text-xs font-bold bg-slate-950 border border-slate-900 px-3.5 py-2 rounded-xl">
+                01 / 10
+            </span>
+            
+            <button 
+                id="next-slide-btn"
+                class="flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer bg-emerald-500 text-slate-955 hover:bg-emerald-400 shadow-md"
+            >
+                次へ <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+            </button>
+        </div>
+    </footer>
+
+  </div>
+
+  <footer class="bg-white border-t border-slate-200 mt-auto">
+    <div class="max-w-6xl mx-auto px-4 py-12 text-center text-slate-500 text-sm">
+      <p class="mb-4">&copy; {new Date().getFullYear()} 生成AIStepSchool. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script is:inline>
+    // -------------------------------------------------------------
+    // スライドデータ定義
+    // -------------------------------------------------------------
+    const slideTitles = [
+        "", // 表紙
+        "今、スマホの「探し方」が激変しています",
+        "AIはあなたのお店を「どこ」で判断しているか？",
+        "ポータルサイトと自社ホームページの決定的な違い",
+        "成果に連動する、新しい店舗支援料金プラン",
+        "【既存HPあり】ホームページ最適化・AIO納品パック",
+        "【新規制作】AI特化型HP完全構築パック",
+        "【月額運用】ホームページ修正・保守・MEO管理",
+        "【教育】店舗のための「生成AI活用・自走コンサル」",
+        "店舗様の「年商」をベースとした料金シミュレーター"
+    ];
+
+    let currentSlide = 0;
+    const totalSlides = 10;
+    let revenue = 30000000; // 初期値：年商3000万円
+
+    // -------------------------------------------------------------
+    // 金額計算・フォーマット関数
+    // -------------------------------------------------------------
+    const formatYen = (num) => {
+        if (num >= 100000000) {
+            const oku = Math.floor(num / 100000000);
+            const man = Math.floor((num % 100000000) / 10000);
+            return `${oku}億${man > 0 ? man + '万' : ''}円`;
+        }
+        return `${(num / 10000).toLocaleString()}万円`;
+    };
+
+    const calcPlan1 = (rev) => rev * 0.01; // 1%
+    const calcPlan2 = (rev) => rev * 0.03; // 3%
+    const calcPlan3Monthly = (rev) => {
+        const calculated = (rev * 0.001) / 12;
+        return Math.max(calculated, 5000); // 最低月額5,000円
+    };
+
+    // -------------------------------------------------------------
+    // DOM要素の参照
+    // -------------------------------------------------------------
+    const container = document.getElementById('slide-container');
+    const slideHeaderBar = document.getElementById('slide-header-bar');
+    const slideFooterBar = document.getElementById('slide-footer-bar');
+    const slideTitleText = document.getElementById('slide-title-text');
+    const slideNumberBadge = document.getElementById('slide-number-badge');
+    const slideProgressText = document.getElementById('slide-progress-text');
+    const pageNumDisplay = document.getElementById('page-num-display');
+    const prevSlideBtn = document.getElementById('prev-slide-btn');
+    const nextSlideBtn = document.getElementById('next-slide-btn');
+    const dotsContainer = document.getElementById('dot-indicators-container');
+    const mobileSettingsBtn = document.getElementById('mobile-settings-btn');
+    const mobileSettingsPanel = document.getElementById('mobile-settings-panel');
+
+    // スライダーと想定年商テキストの参照
+    const desktopSlider = document.getElementById('desktop-revenue-slider');
+    const desktopText = document.getElementById('desktop-revenue-text');
+    const mobileSlider = document.getElementById('mobile-revenue-slider');
+    const mobileText = document.getElementById('mobile-revenue-text');
+    const mobileCompactText = document.getElementById('mobile-compact-revenue-text');
+    const simSlider = document.getElementById('sim-revenue-slider');
+    const simText = document.getElementById('sim-revenue-text');
+
+    // -------------------------------------------------------------
+    // 年商変更処理
+    // -------------------------------------------------------------
+    function updateRevenue(val) {
+        revenue = Number(val);
+        
+        // スライダー値同期
+        if (desktopSlider) desktopSlider.value = revenue;
+        if (mobileSlider) mobileSlider.value = revenue;
+        if (simSlider) simSlider.value = revenue;
+
+        // 想定年商テキスト同期
+        const formatted = formatYen(revenue);
+        if (desktopText) desktopText.innerText = formatted;
+        if (mobileText) mobileText.innerText = formatted;
+        if (mobileCompactText) mobileCompactText.innerText = formatted;
+        if (simText) simText.innerText = formatted;
+
+        // 金額計算＆表示更新
+        const p1 = calcPlan1(revenue);
+        const p2 = calcPlan2(revenue);
+        const p3 = calcPlan3Monthly(revenue);
+
+        const p1Formatted = formatYen(p1);
+        const p2Formatted = formatYen(p2);
+        const p3Formatted = formatYen(p3) + ' / 月';
+
+        document.querySelectorAll('.plan1-price-display').forEach(el => el.innerText = p1Formatted);
+        document.querySelectorAll('.plan2-price-display').forEach(el => el.innerText = p2Formatted);
+        document.querySelectorAll('.plan3-price-display').forEach(el => el.innerText = p3Formatted);
+    }
+
+    // 各スライダーのイベント紐付け
+    if (desktopSlider) desktopSlider.addEventListener('input', (e) => updateRevenue(e.target.value));
+    if (mobileSlider) mobileSlider.addEventListener('input', (e) => updateRevenue(e.target.value));
+    if (simSlider) simSlider.addEventListener('input', (e) => updateRevenue(e.target.value));
+
+    // -------------------------------------------------------------
+    // スライド切り替えロジック
+    // -------------------------------------------------------------
+    function showSlide(index) {
+        if (index < 0 || index >= totalSlides) return;
+        currentSlide = index;
+
+        // 全スライドを非表示にし、対象のスライドのみ表示
+        for (let i = 0; i < totalSlides; i++) {
+            const slide = document.getElementById(`slide-${i}`);
+            if (slide) {
+                if (i === currentSlide) {
+                    slide.classList.remove('hidden');
+                } else {
+                    slide.classList.add('hidden');
+                }
+            }
+        }
+
+        // 常駐ヘッダーとスライド内フッターの表示制御（表紙以外で表示）
+        if (currentSlide === 0) {
+            if (slideHeaderBar) slideHeaderBar.classList.add('hidden');
+            if (slideFooterBar) slideFooterBar.classList.add('hidden');
+        } else {
+            if (slideHeaderBar) {
+                slideHeaderBar.classList.remove('hidden');
+                slideTitleText.innerText = slideTitles[currentSlide];
+                slideNumberBadge.innerText = currentSlide; // 表紙が0なので、スライド1は「1」に
+                slideProgressText.innerText = `Page ${currentSlide + 1} of ${totalSlides}`;
+            }
+            if (slideFooterBar) slideFooterBar.classList.remove('hidden');
+        }
+
+        // ドットの同期
+        for (let i = 0; i < totalSlides; i++) {
+            const dot = document.getElementById(`dot-${i}`);
+            if (dot) {
+                if (i === currentSlide) {
+                    dot.className = "w-3 h-3 rounded-full transition-all cursor-pointer bg-emerald-400 scale-125";
+                } else {
+                    dot.className = "w-3 h-3 rounded-full transition-all cursor-pointer bg-slate-800 hover:bg-slate-600";
+                }
+            }
+        }
+
+        // ページ番号テキストの更新
+        if (pageNumDisplay) {
+            pageNumDisplay.innerText = `${String(currentSlide + 1).padStart(2, '0')} / ${String(totalSlides).padStart(2, '0')}`;
+        }
+
+        // ボタンの無効化
+        if (prevSlideBtn) {
+            if (currentSlide === 0) {
+                prevSlideBtn.classList.add('opacity-20', 'cursor-not-allowed');
+                prevSlideBtn.disabled = true;
+            } else {
+                prevSlideBtn.classList.remove('opacity-20', 'cursor-not-allowed');
+                prevSlideBtn.disabled = false;
+            }
+        }
+        if (nextSlideBtn) {
+            if (currentSlide === totalSlides - 1) {
+                nextSlideBtn.classList.add('opacity-20', 'cursor-not-allowed');
+                nextSlideBtn.disabled = true;
+            } else {
+                nextSlideBtn.classList.remove('opacity-20', 'cursor-not-allowed');
+                nextSlideBtn.disabled = false;
+            }
+        }
+    }
+
+    // -------------------------------------------------------------
+    // ドットインジケーターの生成
+    // -------------------------------------------------------------
+    function createDots() {
+        if (!dotsContainer) return;
+        dotsContainer.innerHTML = '';
+        for (let i = 0; i < totalSlides; i++) {
+            const btn = document.createElement('button');
+            btn.id = `dot-${i}`;
+            btn.className = `w-3 h-3 rounded-full transition-all cursor-pointer ${i === 0 ? 'bg-emerald-400 scale-125' : 'bg-slate-800'}`;
+            btn.title = `スライド ${i + 1}`;
+            btn.addEventListener('click', () => showSlide(i));
+            dotsContainer.appendChild(btn);
+        }
+    }
+
+    // ボタンのクリックイベント
+    if (prevSlideBtn) prevSlideBtn.addEventListener('click', () => {
+        if (currentSlide > 0) showSlide(currentSlide - 1);
+    });
+    if (nextSlideBtn) nextSlideBtn.addEventListener('click', () => {
+        if (currentSlide < totalSlides - 1) showSlide(currentSlide + 1);
+    });
+
+    // キーボード操作
+    window.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowRight' || e.key === ' ') {
+            if (currentSlide < totalSlides - 1) showSlide(currentSlide + 1);
+        } else if (e.key === 'ArrowLeft') {
+            if (currentSlide > 0) showSlide(currentSlide - 1);
+        }
+    });
+
+    // -------------------------------------------------------------
+    // スケーリング（レスポンシブ）
+    // -------------------------------------------------------------
+    const baseWidth = 1024;
+    const baseHeight = 576;
+
+    function handleResize() {
+        if (!container) return;
+        const parent = container.parentElement;
+        if (!parent) return;
+
+        const parentWidth = parent.clientWidth;
+        const parentHeight = parent.clientHeight;
+
+        const scaleX = parentWidth / baseWidth;
+        const scaleY = parentHeight / baseHeight;
+
+        const newScale = Math.min(scaleX, scaleY);
+        const scale = Math.max(0.3, Math.min(newScale * 0.95, 1.2));
+
+        container.style.transform = `scale(${scale})`;
+        container.style.transformOrigin = 'center center';
+    }
+
+    window.addEventListener('resize', handleResize);
+
+    // モバイルトグル設定パネル
+    if (mobileSettingsBtn && mobileSettingsPanel) {
+        mobileSettingsBtn.addEventListener('click', () => {
+            mobileSettingsPanel.classList.toggle('hidden');
+        });
+    }
+
+    // 初期起動処理
+    createDots();
+    updateRevenue(30000000);
+    showSlide(0);
+    handleResize();
+    setTimeout(handleResize, 150);
+  </script>
+</body>
+</html>

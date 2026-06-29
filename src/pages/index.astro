@@ -44,10 +44,11 @@ const canonicalURL = new URL(baseUrl, Astro.site || 'https://example.com').toStr
       <a href={baseUrl} class="text-lg sm:text-xl font-black bg-gradient-to-r from-indigo-600 via-purple-600 to-cyan-600 bg-clip-text text-transparent tracking-tight shrink-0">
         生成AIStepSchool
       </a>
-      <nav class="flex gap-3 sm:gap-6 text-xs sm:text-sm font-semibold items-center overflow-x-auto no-scrollbar py-1">
+      <nav class="flex gap-2 sm:gap-4 text-xs sm:text-sm font-semibold items-center overflow-x-auto no-scrollbar py-1">
         <a href={baseUrl} class="text-indigo-600 font-semibold shrink-0">Home</a>
         <a href={`${baseUrl}articles`} class="hover:text-indigo-600 text-slate-600 transition-colors shrink-0">Articles</a>
-        <a href={`${baseUrl}course`} class="px-3 py-1.5 sm:px-4 sm:py-1.5 rounded-full bg-gradient-to-r from-indigo-600 to-cyan-600 text-white font-semibold text-[10px] sm:text-xs shadow-md shadow-indigo-600/10 hover:opacity-90 transition-opacity shrink-0">AI School</a>
+        <a href={`${baseUrl}course`} class="px-3 py-1.5 sm:px-4 sm:py-1.5 rounded-full bg-gradient-to-r from-indigo-600 to-cyan-600 text-white font-semibold text-[10px] sm:text-xs shadow-md shadow-indigo-600/10 hover:opacity-90 transition-opacity shrink-0 font-sans">AI School</a>
+        <a href={`${baseUrl}aio`} class="px-3 py-1.5 sm:px-4 sm:py-1.5 rounded-full bg-gradient-to-r from-emerald-600 to-teal-500 text-white font-semibold text-[10px] sm:text-xs shadow-md shadow-emerald-600/10 hover:opacity-90 transition-opacity shrink-0 font-sans">AI店舗集客</a>
       </nav>
     </div>
   </header>
