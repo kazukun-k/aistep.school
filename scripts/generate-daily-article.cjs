@@ -1,104 +1,89 @@
+const { GoogleGenerativeAI } = require("@google/generative-ai");
 const fs = require('fs');
 const path = require('path');
-const { GoogleGenerativeAI } = require("@google/generative-ai");
 const { generateEyecatch } = require('./utils/image-generator.cjs');
 
-async function main() {
-  const apiKey = process.env.GEMINI_API_KEY;
-  const isMock = process.argv.includes('--mock');
-
-  if (!apiKey && !isMock) {
-    console.error("Error: GEMINI_API_KEY is not set.");
-    process.exit(1);
-  }
-
-  const today = new Date();
-  const yyyy = today.getFullYear();
-  const mm = String(today.getMonth() + 1).padStart(2, '0');
-  const dd = String(today.getDate()).padStart(2, '0');
-  const dateStr = `${yyyy}-${mm}-${dd}`;
-
-  // 1. Read existing articles to prevent duplicate topics
-  const articlesDir = path.join(__dirname, '..', 'src', 'content', 'articles');
-  let existingTopicsList = "";
-  if (fs.existsSync(articlesDir)) {
-    const files = fs.readdirSync(articlesDir).filter(f => f.endsWith('.md'));
-    const topics = files.map(file => {
-      const content = fs.readFileSync(path.join(articlesDir, file), 'utf8');
-      const titleMatch = content.match(/^title:\s*"([^"]+)"/m) || content.match(/^title:\s*'([^']+)'/m);
-      return titleMatch ? titleMatch[1] : file.replace('.md', '');
-    });
-    existingTopicsList = topics.map(t => `- ${t}`).join('\n');
-  }
-
-  if (isMock) {
-    const mockContent = `---
-title: "ChatGPTで作業効率を10倍にするショートカット活用術"
-description: "毎日のChatGPTとの対話作業。キーボードショートカットやちょっとした小技を知るだけで、執筆やリサーチの速度が圧倒的に向上します。"
-category: "業務効率化"
-publishDate: "${dateStr}T07:00:00+09:00"
-eyecatch: "/images/daily-article-${dateStr}.png"
-isPublished: true
----
-
-## ChatGPT作業をスピードアップするテクニック
-
-AIツールを使いこなす上で、タイピングや画面操作の手間を省くことは重要です。
-
-### 1. キーボードショートカットを活用する
-ChatGPTのチャット欄では、以下のショートカットが有効です：
-- **Shift + Enter**: 改行（誤送信を防ぐ）
-- **Ctrl + Shift + O** (または Cmd + Shift + O): 新規チャットを開く
-
-### 2. プロンプトはあらかじめメモ帳に用意する
-よく使うひな形は辞書登録しておくか、メモアプリにストックしておき、コピペして使い回すことで入力時間を劇的に節約できます。
-`;
-    const outputFilePath = path.join(articlesDir, `daily-article-${dateStr}.md`);
-    fs.writeFileSync(outputFilePath, mockContent, 'utf8');
-    console.log(`[MOCK] Successfully generated daily article: ${outputFilePath}`);
-
-    // Generate mock image
-    try {
-      const imgPath = path.join(__dirname, '..', 'public', 'images', `daily-article-${dateStr}.png`);
-      await generateEyecatch('業務効率化', 'ChatGPTを時短する\nショートカット活用術', imgPath);
-    } catch (err) {
-      console.error("Failed to generate mock eyecatch image:", err);
+// .env から環境変数を手動ロードする（dotenv非依存）
+const envPath = path.join(__dirname, '..', '.env');
+if (fs.existsSync(envPath)) {
+  const envContent = fs.readFileSync(envPath, 'utf8');
+  envContent.split(/\r?\n/).forEach(line => {
+    const trimmed = line.trim();
+    if (!trimmed || trimmed.startsWith('#')) return;
+    const parts = trimmed.split('=');
+    if (parts.length >= 2) {
+      const key = parts[0].trim();
+      let val = parts.slice(1).join('=').trim();
+      if ((val.startsWith('"') && val.endsWith('"')) || (val.startsWith("'") && val.endsWith("'"))) {
+        val = val.slice(1, -1);
+      }
+      process.env[key] = val;
     }
-    return;
+  });
+}
+
+const apiKey = process.env.GEMINI_API_KEY;
+if (!apiKey) {
+  console.error("Error: GEMINI_API_KEY is not set.");
+  process.exit(1);
+}
+
+const genAI = new GoogleGenerativeAI(apiKey);
+const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
+
+function getExistingArticles() {
+  const articlesDir = path.join(__dirname, '..', 'src', 'content', 'posts');
+  if (!fs.existsSync(articlesDir)) {
+    return [];
   }
+  return fs.readdirSync(articlesDir)
+    .filter(file => file.endsWith('.md'))
+    .map(file => {
+      const content = fs.readFileSync(path.join(articlesDir, file), 'utf8');
+      const titleMatch = content.match(/title:\s*"(.*?)"/);
+      return titleMatch ? titleMatch[1] : '';
+    })
+    .filter(Boolean);
+}
 
-  const genAI = new GoogleGenerativeAI(apiKey);
-  // Using gemini-1.5-flash for daily articles as well
-  const model = genAI.getGenerativeModel({
-    model: "gemini-1.5-flash-latest",
-  }, { apiVersion: 'v1' });
+async function main() {
+  const dateStr = new Date().toISOString().split('T')[0];
+  const articlesDir = path.join(__dirname, '..', 'src', 'content', 'posts');
+  
+  const existingArticles = getExistingArticles();
+  
+  const prompt = `あなたは、日本のビジネスパーソンに向けて、生成AIの日常や仕事での具体的な使い方を優しく解説するブロガー「しゅう」です。
 
-  const prompt = `
-あなたはIT・AI初心者にやさしく生成AIの活用法を教える専門スクールの講師です。
-一般の会社員やビジネスパーソンが、明日から実務や日常生活ですぐに使える「生成AIの活用ノウハウ、プロンプトテクニック、業務効率化のアイデア」に関する良質な解説記事を執筆してください。
+【超重要ターゲット】
+今回の記事のターゲット読者は「生成AI初心者（パソコンやスマホの基本的な操作はできるが、ITやプログラミングに強い苦手意識を持つ人）」です。
+「パイソン（Python）」や「プログラミング」「マクロ」といった言葉を聞くだけで、自分には関係のない難しいものだと感じて読むのをやめてしまいます。
+そのため、プログラミングやIT技術的な話題は一切避け、スマホやパソコンの基本操作（文字入力やコピペ）だけで今すぐ試せる「日常や仕事が少し楽になる身近な活用アイデア」を提案・解説してください。
 
-現在、サイト内にはすでに以下のトピックの記事が存在します：
-${existingTopicsList}
+これまでの記事タイトル（重複しないようにしてください）：
+${existingArticles.map(t => `- ${t}`).join('\n')}
 
-上記に挙げた既存記事のテーマと【絶対に重複しない】、新しいテーマを1つ選び、記事を執筆してください。
+上記を踏めて、これまでと重複しない、新しいテーマを1つ選び、記事を執筆してください。
 
 記事は以下の構成とし、Markdown形式で出力してください：
-1. 導入（なぜそのテーマが重要なのか、何が解決するのか）
-2. 具体的な解説や手順（ステップ形式や具体的なプロンプトのテンプレート例を含めてください）
-3. 実務で使う上での注意点やコツ
-4. まとめ（読者へのエールや、今日からできるアクション）
+1. 導入（なぜそのテーマが日常や仕事で役立つのか、何が解決するのかを、難しい言葉を使わずに共感しやすく解説）
+2. 具体的な解説（スマホやパソコンでの実際の操作手順を、ステップ形式でわかりやすく解説してください。また、そのままコピペして使える日本語の『指示文（AIへのお願いの書き方）』のテンプレート例を必ず含めてください）
+3. 使う上での注意点やコツ（AIがたまに間違った答えを出してしまうことへの対策などを、専門用語を使わずに優しく解説）
+4. まとめ（読者の背中を押すエール・今日からできる最初のアクション）
 
 【重要ルール】
-- 記事のテキスト本文を出力する前に、記事のアイキャッチ画像（白いカード付き）に記載する、記事タイトルを要約した短いキャッチコピー（サブ見出しとメイン見出しの2行）を、必ず以下の形式で一番最初の行に出力してください。
-  [EYECATCH_TEXT: 1行目の短い見出し\\n2行目の大きなメインタイトル]
-  例：[EYECATCH_TEXT: AIでExcel作業が\\n10倍速くなる方法]
+- **プログラミングに関連する言葉（Python、パイソン、VBA、GAS、マクロ、JavaScript、コード、プログラムなど）や、難解なAI・ITの専門用語（LLM、ファインチューニング、トークン、パラメータ、RAG、マルチモーダル、ベクトルなど）は【絶対に】使用しないでください。**
+- 難しく聞こえるAI用語は、必ず直感的に理解できる優しい日本語にかみ砕いて表現してください。
+  - プロンプト ➡ 「AIへの指示文」「AIへのお願いの書き方」
+  - ハルシネーション ➡ 「AIの嘘や一時的な勘違い」
+  - Grounding ➡ 「最新の検索結果に基づいた回答」
+  - APIやインテグレーション ➡ 「他のソフトと繋げること」「連携」
 - カテゴリは、「生成AI初心者」「業務効率化」「プロンプト」の3つの中から最も適したものを1つ選択してください。
 - 記事の概要（description）を100〜150文字程度で考えてください。
 - 記事のタイトル（title）を考えてください。
 - 記事本文のMarkdownを出力してください。タイトル（# タイトル）は本文には含めないでください（フロントマターで設定するため）。
 - 回答の最後または別途パースしやすいように、フロントマター用メタデータを以下のJSON形式で、記事本文の【末尾】に必ず出力してください：
   [METADATA_JSON: {"title": "記事タイトル", "description": "概要文", "category": "選択したカテゴリ"}]
-- 出力は指定されたマークダウン本文と指定のタグ（[EYECATCH_TEXT: ...]および[METADATA_JSON: ...]）のみとしてください。不要な応答テキスト（「かしこまりました」など）や、全体をコードブロック（\`\`\`markdown）で囲むことはしないでください。
+- 出力は指示されたマークダウン本文と指示タグ（[EYECATCH_TEXT: ...]および[METADATA_JSON: ...]）のみとしてください。不要な応答テキスト（「かしこまりました」など）や、全体をコードブロック（\`\`\`markdown\`）で囲むことはしないでください。
 `;
 
   try {
@@ -117,7 +102,7 @@ ${existingTopicsList}
     }
 
     // 1. Extract catchphrase for image generation
-    let catchphrase = "生成AI活用法\n基本ガイド！";
+    let catchphrase = "生成AI活用法\n基本ガイド";
     const eyecatchMatch = bodyText.match(/^\[EYECATCH_TEXT:\s*([\s\S]+?)\]/);
     if (eyecatchMatch) {
       catchphrase = eyecatchMatch[1].trim();
