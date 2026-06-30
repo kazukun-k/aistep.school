@@ -40,7 +40,7 @@ const canonicalURL = new URL(baseUrl, Astro.site || 'https://aistepschool.com').
         <a href={baseUrl} class="hover:text-indigo-600 text-slate-600 transition-colors shrink-0">Home</a>
         <a href={`${baseUrl}articles`} class="hover:text-indigo-600 text-slate-600 transition-colors shrink-0">Articles</a>
         <a href={`${baseUrl}course`} class="hover:text-indigo-600 text-slate-600 transition-colors shrink-0">AI School</a>
-        <a href={`${baseUrl}aio`} class="px-3 py-1.5 sm:px-4 sm:py-1.5 rounded-full bg-gradient-to-r from-emerald-600 to-teal-500 text-white font-semibold text-[10px] sm:text-xs shadow-md shadow-emerald-600/10 hover:opacity-90 transition-opacity shrink-0">AI店舗集客</a>
+        <a href={`${baseUrl}aio`} class="px-3 py-1.5 sm:px-4 sm:py-1.5 rounded-full bg-gradient-to-r from-emerald-600 to-teal-500 text-white font-semibold text-[10px] sm:text-xs shadow-md shadow-emerald-600/10 hover:opacity-90 transition-opacity shrink-0 font-sans">集客に悩む店舗様へ</a>
       </nav>
     </div>
   </header>
@@ -52,52 +52,135 @@ const canonicalURL = new URL(baseUrl, Astro.site || 'https://aistepschool.com').
       <div class="absolute top-20 right-0 w-96 h-96 bg-teal-100/20 rounded-full filter blur-3xl"></div>
 
       <div class="max-w-4xl mx-auto text-center px-4 relative">
-        <span class="px-3.5 py-1 text-xs font-bold rounded-full bg-emerald-50 text-emerald-600 border border-emerald-100/80 tracking-wider uppercase mb-6 inline-block">
-          AI検索時代（AIO対策） × 成果コミット型
+        <span class="px-4 py-1.5 text-xs font-bold rounded-full bg-emerald-50 text-emerald-600 border border-emerald-100/80 tracking-wider uppercase mb-6 inline-block">
+          集客にお困りの店舗オーナー様へ
         </span>
         <h1 class="text-4xl md:text-6xl font-black tracking-tight text-slate-900 mb-6 leading-tight">
-          AI検索時代を生き抜く、<br />
-          <span class="bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-600 bg-clip-text text-transparent">新しい店舗集客</span>のご提案
+          グルメサイトへの高い掲載料、<br class="hidden sm:inline" />
+          <span class="bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-600 bg-clip-text text-transparent">いつまで払い続けますか？</span>
         </h1>
         <p class="text-slate-600 text-lg md:text-xl max-w-2xl mx-auto leading-relaxed mb-10 font-normal">
-          スマホの「探し方」の激変に合わせた、<br class="hidden sm:inline" />リスクを最小限に抑える「年間売上連動型」店舗支援プラン
+          スマホの「探し方」の激変に合わせた、<br class="hidden sm:inline" />
+          <span class="inline-block">リスクを最小限に抑える</span><span class="inline-block">「年間売上連動型」店舗集客サポート</span>
         </p>
         <div class="flex flex-col sm:flex-row gap-4 justify-center">
           <a href="#pricing" class="px-8 py-4 rounded-full bg-gradient-to-r from-emerald-600 to-teal-500 font-bold text-white shadow-lg shadow-emerald-600/20 hover:opacity-90 transition-opacity text-center">
             料金プランを見る
           </a>
-          <a href="#simulator" class="px-8 py-4 rounded-full bg-white border border-slate-200 hover:border-slate-350 hover:bg-slate-50 font-semibold text-slate-700 transition-colors text-center shadow-sm">
-            料金シミュレーターを試す
+          <a href="#contact" class="px-8 py-4 rounded-full bg-white border border-slate-200 hover:border-slate-350 hover:bg-slate-50 font-semibold text-slate-700 transition-colors text-center shadow-sm">
+            無料相談・AI診断を受ける
           </a>
         </div>
       </div>
     </section>
 
-    <!-- 背景・課題セクション -->
-    <section class="py-20 border-b border-slate-200/80 bg-white">
+    <!-- Section 1: こんなことで困っていませんか？ (課題提示) -->
+    <section class="py-24 border-b border-slate-100 bg-white">
+      <div class="max-w-5xl mx-auto px-4">
+        <span class="text-emerald-600 text-xs font-bold tracking-wider uppercase block text-center mb-2">Pain Points</span>
+        <h2 class="text-3xl md:text-4xl font-extrabold text-slate-900 text-center mb-4">
+          <span class="inline-block">こんな集客の課題に</span><span class="inline-block">悩まされていませんか？</span>
+        </h2>
+        <p class="text-center text-slate-500 mb-16 max-w-lg mx-auto text-sm">どれだけ努力しても、思ったように客足が伸びないのには理由があります。</p>
+
+        <div class="grid md:grid-cols-3 gap-8">
+          <!-- 課題 1 -->
+          <div class="bg-slate-50/60 p-8 rounded-3xl border border-slate-200/80 shadow-sm hover:shadow-md transition-shadow relative">
+            <div class="w-12 h-12 rounded-2xl bg-rose-50 text-rose-600 flex items-center justify-center font-bold text-xl mb-6">
+              01
+            </div>
+            <h3 class="text-lg font-bold text-slate-900 mb-4">
+              高い広告費・手数料を<br class="hidden md:inline" />払い続けている
+            </h3>
+            <p class="text-slate-600 text-sm leading-relaxed font-normal">
+              予約サイトやポータルサイトの月額掲載料が高く、予約が入るたびに手数料が引かれるため、売上は上がっても利益がほとんど残らない。
+            </p>
+          </div>
+
+          <!-- 課題 2 -->
+          <div class="bg-slate-50/60 p-8 rounded-3xl border border-slate-200/80 shadow-sm hover:shadow-md transition-shadow relative">
+            <div class="w-12 h-12 rounded-2xl bg-rose-50 text-rose-600 flex items-center justify-center font-bold text-xl mb-6">
+              02
+            </div>
+            <h3 class="text-lg font-bold text-slate-900 mb-4">
+              SNSを毎日更新しても<br class="hidden md:inline" />来店に繋がらない
+            </h3>
+            <p class="text-slate-600 text-sm leading-relaxed font-normal">
+              インスタグラムやブログを忙しい合間を縫って発信しているが、「いいね」はついても実際の新規来店や予約ボタンのクリックには結びつかない。
+            </p>
+          </div>
+
+          <!-- 課題 3 -->
+          <div class="bg-slate-50/60 p-8 rounded-3xl border border-slate-200/80 shadow-sm hover:shadow-md transition-shadow relative">
+            <div class="w-12 h-12 rounded-2xl bg-rose-50 text-rose-600 flex items-center justify-center font-bold text-xl mb-6">
+              03
+            </div>
+            <h3 class="text-lg font-bold text-slate-900 mb-4">
+              競合店舗が多すぎて<br class="hidden md:inline" />ネット検索で埋もれる
+            </h3>
+            <p class="text-slate-600 text-sm leading-relaxed font-normal">
+              MEO（Googleマップ）やSEO対策に挑戦してみたが、近くのライバル店舗に埋もれてしまい、検索順位の上位に表示されず見つけてもらえない。
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 2: もしかしたらHPが整っていないからかも (真因) -->
+    <section class="py-24 border-b border-slate-100 bg-slate-50/50">
+      <div class="max-w-4xl mx-auto px-4">
+        <div class="bg-white border border-slate-200 p-8 md:p-12 rounded-3xl shadow-sm text-center relative overflow-hidden">
+          <div class="absolute -top-40 -right-40 w-80 h-80 bg-rose-100/30 rounded-full filter blur-3xl"></div>
+          <span class="text-rose-600 text-xs font-bold tracking-wider uppercase block mb-3">The Root Cause</span>
+          <h2 class="text-2xl md:text-3xl font-extrabold text-slate-900 mb-6 leading-tight">
+            その原因、もしかしたら<br />
+            <span class="text-rose-600">ホームページが「AI時代」に対応していないから</span><br />かもしれません。
+          </h2>
+          <div class="text-slate-600 text-sm md:text-base leading-relaxed space-y-4 max-w-2xl mx-auto font-normal text-left md:text-center">
+            <p>
+              多くの店舗が「広告」や「SNS」ばかりに目を向けがちですが、最終的な顧客の受け皿となるのは<strong class="inline-block">「自社ホームページ」</strong>です。
+            </p>
+            <p>
+              どれだけSNSで認知を広めても、たどり着いたホームページが古かったり、情報が不十分だったりすると、お客様は「信頼できないお店」と判断して離脱してしまいます。
+            </p>
+            <p class="text-slate-900 font-bold bg-rose-50 border border-rose-100 p-4 rounded-2xl md:inline-block leading-relaxed">
+              <span class="inline-block">さらに深刻なのは、</span><span class="inline-block">AIや最新のスマホ検索エンジンに</span><span class="inline-block">「そもそも認識されていない」という事実です。</span>
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 3: これからの検索はこうなっていく (市場の変化) -->
+    <section class="py-24 border-b border-slate-100 bg-white">
       <div class="max-w-5xl mx-auto px-4">
         <span class="text-emerald-600 text-xs font-bold tracking-wider uppercase block text-center mb-2">Market Shift</span>
-        <h2 class="text-3xl font-bold text-slate-900 text-center mb-16">今、スマホの「探し方」が激変しています</h2>
+        <h2 class="text-3xl font-bold text-slate-900 text-center mb-4">
+          <span class="inline-block">これからのスマホ検索は</span><span class="inline-block">こうなっていく</span>
+        </h2>
+        <p class="text-center text-slate-500 mb-16 max-w-xl mx-auto text-sm">
+          キーワードを打ち込んでWebサイトを探す時代から、AIに相談する時代へ。
+        </p>
         
         <div class="grid md:grid-cols-2 gap-12 items-center">
           <div class="space-y-6">
-            <h3 class="text-2xl font-bold text-slate-950">キーワードを並べる検索から、AIへの相談へ</h3>
+            <h3 class="text-2xl font-bold text-slate-955"><span class="inline-block">キーワードを並める検索から、</span><span class="inline-block">AIへの相談へ</span></h3>
             <p class="text-slate-600 leading-relaxed font-normal">
-              これまでは「地域＋業種（例：新宿 美容室）」の単語羅列で探されていましたが、今はユーザーがスマホに直接「シチュエーション」や「具体的な要望」を話しかけてお店を探す時代にシフトしています。
+              これまでは「地域＋業種（例：新宿 美容室）」の単語羅列で探されていましたが、今はユーザーがスマホに直接<span class="inline-block">「シチュエーション」や</span><span class="inline-block">「具体的な要望」を</span>話しかけてお店を探す時代に<span class="inline-block">シフトしています。</span>
             </p>
             <div class="bg-slate-50 border border-slate-200/80 p-5 rounded-2xl space-y-3 shadow-inner">
               <p class="text-xs text-slate-400 font-bold tracking-wider">▼ 検索パターンの変化例</p>
               <p class="text-sm text-slate-400"><span class="text-slate-500 line-through">昔の検索：新宿 美容室 子連れ</span></p>
               <p class="text-base text-slate-800 font-extrabold flex items-start gap-2">
-                <span class="text-emerald-600 font-black shrink-0">AI検索：</span>「近くで子どもが落ち着ける、駐車場のある美容室を教えて」
+                <span class="text-emerald-600 font-black shrink-0">AI検索：</span><span>「近くで子どもが落ち着ける、<span class="inline-block">駐車場のある</span><span class="inline-block">美容室を教えて」</span></span>
               </p>
             </div>
           </div>
-          <div class="p-8 rounded-3xl bg-gradient-to-br from-slate-900 to-indigo-950 text-white shadow-lg space-y-4">
+          <div class="p-8 rounded-3xl bg-gradient-to-br from-slate-900 to-indigo-955 text-white shadow-lg space-y-4">
             <div class="text-5xl font-black text-emerald-400 font-sans">約 60%</div>
             <div class="text-lg font-bold text-white">ゼロクリック検索の衝撃</div>
-            <p class="text-slate-350 text-sm leading-relaxed font-normal">
-              AIが検索画面で最善のお店を1つ教えて解決してしまうため、ユーザーが店舗ホームページのリンクを一切クリックせずに検索を終わらせる割合が6割に迫っています。
+            <p class="text-slate-300 text-sm leading-relaxed font-normal">
+              AIが検索画面で最善のお店を1つ教えて解決してしまうため、<span class="inline-block">ユーザーが</span>店舗ホームページのリンクを一切クリックせずに検索を終わらせる割合が<span class="inline-block">6割に迫っています。</span>
             </p>
             <div class="text-[10px] text-slate-500 text-right">出典：Semrush社 AI検索行動分析データ</div>
           </div>
@@ -105,14 +188,14 @@ const canonicalURL = new URL(baseUrl, Astro.site || 'https://aistepschool.com').
       </div>
     </section>
 
-    <!-- AIおすすめ新基準セクション -->
-    <section class="py-20 border-b border-slate-200/80 bg-slate-50">
+    <!-- Section 4: それに対応できますか？ (危機感・気づき) -->
+    <section class="py-24 border-b border-slate-100 bg-slate-50">
       <div class="max-w-5xl mx-auto px-4">
-        <span class="text-emerald-600 text-xs font-bold tracking-wider uppercase block text-center mb-2">AI Algorithm</span>
-        <h2 class="text-3xl font-bold text-slate-900 text-center mb-4">AIはあなたのお店を「どこ」で判断しているか？</h2>
+        <span class="text-emerald-600 text-xs font-bold tracking-wider uppercase block text-center mb-2">Are you ready?</span>
+        <h2 class="text-3xl font-bold text-slate-900 text-center mb-4">今のホームページで、AIに選ばれる自信はありますか？</h2>
         <p class="text-center text-slate-500 mb-16 max-w-xl mx-auto text-sm">マップ登録（MEO）だけでは、もうAIおすすめの上位に表示されません。</p>
 
-        <div class="grid md:grid-cols-3 gap-8">
+        <div class="grid md:grid-cols-3 gap-8 mb-16">
           <!-- 要素 1 -->
           <div class="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm flex flex-col justify-between hover:shadow-md transition-shadow relative">
             <div>
@@ -146,7 +229,7 @@ const canonicalURL = new URL(baseUrl, Astro.site || 'https://aistepschool.com').
           <!-- 要素 3 -->
           <div class="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm flex flex-col justify-between hover:shadow-md transition-shadow relative">
             <div>
-              <span class="text-xs font-bold text-slate-600 bg-slate-55 border border-slate-200 px-2.5 py-1 rounded-md mb-4 inline-block">従来型対策</span>
+              <span class="text-xs font-bold text-slate-600 bg-slate-100 border border-slate-200 px-2.5 py-1 rounded-md mb-4 inline-block">従来型対策</span>
               <h3 class="text-lg font-bold text-slate-900 mb-2">③ マップ登録情報 (MEO)</h3>
               <p class="text-slate-600 text-sm leading-relaxed mb-6 font-normal">
                 Googleマップ等の登録情報の関連度は相対的に低下。登録していること自体は最低限の前提条件となりました。
@@ -158,23 +241,15 @@ const canonicalURL = new URL(baseUrl, Astro.site || 'https://aistepschool.com').
             </div>
           </div>
         </div>
-        <p class="text-slate-400 text-xs text-center mt-8">※出典：Whitespark社 2026年最新ランキング要因レポート</p>
-      </div>
-    </section>
 
-    <!-- ポータル vs 自社HP -->
-    <section class="py-20 border-b border-slate-200/80 bg-white">
-      <div class="max-w-5xl mx-auto px-4">
-        <span class="text-emerald-600 text-xs font-bold tracking-wider uppercase block text-center mb-2">Platform Difference</span>
-        <h2 class="text-3xl font-bold text-slate-900 text-center mb-16">ポータルサイトと自社ホームページの決定的な違い</h2>
-        
+        <!-- ポータル vs 自社HP -->
         <div class="grid md:grid-cols-2 gap-8">
-          <div class="bg-slate-50 border border-slate-200 rounded-3xl p-8 space-y-4">
+          <div class="bg-white border border-slate-200 rounded-3xl p-8 space-y-4">
             <div class="flex items-center gap-2">
               <span class="bg-slate-500 text-white text-xs px-2.5 py-1 rounded-full font-bold">モール型</span>
               <h4 class="text-lg font-bold text-slate-800">予約サイト・ポータル掲載など</h4>
             </div>
-            <p class="text-2xl font-black text-slate-500">「ショッピングモールの1区画」</p>
+            <p class="text-2xl font-black text-slate-500"><span class="inline-block">「ショッピングモールの</span><span class="inline-block">1区画」</span></p>
             <p class="text-slate-600 text-sm leading-relaxed font-normal">
               決められた共通フォーマットの中に、お店の情報を当てはめるだけ。AI向けに裏側の「HTML構造のプチ改善」や「自由なFAQ設置」を自分たちで行うことは不可能です。
             </p>
@@ -185,7 +260,7 @@ const canonicalURL = new URL(baseUrl, Astro.site || 'https://aistepschool.com').
               <span class="bg-emerald-500 text-slate-950 text-xs px-2.5 py-1 rounded-full font-bold">路面店型</span>
               <h4 class="text-lg font-bold text-emerald-600">AIに最適化した自社ホームページ</h4>
             </div>
-            <p class="text-2xl font-black text-emerald-600">「独立した自分だけの路面店」</p>
+            <p class="text-2xl font-black text-emerald-600"><span class="inline-block">「独立した自分だけの</span><span class="inline-block">路面店」</span></p>
             <p class="text-slate-600 text-sm leading-relaxed font-normal">
               看板から店内のこだわり、AIが一番読み取りやすい「1対1のFAQ（よくある質問）」を自由自在に配置。AIに「地域で最もおすすめの店舗」として最速で認識されます。
             </p>
@@ -194,21 +269,23 @@ const canonicalURL = new URL(baseUrl, Astro.site || 'https://aistepschool.com').
       </div>
     </section>
 
-    <!-- 料金プランセクション -->
-    <section id="pricing" class="py-20 border-b border-slate-200/80 bg-slate-50">
+    <!-- Section 5: 解決いたします (料金プラン・シミュレーター) -->
+    <section id="pricing" class="py-24 border-b border-slate-200/80 bg-white">
       <div class="max-w-5xl mx-auto px-4">
-        <span class="text-emerald-600 text-xs font-bold tracking-wider uppercase block text-center mb-2">Pricing Plans</span>
-        <h2 class="text-3xl font-bold text-slate-900 text-center mb-4">年間売上に連動する、フェアな料金プラン</h2>
-        <p class="text-center text-slate-500 mb-16 max-w-xl mx-auto text-sm">一方的な高額固定費はいただきません。初期リスクを最小限に抑えてスタートできます。</p>
+        <span class="text-emerald-600 text-xs font-bold tracking-wider uppercase block text-center mb-2">Our Solutions</span>
+        <h2 class="text-3xl md:text-4xl font-extrabold text-slate-900 text-center mb-4">
+          <span class="inline-block">AI検索時代に対応し、</span><span class="inline-block">集客を解決いたします。</span>
+        </h2>
+        <p class="text-center text-slate-500 mb-16 max-w-xl mx-auto text-sm">一方的な高額固定費はいただきません。店舗様の売上に寄り添う、フェアな成果コミット型料金プランです。</p>
 
         <!-- 1. 初期構築プラン -->
         <div class="mb-16">
           <h3 class="text-xl font-bold text-slate-900 mb-8 pb-2 border-b border-slate-200 flex items-center gap-2">
-            <span class="text-emerald-600">■</span> 1. 初期構築・最適化プラン（納品パック）
+            <span class="text-emerald-600">■</span> 1. 初期構築・最適化プラン（AIO納品パック）
           </h3>
           <div class="grid md:grid-cols-2 gap-8">
             <!-- 既存HPあり -->
-            <div class="bg-white p-8 rounded-3xl border border-slate-200 flex flex-col justify-between hover:border-emerald-300 transition-colors shadow-sm">
+            <div class="bg-slate-50/50 p-8 rounded-3xl border border-slate-200 flex flex-col justify-between hover:border-emerald-300 transition-colors shadow-sm">
               <div>
                 <div class="flex justify-between items-start mb-4">
                   <span class="px-2.5 py-1 text-xs font-bold rounded-md bg-indigo-50 text-indigo-600 border border-indigo-100">既存HPありの店舗様</span>
@@ -218,15 +295,24 @@ const canonicalURL = new URL(baseUrl, Astro.site || 'https://aistepschool.com').
                 <div class="text-3xl font-black text-slate-900 mb-6 font-sans">年間売上の 1%</div>
                 
                 <ul class="space-y-3.5 text-slate-655 text-sm font-normal mb-8 border-t border-slate-100 pt-6">
-                  <li class="flex gap-2"><span class="text-emerald-600 font-bold">✔</span> <strong>ホームページAI健康診断（エゴグラム診断）</strong>：AIからどう見えているかをカルテ化</li>
-                  <li class="flex gap-2"><span class="text-emerald-600 font-bold">✔</span> <strong>ボトルネックの洗い出し</strong>：AIが認識できない画像メニューやテキスト不足の特定</li>
-                  <li class="flex gap-2"><span class="text-emerald-600 font-bold">✔</span> <strong>HTML構造化＆不足項目の追加</strong>：AIが最も好むデータ構造と文章（FAQなど）への最適化作業</li>
+                  <li class="flex items-start gap-2">
+                    <span class="text-emerald-600 font-bold shrink-0 mt-0.5">✔</span>
+                    <span><strong class="inline-block">ホームページAI健康診断</strong>：AIからどう見えているかをカルテ化</span>
+                  </li>
+                  <li class="flex items-start gap-2">
+                    <span class="text-emerald-600 font-bold shrink-0 mt-0.5">✔</span>
+                    <span><strong class="inline-block">ボトルネックの洗い出し</strong>：AIが認識できない画像メニューやテキスト不足の特定</span>
+                  </li>
+                  <li class="flex items-start gap-2">
+                    <span class="text-emerald-600 font-bold shrink-0 mt-0.5">✔</span>
+                    <span><strong class="inline-block">HTML構造化＆不足項目の追加</strong>：AIが最も好むデータ構造と文章（FAQなど）への最適化作業</span>
+                  </li>
                 </ul>
               </div>
             </div>
 
             <!-- 新規HP制作 -->
-            <div class="bg-white p-8 rounded-3xl border border-slate-200 flex flex-col justify-between hover:border-emerald-300 transition-colors shadow-sm">
+            <div class="bg-slate-50/50 p-8 rounded-3xl border border-slate-200 flex flex-col justify-between hover:border-emerald-300 transition-colors shadow-sm">
               <div>
                 <div class="flex justify-between items-start mb-4">
                   <span class="px-2.5 py-1 text-xs font-bold rounded-md bg-emerald-50 text-emerald-600 border border-emerald-100">公式サイトがない店舗様</span>
@@ -236,9 +322,18 @@ const canonicalURL = new URL(baseUrl, Astro.site || 'https://aistepschool.com').
                 <div class="text-3xl font-black text-slate-900 mb-6 font-sans">年間売上の 3%</div>
                 
                 <ul class="space-y-3.5 text-slate-655 text-sm font-normal mb-8 border-t border-slate-100 pt-6">
-                  <li class="flex gap-2"><span class="text-emerald-600 font-bold">✔</span> <strong>AI専用構造化HTMLコーディング</strong>：AIロボットが最も深く正確にお店のこだわりを読み込める構造</li>
-                  <li class="flex gap-2"><span class="text-emerald-600 font-bold">✔</span> <strong>1対1FAQ（よくある質問）実装</strong>：ユーザーの具体的なシチュエーション相談にマッチする文章を構築</li>
-                  <li class="flex gap-2"><span class="text-emerald-600 font-bold">✔</span> <strong>メニューやこだわり情報の完全テキスト化</strong>：AIのテキストクロール対策（画像文字の排除）</li>
+                  <li class="flex items-start gap-2">
+                    <span class="text-emerald-600 font-bold shrink-0 mt-0.5">✔</span>
+                    <span><strong class="inline-block">AI専用構造化HTMLコーディング</strong>：AIロボットが最も深く正確にお店のこだわりを読み込める構造</span>
+                  </li>
+                  <li class="flex items-start gap-2">
+                    <span class="text-emerald-600 font-bold shrink-0 mt-0.5">✔</span>
+                    <span><strong class="inline-block">1対1FAQ（よくある質問）実装</strong>：ユーザーの具体的なシチュエーション相談にマッチする文章を構築</span>
+                  </li>
+                  <li class="flex items-start gap-2">
+                    <span class="text-emerald-600 font-bold shrink-0 mt-0.5">✔</span>
+                    <span><strong class="inline-block">メニューやこだわり情報のテキスト化</strong>：AIのテキストクロール対策（画像文字の排除）</span>
+                  </li>
                 </ul>
               </div>
             </div>
@@ -254,7 +349,7 @@ const canonicalURL = new URL(baseUrl, Astro.site || 'https://aistepschool.com').
           
           <div class="grid md:grid-cols-2 gap-8 mb-8">
             <!-- 保守（守り） -->
-            <div class="bg-white p-8 rounded-3xl border border-slate-200 hover:border-emerald-300 transition-colors shadow-sm flex flex-col justify-between">
+            <div class="bg-slate-50/50 p-8 rounded-3xl border border-slate-200 hover:border-emerald-300 transition-colors shadow-sm flex flex-col justify-between">
               <div>
                 <div class="flex justify-between items-center mb-4">
                   <span class="px-2.5 py-1 text-xs font-bold rounded-md bg-slate-100 text-slate-655">🛠️ 守りの対策</span>
@@ -269,18 +364,27 @@ const canonicalURL = new URL(baseUrl, Astro.site || 'https://aistepschool.com').
                 <p class="text-xs text-slate-500 mb-6 font-normal">※最低保証金額：5,000円 / 月</p>
                 
                 <ul class="space-y-3.5 text-slate-655 text-sm font-normal mb-8 border-t border-slate-100 pt-6">
-                  <li class="flex gap-2">🔹 営業時間の変更やメニューの随時微修正</li>
-                  <li class="flex gap-2">🔹 AIの評価基準アップデートへの自動追従</li>
-                  <li class="flex gap-2">🔹 サーバー保守、エラー管理、マップ情報の定期パトロール</li>
+                  <li class="flex items-start gap-2">
+                    <span class="shrink-0">🔹</span>
+                    <span>営業時間の変更やメニューの随時微修正</span>
+                  </li>
+                  <li class="flex items-start gap-2">
+                    <span class="shrink-0">🔹</span>
+                    <span>AIの評価基準アップデートへの自動追従</span>
+                  </li>
+                  <li class="flex items-start gap-2">
+                    <span class="shrink-0">🔹</span>
+                    <span>サーバー保守、エラー管理、マップ情報の定期パトロール</span>
+                  </li>
                 </ul>
               </div>
-              <div class="bg-slate-50 p-4 rounded-2xl text-center text-xs text-slate-500 font-normal border border-slate-100">
+              <div class="bg-slate-100/50 p-4 rounded-2xl text-center text-xs text-slate-500 font-normal border border-slate-200/60 mt-4">
                 例え話：「お店の鍵を閉め、看板を綺麗に保つ管理」
               </div>
             </div>
 
             <!-- コラム（攻め） -->
-            <div class="bg-white p-8 rounded-3xl border border-slate-200 hover:border-emerald-300 transition-colors shadow-sm flex flex-col justify-between">
+            <div class="bg-slate-50/50 p-8 rounded-3xl border border-slate-200 hover:border-emerald-300 transition-colors shadow-sm flex flex-col justify-between">
               <div>
                 <div class="flex justify-between items-center mb-4">
                   <span class="px-2.5 py-1 text-xs font-bold rounded-md bg-emerald-50 text-emerald-600 border border-emerald-100">✍️ 攻めの対策</span>
@@ -295,20 +399,24 @@ const canonicalURL = new URL(baseUrl, Astro.site || 'https://aistepschool.com').
                 <p class="text-xs text-slate-500 mb-6 font-normal">※最低保証金額：10,000円 / 月</p>
                 
                 <ul class="space-y-3.5 text-slate-655 text-sm font-normal mb-8 border-t border-slate-100 pt-6">
-                  <li class="flex gap-2">🔹 <strong>毎月4回のAIO特化型コラム執筆・投稿</strong></li>
-                  <li class="flex gap-2">🔹 AIが拾いやすいシチュエーションワードの追加・拡張</li>
-                  <li class="flex gap-2">🔹 地域トレンドや季節需要に合わせた文脈の埋め込み</li>
+                  <li class="flex items-start gap-2">
+                    <span class="shrink-0">🔹</span>
+                    <span><strong>毎月4回のAIO特化型コラム執筆・投稿</strong></span>
+                  </li>
+                  <li class="flex items-start gap-2">
+                    <span class="shrink-0">🔹</span>
+                    <span>AIが拾いやすいシチュエーションワードの追加・拡張</span>
+                  </li>
+                  <li class="flex items-start gap-2">
+                    <span class="shrink-0">🔹</span>
+                    <span>地域トレンドや季節需要に合わせた文脈の埋め込み</span>
+                  </li>
                 </ul>
               </div>
-              <div class="bg-slate-50 p-4 rounded-2xl text-center text-xs text-slate-500 font-normal border border-slate-100">
+              <div class="bg-slate-100/50 p-4 rounded-2xl text-center text-xs text-slate-500 font-normal border border-slate-200/60 mt-4">
                 例え話：「お店の前で毎日新しいチラシを配る営業」
               </div>
             </div>
-          </div>
-
-          <div class="bg-gradient-to-r from-emerald-500/10 to-teal-500/10 p-6 rounded-3xl border border-emerald-500/20 text-center max-w-2xl mx-auto shadow-sm">
-            <span class="px-3 py-0.5 text-[10px] font-bold rounded-full bg-emerald-100 text-emerald-700 uppercase tracking-wider mb-2 inline-block">おすすめ</span>
-            <p class="text-slate-800 text-sm font-bold">両方を組み合わせた「フルサポートパック（月額：年間売上の0.3%）」での運用が最も効果が高くおすすめです。</p>
           </div>
         </div>
 
@@ -317,7 +425,7 @@ const canonicalURL = new URL(baseUrl, Astro.site || 'https://aistepschool.com').
           <h3 class="text-xl font-bold text-slate-900 mb-8 pb-2 border-b border-slate-200 flex items-center gap-2">
             <span class="text-emerald-600">■</span> 3. スポット教育プラン
           </h3>
-          <div class="bg-white p-8 rounded-3xl border border-slate-200 hover:border-emerald-300 transition-colors shadow-sm max-w-3xl mx-auto">
+          <div class="bg-slate-50/50 p-8 rounded-3xl border border-slate-200 hover:border-emerald-300 transition-colors shadow-sm max-w-3xl mx-auto">
             <div class="flex justify-between items-start mb-4">
               <span class="px-2.5 py-1 text-xs font-bold rounded-md bg-amber-50 text-amber-700 border border-amber-100">自社でAIを内製化</span>
             </div>
@@ -327,9 +435,18 @@ const canonicalURL = new URL(baseUrl, Astro.site || 'https://aistepschool.com').
             <p class="text-slate-500 text-xs mb-6 font-normal">※都度申込ができる「単発チケット制」なので、足りない時にだけ追加できて安心です。</p>
             
             <ul class="space-y-3.5 text-slate-655 text-sm font-normal mb-8 border-t border-slate-100 pt-6">
-              <li class="flex gap-2">🔹 ChatGPT等を使った<strong>「AIが喜ぶFAQ」の大量生産ワークショップ</strong></li>
-              <li class="flex gap-2">🔹 口コミに対してAIを使って2分で<strong>「神返信」を作成するプロンプト伝授</strong></li>
-              <li class="flex gap-2">🔹 スタッフ様も同席可能（複数人での受講も追加料金なし）</li>
+              <li class="flex items-start gap-2">
+                <span class="shrink-0">🔹</span>
+                <span>ChatGPT等を使った<strong>「AIが喜ぶFAQ」の大量生産ワークショップ</strong></span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="shrink-0">🔹</span>
+                <span>口コミに対してAIを使って2分で<strong>「神返信」を作成するプロンプト伝授</strong></span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="shrink-0">🔹</span>
+                <span>スタッフ様も同席可能（複数人での受講も追加料金なし）</span>
+              </li>
             </ul>
           </div>
         </div>
@@ -338,13 +455,13 @@ const canonicalURL = new URL(baseUrl, Astro.site || 'https://aistepschool.com').
     </section>
 
     <!-- シミュレーターセクション -->
-    <section id="simulator" class="py-20 border-b border-slate-200/80 bg-white">
+    <section id="simulator" class="py-24 border-b border-slate-200/80 bg-slate-50/50">
       <div class="max-w-4xl mx-auto px-4">
         <span class="text-emerald-600 text-xs font-bold tracking-wider uppercase block text-center mb-2">Simulator</span>
-        <h2 class="text-3xl font-bold text-slate-900 text-center mb-4">料金シミュレーター</h2>
-        <p class="text-center text-slate-500 mb-16 max-w-xl mx-auto text-sm">店舗様の現在の「想定年商」を設定して、実際のプラン料金を計算できます。</p>
+        <h2 class="text-3xl font-bold text-slate-900 text-center mb-4"><span class="inline-block">料金シミュレーター</span></h2>
+        <p class="text-center text-slate-500 mb-16 max-w-xl mx-auto text-sm"><span class="inline-block">店舗様の現在の「想定年商」を設定して、</span><span class="inline-block">実際のプラン料金を計算できます。</span></p>
 
-        <div class="grid md:grid-cols-12 gap-8 items-center bg-slate-50 p-8 md:p-10 rounded-3xl border border-slate-200">
+        <div class="grid md:grid-cols-12 gap-8 items-center bg-white p-8 md:p-10 rounded-3xl border border-slate-200 shadow-sm">
           <!-- スライダー調整側 -->
           <div class="md:col-span-5 space-y-6">
             <h4 class="text-lg font-bold text-slate-900 flex items-center gap-2">
@@ -353,7 +470,7 @@ const canonicalURL = new URL(baseUrl, Astro.site || 'https://aistepschool.com').
             </h4>
             <div class="space-y-2">
               <p class="text-xs text-slate-400 font-normal">スライダーを左右に動かしてください：</p>
-              <div id="sim-revenue-text" class="text-3xl font-black text-emerald-600 text-center bg-white border border-slate-200 p-4 rounded-2xl shadow-sm font-sans">
+              <div id="sim-revenue-text" class="text-3xl font-black text-emerald-600 text-center bg-slate-50 border border-slate-200 p-4 rounded-2xl shadow-inner font-sans">
                 3,000万円
               </div>
             </div>
@@ -372,7 +489,7 @@ const canonicalURL = new URL(baseUrl, Astro.site || 'https://aistepschool.com').
               <span>2億円</span>
             </div>
             
-            <div class="bg-white p-4 rounded-2xl text-[11px] text-slate-500 leading-relaxed font-normal border border-slate-250/60 shadow-sm">
+            <div class="bg-slate-50 p-4 rounded-2xl text-[11px] text-slate-500 leading-relaxed font-normal border border-slate-200 shadow-inner">
               <span class="text-emerald-600 font-bold">📌 シミュレーション例</span><br>
               年商 3,000万円（月商 約250万円）の場合、初期最適化（1% = 30万円）と、月額保守（0.1% = 2,500円ですが最低保証が適用され <strong>5,000円/月</strong>）となります。
             </div>
@@ -381,7 +498,7 @@ const canonicalURL = new URL(baseUrl, Astro.site || 'https://aistepschool.com').
           <!-- 料金結果表示側 -->
           <div class="md:col-span-7 space-y-4">
             <!-- 既存HP最適化 -->
-            <div class="bg-white p-4 rounded-2xl border border-slate-200 flex justify-between items-center shadow-sm">
+            <div class="bg-slate-50/50 p-4 rounded-2xl border border-slate-200 flex justify-between items-center shadow-sm">
               <div>
                 <p class="text-xs text-indigo-600 font-bold">【既存HP】ホームページ最適化 (1%)</p>
                 <p class="text-[10px] text-slate-400 mt-1 font-normal">AIO納品パック初期費用（一括）</p>
@@ -391,7 +508,7 @@ const canonicalURL = new URL(baseUrl, Astro.site || 'https://aistepschool.com').
               </div>
             </div>
             <!-- 新規HP制作 -->
-            <div class="bg-white p-4 rounded-2xl border border-slate-200 flex justify-between items-center shadow-sm">
+            <div class="bg-slate-50/50 p-4 rounded-2xl border border-slate-200 flex justify-between items-center shadow-sm">
               <div>
                 <p class="text-xs text-emerald-600 font-bold">【新規制作】AI特化型HP完全構築 (3%)</p>
                 <p class="text-[10px] text-slate-400 mt-1 font-normal">完全新規HP構築初期費用（一括）</p>
@@ -401,7 +518,7 @@ const canonicalURL = new URL(baseUrl, Astro.site || 'https://aistepschool.com').
               </div>
             </div>
             <!-- 月額保守 -->
-            <div class="bg-white p-4 rounded-2xl border border-slate-200 flex justify-between items-center shadow-sm">
+            <div class="bg-slate-50/50 p-4 rounded-2xl border border-slate-200 flex justify-between items-center shadow-sm">
               <div>
                 <p class="text-xs text-slate-655 font-bold">【月額】月額保守パック (0.1%)</p>
                 <p class="text-[10px] text-slate-400 mt-1 font-normal">減点を防ぐ「守り」（※最低5,000円/月）</p>
@@ -411,7 +528,7 @@ const canonicalURL = new URL(baseUrl, Astro.site || 'https://aistepschool.com').
               </div>
             </div>
             <!-- コラム運用 -->
-            <div class="bg-white p-4 rounded-2xl border border-slate-200 flex justify-between items-center shadow-sm">
+            <div class="bg-slate-50/50 p-4 rounded-2xl border border-slate-200 flex justify-between items-center shadow-sm">
               <div>
                 <p class="text-xs text-emerald-600 font-bold">【月額】AI集客コラム運用パック (0.2%)</p>
                 <p class="text-[10px] text-slate-400 mt-1 font-normal">加点を狙う「攻め」（※最低10,000円/月）</p>
@@ -436,7 +553,7 @@ const canonicalURL = new URL(baseUrl, Astro.site || 'https://aistepschool.com').
     </section>
 
     <!-- 受講フローセクション -->
-    <section class="py-20 bg-slate-50 border-b border-slate-200/80">
+    <section class="py-24 bg-white border-b border-slate-200/85">
       <div class="max-w-5xl mx-auto px-4">
         <h2 class="text-3xl font-bold text-slate-900 text-center mb-4">お申し込みから導入の流れ</h2>
         <p class="text-center text-slate-500 mb-16 max-w-xl mx-auto text-sm">まずはお店の現状を診断することからスタートします。</p>
@@ -447,9 +564,9 @@ const canonicalURL = new URL(baseUrl, Astro.site || 'https://aistepschool.com').
             <div class="w-12 h-12 rounded-full bg-emerald-50 text-emerald-600 border border-emerald-100 flex items-center justify-center font-bold text-lg mb-6 shadow-sm">
               Step 1
             </div>
-            <h3 class="text-lg font-bold text-slate-900 mb-3">無料AIおすすめ度診断の申し込み</h3>
+            <h3 class="text-lg font-bold text-slate-900 mb-3 leading-snug"><span class="inline-block">無料AIおすすめ度診断の</span><span class="inline-block">お申し込み</span></h3>
             <p class="text-slate-500 text-sm leading-relaxed font-normal">
-              本ページ下部のフォームより、現在のお店のホームページURL、マップ情報などをお送りいただき、無料診断をお申し込みください。
+              <span class="inline-block">本ページ下部のフォームより、</span><span class="inline-block">現在のお店のホームページURL、</span><span class="inline-block">マップ情報などをお送りいただき、</span><span class="inline-block">無料診断をお申し込みください。</span>
             </p>
           </div>
 
@@ -458,9 +575,9 @@ const canonicalURL = new URL(baseUrl, Astro.site || 'https://aistepschool.com').
             <div class="w-12 h-12 rounded-full bg-emerald-50 text-emerald-600 border border-emerald-100 flex items-center justify-center font-bold text-lg mb-6 shadow-sm">
               Step 2
             </div>
-            <h3 class="text-lg font-bold text-slate-900 mb-3">診断レポート＆改善案のご提案</h3>
+            <h3 class="text-lg font-bold text-slate-900 mb-3 leading-snug"><span class="inline-block">診断レポート＆改善案の</span><span class="inline-block">ご提案</span></h3>
             <p class="text-slate-500 text-sm leading-relaxed font-normal">
-              AIから現在お店がどう見えているかをカルテ化し、必要なボトルネックの対策、お見積もりと最適なプランを丁寧にご提案します。
+              <span class="inline-block">AIから現在お店がどう見えているかを</span><span class="inline-block">カルテ化し、</span><span class="inline-block">必要なボトルネックの対策、</span><span class="inline-block">お見積もりと最適なプランを</span><span class="inline-block">丁寧にご提案します。</span>
             </p>
           </div>
 
@@ -469,53 +586,81 @@ const canonicalURL = new URL(baseUrl, Astro.site || 'https://aistepschool.com').
             <div class="w-12 h-12 rounded-full bg-emerald-50 text-emerald-600 border border-emerald-100 flex items-center justify-center font-bold text-lg mb-6 shadow-sm">
               Step 3
             </div>
-            <h3 class="text-lg font-bold text-slate-900 mb-3">ご契約・最適化作業の開始</h3>
+            <h3 class="text-lg font-bold text-slate-900 mb-3 leading-snug"><span class="inline-block">ご契約・最適化作業の開始</span></h3>
             <p class="text-slate-500 text-sm leading-relaxed font-normal">
-              内容にご納得いただけましたら契約となり、ホームページのHTML構造の改善、FAQ実装などAI検索対策を開始します。
+              <span class="inline-block">内容にご納得いただけましたら</span><span class="inline-block">契約となり、</span><span class="inline-block">ホームページのHTML構造の改善、</span><span class="inline-block">FAQ実装などAI検索対策を</span><span class="inline-block">開始します。</span>
             </p>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- 診断CTAセクション -->
-    <section class="py-24 bg-white relative overflow-hidden">
+    <!-- 診断CTA / お問い合わせセクション (メールも明記) -->
+    <section id="contact" class="py-24 bg-slate-50 relative overflow-hidden">
       <div class="absolute -bottom-40 -left-40 w-96 h-96 bg-emerald-50 rounded-full filter blur-3xl"></div>
       
-      <div class="max-w-4xl mx-auto px-4 relative text-center">
-        <h2 class="text-3xl md:text-4xl font-extrabold text-slate-900 mb-6 leading-tight">
-          あなたのお店はAI検索で推薦されますか？<br>
-          <span class="text-emerald-600">「無料AIおすすめ度診断」</span>実施中
-        </h2>
-        <p class="text-slate-600 text-base md:text-lg max-w-2xl mx-auto leading-relaxed mb-10 font-normal">
-          AI検索エンジン（ChatGPT / Gemini 等）から、現時点であなたのお店がどのような評価を受けているかを調査し、改善点がわかる「診断レポート」を無料で作成いたします。
-        </p>
+      <div class="max-w-4xl mx-auto px-4 relative">
+        <div class="text-center mb-16">
+          <h2 class="text-3xl md:text-4xl font-extrabold text-slate-900 mb-6 leading-tight">
+            あなたのお店はAI検索で推薦されますか？<br>
+            <span class="text-emerald-600">「無料AIおすすめ度診断」</span>実施中
+          </h2>
+          <p class="text-slate-600 text-base md:text-lg max-w-2xl mx-auto leading-relaxed mb-10 font-normal font-sans">
+            AI検索エンジン（ChatGPT / Gemini 等）から、現時点であなたのお店がどのような評価を受けているかを調査し、改善点がわかる「診断レポート」を無料で作成いたします。
+          </p>
+        </div>
         
-        <div class="bg-slate-50 p-8 rounded-3xl border border-slate-200 text-left max-w-xl mx-auto shadow-sm">
-          <h3 class="text-lg font-bold text-slate-900 mb-6 border-b border-slate-200 pb-3 flex items-center gap-2">
-            ✉️ 無料診断のお申し込み
-          </h3>
-          <div class="space-y-4">
-            <div>
-              <label class="block text-xs font-bold text-slate-600 mb-2">店舗名 / 会社名</label>
-              <input type="text" placeholder="例：AIカフェ 新宿店" class="w-full px-4 py-3 rounded-xl border border-slate-200 bg-white text-sm focus:outline-none focus:border-emerald-500" />
+        <div class="grid md:grid-cols-12 gap-8 items-start">
+          <!-- フォーム側 -->
+          <div class="md:col-span-7 bg-white p-8 rounded-3xl border border-slate-200 shadow-sm">
+            <h3 class="text-lg font-bold text-slate-900 mb-6 border-b border-slate-100 pb-3 flex items-center gap-2">
+              ✉️ フォームからのお申し込み
+            </h3>
+            <div class="space-y-4">
+              <div>
+                <label class="block text-xs font-bold text-slate-600 mb-2">店舗名 / 会社名</label>
+                <input type="text" placeholder="例：AIカフェ 新宿店" class="w-full px-4 py-3 rounded-xl border border-slate-200 bg-white text-sm focus:outline-none focus:border-emerald-500" />
+              </div>
+              <div>
+                <label class="block text-xs font-bold text-slate-600 mb-2">メールアドレス</label>
+                <input type="email" placeholder="example@aistepschool.com" class="w-full px-4 py-3 rounded-xl border border-slate-200 bg-white text-sm focus:outline-none focus:border-emerald-500" />
+              </div>
+              <div>
+                <label class="block text-xs font-bold text-slate-600 mb-2">現在お持ちのホームページURL</label>
+                <input type="url" placeholder="https://example.com" class="w-full px-4 py-3 rounded-xl border border-slate-200 bg-white text-sm focus:outline-none focus:border-emerald-500" />
+              </div>
+              <button onclick="alert('デモ送信：無料診断の受付を完了しました。（※本稼働時はお問い合わせ用メール等と連携します）')" class="w-full py-4 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-500 text-white font-bold shadow-md shadow-emerald-600/10 hover:opacity-90 transition-opacity text-center cursor-pointer mt-4">
+                無料診断レポートを申し込む
+              </button>
             </div>
-            <div>
-              <label class="block text-xs font-bold text-slate-600 mb-2">メールアドレス</label>
-              <input type="email" placeholder="example@aistepschool.com" class="w-full px-4 py-3 rounded-xl border border-slate-200 bg-white text-sm focus:outline-none focus:border-emerald-500" />
+          </div>
+
+          <!-- メール直接お問い合わせ側 (新規追加) -->
+          <div class="md:col-span-5 bg-gradient-to-br from-slate-900 to-indigo-950 text-white p-8 rounded-3xl shadow-md space-y-6">
+            <h3 class="text-lg font-bold text-emerald-400 border-b border-slate-800 pb-3 flex items-center gap-2">
+              📧 メールで直接相談する
+            </h3>
+            <p class="text-slate-300 text-xs leading-relaxed font-normal font-sans">
+              フォームへの入力が面倒な方や、集客について直接ご相談・ご質問されたい方は、以下のメールアドレスまで直接お気軽にお問い合わせください。
+            </p>
+            <div class="bg-slate-900/60 border border-slate-800 p-4 rounded-2xl text-center space-y-1">
+              <span class="text-[10px] text-slate-400 block font-bold uppercase tracking-wider">直接お問い合わせ先</span>
+              <a href="mailto:aistep.school@gmail.com" class="text-base sm:text-lg font-black text-emerald-400 hover:underline break-all">
+                aistep.school@gmail.com
+              </a>
             </div>
-            <div>
-              <label class="block text-xs font-bold text-slate-600 mb-2">現在お持ちのホームページURL（※お持ちの場合）</label>
-              <input type="url" placeholder="https://example.com" class="w-full px-4 py-3 rounded-xl border border-slate-200 bg-white text-sm focus:outline-none focus:border-emerald-500" />
+            <div class="space-y-2.5 text-xs text-slate-300 font-normal font-sans">
+              <p class="flex gap-2 items-start">
+                <span class="text-emerald-400">✓</span> 24時間受付中（2営業日以内にご返信）
+              </p>
+              <p class="flex gap-2 items-start">
+                <span class="text-emerald-400">✓</span> 集客のお悩みや診断依頼など何でもOK
+              </p>
             </div>
-            <button onclick="alert('デモ送信：無料診断の受付を完了しました。（※本稼働時はお問い合わせ用メール等と連携します）')" class="w-full py-4 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-500 text-white font-bold shadow-md shadow-emerald-600/10 hover:opacity-90 transition-opacity text-center cursor-pointer mt-4">
-              無料診断レポートを申し込む
-            </button>
           </div>
         </div>
       </div>
     </section>
-
   </main>
 
   <footer class="bg-white border-t border-slate-200 mt-auto">
