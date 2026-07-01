@@ -195,6 +195,92 @@ const canonicalURL = new URL(baseUrl, Astro.site || 'https://aistepschool.com').
         <h2 class="text-3xl font-bold text-slate-900 text-center mb-4">今のホームページで、AIに選ばれる自信はありますか？</h2>
         <p class="text-center text-slate-500 mb-16 max-w-xl mx-auto text-sm">マップ登録（MEO）だけでは、もうAIおすすめの上位に表示されません。</p>
 
+        <!-- 全体円グラフと土台解説エリア -->
+        <div class="grid md:grid-cols-12 gap-8 items-center bg-white p-8 md:p-10 rounded-3xl border border-slate-200 shadow-sm mb-12">
+          <!-- 左側：100%ドーナツ円グラフ -->
+          <div class="md:col-span-5 flex flex-col items-center justify-center">
+            <h3 class="text-base font-bold text-slate-900 mb-6 text-center">AI検索が参照する全ソース構成比</h3>
+            
+            <div class="relative w-48 h-48 flex items-center justify-center shrink-0">
+              <!-- ドーナツ型グラフ SVG (半径40, 外周251.3) -->
+              <svg class="absolute w-full h-full transform -rotate-90" viewBox="0 0 100 100">
+                <circle cx="50" cy="50" r="40" stroke="#f1f5f9" stroke-width="12" fill="transparent"/>
+                <!-- 1. 公式HP (24%) : 緑色 -->
+                <circle cx="50" cy="50" r="40" stroke="#10b981" stroke-width="12" stroke-dasharray="60.3 251.3" stroke-dashoffset="0" fill="transparent"/>
+                <!-- 2. 口コミ・評価 (16%) : 紺色 -->
+                <circle cx="50" cy="50" r="40" stroke="#6366f1" stroke-width="12" stroke-dasharray="40.2 251.3" stroke-dashoffset="-60.3" fill="transparent"/>
+                <!-- 3. 外部メディア (15%) : 青 -->
+                <circle cx="50" cy="50" r="40" stroke="#0ea5e9" stroke-width="12" stroke-dasharray="37.7 251.3" stroke-dashoffset="-100.5" fill="transparent"/>
+                <!-- 4. SNSシグナル (13%) : 黄色 -->
+                <circle cx="50" cy="50" r="40" stroke="#f59e0b" stroke-width="12" stroke-dasharray="32.7 251.3" stroke-dashoffset="-138.2" fill="transparent"/>
+                <!-- 5. マップ情報 (12%) : グレー -->
+                <circle cx="50" cy="50" r="40" stroke="#94a3b8" stroke-width="12" stroke-dasharray="30.2 251.3" stroke-dashoffset="-170.9" fill="transparent"/>
+                <!-- 6. プレスリリース (10%) : 紫 -->
+                <circle cx="50" cy="50" r="40" stroke="#a855f7" stroke-width="12" stroke-dasharray="25.1 251.3" stroke-dashoffset="-201.1" fill="transparent"/>
+                <!-- 7. その他 (10%) : ピンク -->
+                <circle cx="50" cy="50" r="40" stroke="#ec4899" stroke-width="12" stroke-dasharray="25.1 251.3" stroke-dashoffset="-226.2" fill="transparent"/>
+              </svg>
+              <!-- 中心ラベル -->
+              <div class="text-center z-10">
+                <span class="text-[10px] text-slate-400 font-bold block uppercase tracking-wider">合計</span>
+                <span class="text-3xl font-black text-slate-900 font-sans">100%</span>
+              </div>
+            </div>
+            
+            <!-- 凡例 -->
+            <div class="grid grid-cols-2 gap-x-4 gap-y-1.5 mt-6 text-[10px] text-slate-655 font-bold font-sans">
+              <div class="flex items-center gap-1.5">
+                <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 block"></span>
+                <span>公式HP: 24%</span>
+              </div>
+              <div class="flex items-center gap-1.5">
+                <span class="w-2.5 h-2.5 rounded-full bg-indigo-500 block"></span>
+                <span>口コミ: 16%</span>
+              </div>
+              <div class="flex items-center gap-1.5">
+                <span class="w-2.5 h-2.5 rounded-full bg-sky-500 block"></span>
+                <span>外部メディア: 15%</span>
+              </div>
+              <div class="flex items-center gap-1.5">
+                <span class="w-2.5 h-2.5 rounded-full bg-amber-500 block"></span>
+                <span>SNS投稿: 13%</span>
+              </div>
+              <div class="flex items-center gap-1.5">
+                <span class="w-2.5 h-2.5 rounded-full bg-slate-400 block"></span>
+                <span>マップ登録: 12%</span>
+              </div>
+              <div class="flex items-center gap-1.5">
+                <span class="w-2.5 h-2.5 rounded-full bg-purple-500 block"></span>
+                <span>プレスリリース: 10%</span>
+              </div>
+              <div class="flex items-center gap-1.5 col-span-2">
+                <span class="w-2.5 h-2.5 rounded-full bg-pink-500 block"></span>
+                <span>その他（サイテーション等）: 10%</span>
+              </div>
+            </div>
+          </div>
+          
+          <!-- 右側：なぜ自社HPが土台なのかの解説 -->
+          <div class="md:col-span-7 space-y-4">
+            <span class="text-xs font-bold text-emerald-600 bg-emerald-50 border border-emerald-100 px-2.5 py-1 rounded-md inline-block">結論：すべての対策はHPに繋がっている</span>
+            <h3 class="text-xl md:text-2xl font-black text-slate-900 leading-tight">
+              なぜ、他の48%対策も「自社ホームページ」がなければ効果が出ないのか？
+            </h3>
+            <div class="text-slate-655 text-sm leading-relaxed space-y-3 font-normal font-sans">
+              <p>
+                AI検索エンジン（ChatGPTやGemini等）は、情報を推薦する際に1つのソースだけを信用することはありません。
+                SNS（13%）や外部Webメディア（15%）での評判を認識したAIは、必ず<strong>「その情報の真偽を確かめるために、店舗の公式ホームページをクロールして照合（サイテーションの確認）」</strong>を行います。
+              </p>
+              <p>
+                つまり、土台となるホームページがAIに最適化されていなければ、たとえSNSや口コミ、ポータルをどれだけ頑張っても、AIは情報の整合性を確認できず、<strong>「実体の不確かな店舗」として評価を大幅に下げ（減点）てしまいます。</strong>
+              </p>
+              <p class="text-slate-900 font-bold bg-emerald-50 border border-emerald-100 p-4 rounded-xl">
+                ✨ 自社HPを最適化（AIO対策）することは、残りの48%の外部評価効果を「100%」フルに引き出すための、唯一にして絶対必要な土台なのです。
+              </p>
+            </div>
+          </div>
+        </div>
+
         <div class="grid md:grid-cols-3 gap-8 mb-16">
           <!-- 要素 1 -->
           <div class="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm flex flex-col justify-between hover:shadow-md transition-shadow relative">
@@ -205,9 +291,16 @@ const canonicalURL = new URL(baseUrl, Astro.site || 'https://aistepschool.com').
                 AIが最も信用するのは、店舗公式サイト内の「HTML構造」と「具体的な文章（Q&Aなど）」です。
               </p>
             </div>
-            <div class="border-t border-slate-100 pt-4 flex justify-between items-end">
-              <span class="text-xs text-slate-400">AI影響度</span>
-              <span class="text-3xl font-black text-emerald-600 font-sans">24%</span>
+            <div class="border-t border-slate-100 pt-4 flex justify-between items-center">
+              <span class="text-xs text-slate-400 font-bold">AI検索への<br/>影響度</span>
+              <!-- ドーナツ型円グラフ -->
+              <div class="relative w-16 h-16 flex items-center justify-center shrink-0">
+                <svg class="absolute w-full h-full transform -rotate-90" viewBox="0 0 60 60">
+                  <circle cx="30" cy="30" r="24" class="text-slate-100" stroke-width="5" stroke="currentColor" fill="transparent"/>
+                  <circle cx="30" cy="30" r="24" class="text-emerald-500" stroke-width="5" stroke-dasharray="150.8" stroke-dashoffset="114.6" stroke-linecap="round" stroke="currentColor" fill="transparent"/>
+                </svg>
+                <span class="text-sm font-black text-slate-900 font-sans">24%</span>
+              </div>
             </div>
           </div>
 
@@ -220,9 +313,16 @@ const canonicalURL = new URL(baseUrl, Astro.site || 'https://aistepschool.com').
                 直近3ヶ月以内の具体的な「キーワード（文脈）」を含んだリアルな口コミがAIの推薦エンジンを動かします。
               </p>
             </div>
-            <div class="border-t border-slate-100 pt-4 flex justify-between items-end">
-              <span class="text-xs text-slate-400">AI影響度</span>
-              <span class="text-3xl font-black text-indigo-600 font-sans">16%</span>
+            <div class="border-t border-slate-100 pt-4 flex justify-between items-center">
+              <span class="text-xs text-slate-400 font-bold">AI検索への<br/>影響度</span>
+              <!-- ドーナツ型円グラフ -->
+              <div class="relative w-16 h-16 flex items-center justify-center shrink-0">
+                <svg class="absolute w-full h-full transform -rotate-90" viewBox="0 0 60 60">
+                  <circle cx="30" cy="30" r="24" class="text-slate-100" stroke-width="5" stroke="currentColor" fill="transparent"/>
+                  <circle cx="30" cy="30" r="24" class="text-indigo-500" stroke-width="5" stroke-dasharray="150.8" stroke-dashoffset="126.7" stroke-linecap="round" stroke="currentColor" fill="transparent"/>
+                </svg>
+                <span class="text-sm font-black text-slate-900 font-sans">16%</span>
+              </div>
             </div>
           </div>
 
@@ -235,9 +335,16 @@ const canonicalURL = new URL(baseUrl, Astro.site || 'https://aistepschool.com').
                 Googleマップ等の登録情報の関連度は相対的に低下。登録していること自体は最低限の前提条件となりました。
               </p>
             </div>
-            <div class="border-t border-slate-100 pt-4 flex justify-between items-end">
-              <span class="text-xs text-slate-400">AI影響度</span>
-              <span class="text-3xl font-black text-slate-500 font-sans">12%</span>
+            <div class="border-t border-slate-100 pt-4 flex justify-between items-center">
+              <span class="text-xs text-slate-400 font-bold">AI検索への<br/>影響度</span>
+              <!-- ドーナツ型円グラフ -->
+              <div class="relative w-16 h-16 flex items-center justify-center shrink-0">
+                <svg class="absolute w-full h-full transform -rotate-90" viewBox="0 0 60 60">
+                  <circle cx="30" cy="30" r="24" class="text-slate-100" stroke-width="5" stroke="currentColor" fill="transparent"/>
+                  <circle cx="30" cy="30" r="24" class="text-slate-400" stroke-width="5" stroke-dasharray="150.8" stroke-dashoffset="132.7" stroke-linecap="round" stroke="currentColor" fill="transparent"/>
+                </svg>
+                <span class="text-sm font-black text-slate-900 font-sans">12%</span>
+              </div>
             </div>
           </div>
         </div>
@@ -250,6 +357,36 @@ const canonicalURL = new URL(baseUrl, Astro.site || 'https://aistepschool.com').
               <h4 class="text-lg font-bold text-slate-800">予約サイト・ポータル掲載など</h4>
             </div>
             <p class="text-2xl font-black text-slate-500"><span class="inline-block">「ショッピングモールの</span><span class="inline-block">1区画」</span></p>
+            
+            <!-- モール型 接続説明SVG -->
+            <div class="w-full bg-slate-100 rounded-2xl p-4 flex items-center justify-center border border-slate-200/60 h-28 my-2">
+              <svg viewBox="0 0 350 80" class="w-full max-w-sm h-full" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <!-- AI検索エンジン -->
+                <rect x="10" y="20" width="60" height="40" rx="8" fill="#e2e8f0" stroke="#94a3b8" stroke-width="2"/>
+                <text x="40" y="44" fill="#475569" font-size="10" font-weight="bold" text-anchor="middle">AI検索</text>
+                
+                <!-- 矢印破線 (AI -> ポータル) -->
+                <path d="M70 40H120" stroke="#94a3b8" stroke-width="2" stroke-dasharray="4 4"/>
+                
+                <!-- ポータルサイト -->
+                <rect x="120" y="10" width="100" height="60" rx="8" fill="#cbd5e1" stroke="#64748b" stroke-width="2"/>
+                <text x="170" y="38" fill="#334155" font-size="10" font-weight="bold" text-anchor="middle">ポータルサイト</text>
+                <text x="170" y="52" fill="#475569" font-size="8" text-anchor="middle">（共通フォーマット）</text>
+                
+                <!-- 遮断壁 -->
+                <line x1="230" y1="15" x2="230" y2="65" stroke="#ef4444" stroke-width="3"/>
+                <text x="230" y="10" fill="#ef4444" font-size="8" font-weight="bold" text-anchor="middle">遮断</text>
+                
+                <!-- 自社店舗 -->
+                <rect x="250" y="20" width="80" height="40" rx="8" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="2"/>
+                <text x="290" y="40" fill="#94a3b8" font-size="10" font-weight="bold" text-anchor="middle">あなたのお店</text>
+                <text x="290" y="52" fill="#cbd5e1" font-size="8" text-anchor="middle">（詳細が届かない）</text>
+                
+                <!-- 中継手数料マーク -->
+                <circle cx="95" cy="30" r="10" fill="#fee2e2" stroke="#fca5a5"/>
+                <text x="95" y="33" fill="#ef4444" font-size="8" font-weight="bold" text-anchor="middle">￥</text>
+              </svg>
+            </div>
             <p class="text-slate-600 text-sm leading-relaxed font-normal">
               決められた共通フォーマットの中に、お店の情報を当てはめるだけ。AI向けに裏側の「HTML構造のプチ改善」や「自由なFAQ設置」を自分たちで行うことは不可能です。
             </p>
@@ -261,6 +398,46 @@ const canonicalURL = new URL(baseUrl, Astro.site || 'https://aistepschool.com').
               <h4 class="text-lg font-bold text-emerald-600">AIに最適化した自社ホームページ</h4>
             </div>
             <p class="text-2xl font-black text-emerald-600"><span class="inline-block">「独立した自分だけの</span><span class="inline-block">路面店」</span></p>
+            
+            <!-- 路面店型 接続説明SVG -->
+            <div class="w-full bg-emerald-50/50 rounded-2xl p-4 flex items-center justify-center border border-emerald-100 h-28 my-2 overflow-hidden relative">
+              <!-- アニメーション用の輝くエフェクト背景 -->
+              <div class="absolute inset-0 bg-gradient-to-r from-transparent via-emerald-100/10 to-transparent animate-[pulse_3s_infinite]"></div>
+              
+              <svg viewBox="0 0 350 80" class="w-full max-w-sm h-full relative z-10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                  <!-- 光るパルス用グラデーション -->
+                  <linearGradient id="glowGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stop-color="#10b981" stop-opacity="0.2"/>
+                    <stop offset="50%" stop-color="#10b981" stop-opacity="1"/>
+                    <stop offset="100%" stop-color="#06b6d4" stop-opacity="0.2"/>
+                  </linearGradient>
+                </defs>
+                
+                <!-- AI検索エンジン -->
+                <rect x="10" y="20" width="60" height="40" rx="8" fill="#ecfdf5" stroke="#10b981" stroke-width="2"/>
+                <text x="40" y="44" fill="#047857" font-size="10" font-weight="bold" text-anchor="middle">AI検索</text>
+                
+                <!-- 輝くダイレクトパス -->
+                <path d="M70 40H250" stroke="#cbd5e1" stroke-width="3" stroke-linecap="round"/>
+                <path d="M70 40H250" stroke="url(#glowGrad)" stroke-width="3" stroke-linecap="round" stroke-dasharray="30 150">
+                  <animate attributeName="stroke-dashoffset" values="180;0" dur="2.5s" repeatCount="indefinite" />
+                </path>
+                
+                <!-- 双方向接続矢印 -->
+                <path d="M245 35L250 40L245 45" stroke="#06b6d4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M75 35L70 40L75 45" stroke="#10b981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                
+                <!-- 直接通信テキスト -->
+                <rect x="105" y="10" width="110" height="18" rx="9" fill="#10b981" />
+                <text x="160" y="22" fill="#ffffff" font-size="8" font-weight="bold" text-anchor="middle">1対1で直接接続</text>
+                
+                <!-- 自社店舗（路面店型） -->
+                <rect x="250" y="20" width="90" height="40" rx="8" fill="#e0f2fe" stroke="#0284c7" stroke-width="2"/>
+                <text x="295" y="40" fill="#0369a1" font-size="10" font-weight="bold" text-anchor="middle">自社ホームページ</text>
+                <text x="295" y="52" fill="#0284c7" font-size="8" font-weight="bold" text-anchor="middle">（AI構造化データ）</text>
+              </svg>
+            </div>
             <p class="text-slate-600 text-sm leading-relaxed font-normal">
               看板から店内のこだわり、AIが一番読み取りやすい「1対1のFAQ（よくある質問）」を自由自在に配置。AIに「地域で最もおすすめの店舗」として最速で認識されます。
             </p>
