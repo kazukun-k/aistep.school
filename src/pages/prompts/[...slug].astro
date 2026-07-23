@@ -1,0 +1,249 @@
+---
+import { getCollection } from 'astro:content';
+
+// 動的ルートのパス一覧を生成
+export async function getStaticPaths() {
+  const prompts = await getCollection('prompts', ({ data }) => {
+    return data.isPublished;
+  });
+
+  return prompts.map((prompt) => ({
+    params: { slug: prompt.slug },
+    props: { prompt },
+  }));
+}
+
+// プロンプトデータをPropsから取得
+const { prompt } = Astro.props;
+const { Content } = await prompt.render();
+const { title, description, category, target, difficulty, recommendedAI, publishDate } = prompt.data;
+
+const baseUrl = import.meta.env.BASE_URL;
+
+// canonical URL の生成
+const canonicalURL = new URL(Astro.url.pathname, Astro.site || 'https://example.com').toString();
+---
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{title} - 実践プロンプト集 - 生成AIStepSchool</title>
+  <meta name="description" content={description || `${title}のプロンプト詳細ページ。コピーしてすぐに使えます。`} />
+  <link rel="canonical" href={canonicalURL} />
+  <!-- OGP Tags -->
+  <meta property="og:title" content={`${title} - 実践プロンプト集 - 生成AIStepSchool`} />
+  <meta property="og:description" content={description || `${title}のプロンプト詳細ページ。コピーしてすぐに使えます。`} />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content={canonicalURL} />
+  <meta property="og:image" content={new URL(`${baseUrl}images/instructor_avatar.png`, Astro.site || 'https://example.com').toString()} />
+  <meta property="og:site_name" content="生成AIStepSchool" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
+
+  <style is:global>
+    /* マークダウンコンテンツ内のコードブロックのスタイルカスタマイズ */
+    .prose pre {
+      background-color: #0f172a !important; /* Slate 900 */
+      border: 1px solid rgba(255, 255, 255, 0.1) !important;
+      border-radius: 20px !important;
+      padding: 1.5rem !important;
+      margin-top: 1.5rem !important;
+      margin-bottom: 1.5rem !important;
+      overflow-x: auto !important;
+      position: relative !important;
+      box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5) !important;
+    }
+    .prose code {
+      font-family: 'Fira Code', Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace !important;
+      font-size: 0.9em !important;
+      color: #e2e8f0 !important; /* Slate 200 */
+      background: transparent !important;
+      padding: 0 !important;
+      border-radius: 0 !important;
+    }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col font-sans">
+  <header class="border-b border-slate-200 bg-white/95 backdrop-blur sticky top-0 z-50 shadow-sm">
+    <div class="max-w-6xl mx-auto px-4 py-4 flex flex-row justify-between items-center gap-4">
+      <a href={baseUrl} class="text-lg sm:text-xl font-black bg-gradient-to-r from-indigo-600 via-purple-600 to-cyan-600 bg-clip-text text-transparent tracking-tight shrink-0">
+        生成AIStepSchool
+      </a>
+      <nav class="flex gap-2 sm:gap-4 text-xs sm:text-sm font-semibold items-center overflow-x-auto no-scrollbar py-1">
+        <a href={baseUrl} class="hover:text-indigo-600 text-slate-600 transition-colors shrink-0">Home</a>
+        <a href={`${baseUrl}articles`} class="hover:text-indigo-600 text-slate-600 transition-colors shrink-0">Articles</a>
+        <a href={`${baseUrl}prompts`} class="hover:text-indigo-600 text-slate-600 transition-colors shrink-0">Prompts</a>
+        <a href={`${baseUrl}course`} class="px-3 py-1.5 sm:px-4 sm:py-1.5 rounded-full bg-gradient-to-r from-indigo-600 to-cyan-600 text-white font-semibold text-[10px] sm:text-xs shadow-md shadow-indigo-600/10 hover:opacity-90 transition-opacity shrink-0 font-sans">AI School</a>
+        <a href={`${baseUrl}aio`} class="px-3 py-1.5 sm:px-4 sm:py-1.5 rounded-full bg-gradient-to-r from-emerald-600 to-teal-500 text-white font-semibold text-[10px] sm:text-xs shadow-md shadow-emerald-600/10 hover:opacity-90 transition-opacity shrink-0 font-sans">集客に悩む店舗様へ</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- メインコンテンツ -->
+  <main class="flex-grow max-w-4xl w-full mx-auto px-4 py-12">
+    <!-- 戻るリンク -->
+    <a href={`${baseUrl}prompts`} class="inline-flex items-center text-sm text-slate-500 hover:text-indigo-600 mb-8 transition-colors group">
+      <span class="mr-1 group-hover:-translate-x-1 transition-transform">&larr;</span> プロンプト一覧へ戻る
+    </a>
+
+    <!-- プロンプトヘッダー -->
+    <header class="mb-10 bg-white border border-slate-200 rounded-3xl p-6 md:p-8 shadow-sm relative overflow-hidden">
+      <div class="absolute -right-20 -top-20 w-44 h-44 bg-indigo-500/5 rounded-full filter blur-xl"></div>
+      
+      <div class="flex flex-wrap items-center gap-3 mb-4 relative z-10">
+        <span class="px-2.5 py-0.5 text-xs font-semibold rounded-full bg-indigo-50 text-indigo-600 border border-indigo-100">
+          {category}
+        </span>
+        <span class={`px-2.5 py-0.5 text-xs font-semibold rounded-full border ${
+          difficulty === '初級' 
+          ? 'bg-emerald-50 text-emerald-600 border-emerald-100'
+          : difficulty === '中級'
+          ? 'bg-amber-50 text-amber-600 border-amber-100'
+          : 'bg-rose-50 text-rose-600 border-rose-100'
+        }`}>
+          難易度: {difficulty}
+        </span>
+        <span class="text-xs text-slate-400 font-normal">
+          公開日: {publishDate.toLocaleDateString('ja-JP')}
+        </span>
+      </div>
+
+      <h1 class="text-2xl md:text-4xl font-extrabold leading-tight text-slate-900 mb-6 relative z-10">
+        {title}
+      </h1>
+      
+      {description && (
+        <p class="text-slate-600 text-sm md:text-base border-l-4 border-indigo-600 pl-4 py-1 leading-relaxed font-normal relative z-10">
+          {description}
+        </p>
+      )}
+
+      <div class="border-t border-slate-100 pt-6 mt-6 grid grid-cols-2 gap-4 text-xs md:text-sm">
+        <div>
+          <span class="text-slate-400 block mb-1">主な対象・目的:</span>
+          <strong class="text-slate-700 font-bold">{target}</strong>
+        </div>
+        <div>
+          <span class="text-slate-400 block mb-1">推奨するAIツール:</span>
+          <strong class="text-indigo-600 font-bold bg-indigo-50 px-2 py-0.5 rounded border border-indigo-100/50 inline-block">{recommendedAI}</strong>
+        </div>
+      </div>
+    </header>
+
+    <!-- レンダリングされたマークダウンコンテンツ -->
+    <div class="prose max-w-none font-normal leading-relaxed text-slate-700 prose-slate prose-headings:font-bold prose-headings:text-slate-900 prose-h2:text-xl md:prose-h2:text-2xl prose-h2:border-b prose-h2:border-slate-200 prose-h2:pb-3 prose-h2:mt-10 prose-a:text-indigo-600 hover:prose-a:text-indigo-500">
+      <Content />
+    </div>
+
+    <!-- お問い合わせ・教室への誘導エリア -->
+    <div class="mt-20 p-8 md:p-12 rounded-3xl bg-gradient-to-br from-indigo-900 via-slate-900 to-slate-950 text-white relative overflow-hidden text-center shadow-lg">
+      <div class="absolute top-0 right-0 w-80 h-80 bg-indigo-500/10 rounded-full filter blur-3xl"></div>
+      <div class="absolute -bottom-20 -left-20 w-60 h-60 bg-cyan-500/10 rounded-full filter blur-2xl"></div>
+      
+      <div class="relative z-10 max-w-2xl mx-auto">
+        <h3 class="text-xl md:text-2xl font-bold mb-3">プロンプトを実務に組み込んでみませんか？</h3>
+        <p class="text-slate-300 text-xs md:text-sm mb-8 leading-relaxed font-normal">
+          「プロンプトの使い方をもっと詳しく学びたい」「自社の特定業務を完全に自動化する専用の指示文がほしい」など、AIのビジネス活用でお悩みの方はお気軽にご相談ください。初心者向けのオンライン個別教室も随時開催しております。
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a href={`${baseUrl}course`} class="px-6 py-3 rounded-full bg-gradient-to-r from-indigo-500 to-cyan-500 hover:opacity-90 transition-opacity font-bold text-xs sm:text-sm text-white text-center shadow-md shadow-indigo-600/10">
+            AISTEP個別コースを見る
+          </a>
+          <a href="mailto:aistep.school@gmail.com?subject=%E3%80%90%E3%81%8A%E5%95%8F%E3%81%84%E5%90%88%E3%82%8F%E3%81%9B%E3%83%BB%E7%84%A1%E6%96%99%E7%9B%B8%E8%AB%87%E3%80%91%E3%83%9B%E3%83%BC%E3%83%A0%E3%83%9A%E3%83%BC%E3%82%B8%E3%82%88%E3%82%8A" class="px-6 py-3 rounded-full bg-white/10 border border-white/20 hover:bg-white/20 transition-colors font-bold text-xs sm:text-sm text-white text-center">
+            無料相談・お問い合わせ
+          </a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- フッター -->
+  <footer class="border-t border-slate-200 bg-white py-12 text-center text-slate-500 text-sm mt-20 shadow-inner">
+    <div class="max-w-6xl mx-auto px-4">
+      <p>&copy; {new Date().getFullYear()} 生成AIStepSchool. Built with Astro & Tailwind CSS.</p>
+    </div>
+  </footer>
+
+  <!-- コピーボタンとトースト通知の動的実装スクリプト -->
+  <script>
+    const blocks = document.querySelectorAll('pre');
+
+    blocks.forEach((block) => {
+      // 親コンテナの位置情報を相対に設定
+      block.style.position = 'relative';
+      
+      // コピーボタンの作成
+      const button = document.createElement('button');
+      // ボタンのスタイル定義（グラスモルフィズム風）
+      button.className = 'copy-btn absolute top-3 right-3 p-2 rounded-lg bg-slate-800/80 border border-slate-700/80 hover:bg-slate-700/80 text-slate-300 hover:text-white transition-all cursor-pointer text-xs font-semibold flex items-center gap-1.5 z-20 shadow-sm';
+      button.innerHTML = `
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"></rect><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path></svg>
+        <span>コピー</span>
+      `;
+
+      block.appendChild(button);
+
+      // コピー動作の実装
+      button.addEventListener('click', async () => {
+        const codeElement = block.querySelector('code');
+        const textToCopy = codeElement ? codeElement.innerText : block.innerText;
+
+        try {
+          await navigator.clipboard.writeText(textToCopy);
+          
+          // コピー完了時の表示切り替え
+          button.innerHTML = `
+            <svg class="w-3.5 h-3.5 text-emerald-400" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            <span class="text-emerald-400">コピー完了!</span>
+          `;
+          
+          // トースト通知の呼び出し
+          showToast("プロンプトをコピーしました！");
+
+          // 2.5秒後に表示を戻す
+          setTimeout(() => {
+            button.innerHTML = `
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"></rect><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path></svg>
+              <span>コピー</span>
+            `;
+          }, 2500);
+        } catch (err) {
+          console.error('Failed to copy: ', err);
+          showToast("コピーに失敗しました。選択して手動でコピーしてください。");
+        }
+      });
+    });
+
+    // トースト通知を表示する関数
+    function showToast(message) {
+      let toast = document.getElementById('toast');
+      if (!toast) {
+        toast = document.createElement('div');
+        toast.id = 'toast';
+        // トーストのスタイル（プレミアムダークテーマ）
+        toast.className = 'fixed bottom-6 right-6 px-6 py-4 rounded-full bg-slate-900/95 text-white text-xs sm:text-sm font-bold shadow-2xl border border-slate-800 transition-all duration-300 transform translate-y-12 opacity-0 z-50 flex items-center gap-2.5 backdrop-blur';
+        document.body.appendChild(toast);
+      }
+      
+      toast.innerHTML = `
+        <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><polyline points="12 8 12 12 16 14"></polyline></svg>
+        <span>${message}</span>
+      `;
+      
+      // アニメーション表示
+      toast.classList.remove('translate-y-12', 'opacity-0');
+      toast.classList.add('translate-y-0', 'opacity-100');
+
+      // 3秒後に消去
+      setTimeout(() => {
+        toast.classList.remove('translate-y-0', 'opacity-100');
+        toast.classList.add('translate-y-12', 'opacity-0');
+      }, 3000);
+    }
+  </script>
+</body>
+</html>

@@ -14,7 +14,22 @@ const articlesCollection = defineCollection({
   }),
 });
 
+const promptsCollection = defineCollection({
+  type: 'content',
+  schema: z.object({
+    title: z.string(),
+    description: z.string(),
+    category: z.string(),
+    target: z.string(),
+    difficulty: z.enum(['初級', '中級', '上級']),
+    recommendedAI: z.string(),
+    publishDate: z.coerce.date(),
+    isPublished: z.boolean().default(true),
+  }),
+});
+
 // コレクションをエクスポート
 export const collections = {
   articles: articlesCollection,
+  prompts: promptsCollection,
 };
