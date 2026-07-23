@@ -1,27 +1,14 @@
 const fs = require('fs');
 const path = require('path');
-const { createCanvas, loadImage, GlobalFonts } = require('@napi-rs/canvas');
+const { createCanvas, GlobalFonts } = require('@napi-rs/canvas');
 
 // Paths
 const resourcesDir = path.join(__dirname, '..', 'resources');
 const fontsDir = path.join(resourcesDir, 'fonts');
-const bgDir = path.join(resourcesDir, 'backgrounds');
 
-const FONT_URL = "https://raw.githubusercontent.com/google/fonts/main/ofl/sawarabigothic/SawarabiGothic-Regular.ttf";
-const FONT_PATH = path.join(fontsDir, 'SawarabiGothic-Regular.ttf');
-
-const BG_URLS = [
-  "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1200&h=630&q=80", // Tech workspace
-  "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1200&h=630&q=80", // Charts/Laptop
-  "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?auto=format&fit=crop&w=1200&h=630&q=80", // Working at laptop
-  "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=1200&h=630&q=80", // Team working
-  "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1200&h=630&q=80", // Network/Abstract tech
-  "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1200&h=630&q=80", // Microchip/Technology
-  "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=1200&h=630&q=80", // Code on screen/Digital
-  "https://images.unsplash.com/photo-1531297484001-80022131f5a1?auto=format&fit=crop&w=1200&h=630&q=80", // Laptop/Modern workspace
-  "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=1200&h=630&q=80", // Cyber security/Tech
-  "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?auto=format&fit=crop&w=1200&h=630&q=80"  // Tech equipment/Programming
-];
+// Using Zen Kaku Gothic New Bold for higher quality Japanese typography
+const FONT_URL = "https://github.com/google/fonts/raw/main/ofl/zenkakugothicnew/ZenKakuGothicNew-Bold.ttf";
+const FONT_PATH = path.join(fontsDir, 'zen-kaku-gothic-new-bold.ttf');
 
 // Helper to download a file
 async function downloadFile(url, destPath) {
@@ -37,26 +24,18 @@ async function downloadFile(url, destPath) {
   console.log(`Successfully downloaded: ${destPath}`);
 }
 
-// Ensure fonts and backgrounds exist
+// Ensure fonts resource exists and register it
 async function ensureResources() {
-  // 1. Download Font if missing
   if (!fs.existsSync(FONT_PATH)) {
-    console.log("Font not found. Downloading Sawarabi Gothic...");
+    console.log("Font not found. Downloading Zen Kaku Gothic New Bold...");
     await downloadFile(FONT_URL, FONT_PATH);
   }
   
-  // Register font
-  GlobalFonts.registerFromPath(FONT_PATH, 'SawarabiGothic');
-
-  // 2. Download Backgrounds if missing
-  if (!fs.existsSync(bgDir) || fs.readdirSync(bgDir).length < BG_URLS.length) {
-    console.log("Background templates not found. Downloading backgrounds from Unsplash...");
-    for (let i = 0; i < BG_URLS.length; i++) {
-      const bgPath = path.join(bgDir, `bg-${i + 1}.jpg`);
-      if (!fs.existsSync(bgPath)) {
-        await downloadFile(BG_URLS[i], bgPath);
-      }
-    }
+  // Register font for canvas use
+  try {
+    GlobalFonts.registerFromPath(FONT_PATH, 'ZenKakuGothicNew');
+  } catch (err) {
+    console.error("Failed to register font:", err);
   }
 }
 
@@ -76,7 +55,7 @@ function drawRoundedRect(ctx, x, y, width, height, radius) {
 }
 
 /**
- * Generates an eyecatch image with text overlay on a random background.
+ * Generates an eyecatch image with text overlay on a beautiful gradient background.
  * @param {string} category - The category of the article (e.g. "プロンプト")
  * @param {string} text - Catchphrase with optional newlines (e.g. "AIとプロンプトで瞬時に\n箇条書きが\n「神文章」に！")
  * @param {string} outputPath - Path to write the output image (e.g. "public/images/output.png")
@@ -84,98 +63,157 @@ function drawRoundedRect(ctx, x, y, width, height, radius) {
 async function generateEyecatch(category, text, outputPath) {
   await ensureResources();
 
-  // 1. Pick a random background
-  const bgFiles = fs.readdirSync(bgDir).filter(file => file.endsWith('.jpg'));
-  if (bgFiles.length === 0) throw new Error("No background images available.");
-  const randomBg = bgFiles[Math.floor(Math.random() * bgFiles.length)];
-  const bgPath = path.join(bgDir, randomBg);
-
-  // 2. Load background image
-  const bgImg = await loadImage(bgPath);
-
-  // 3. Create canvas
+  // 1. Create canvas (standard OGP size)
   const canvas = createCanvas(1200, 630);
   const ctx = canvas.getContext('2d');
 
-  // Draw background image
-  ctx.drawImage(bgImg, 0, 0, 1200, 630);
+  // 2. Draw Premium Dark Gradient Background
+  const bgGrad = ctx.createLinearGradient(0, 0, 1200, 630);
+  bgGrad.addColorStop(0, '#0b0f19');   // Deepest dark blue
+  bgGrad.addColorStop(0.5, '#1e1b4b'); // Deep indigo
+  bgGrad.addColorStop(1, '#2e1065');   // Dark violet
+  ctx.fillStyle = bgGrad;
+  ctx.fillRect(0, 0, 1200, 630);
 
-  // 4. Draw central white card with shadow
-  const cardW = 820;
-  const cardH = 390;
-  const cardX = (1200 - cardW) / 2;
-  const cardY = (630 - cardH) / 2 + 10; // Slightly shifted down for a balanced look
-
-  ctx.shadowColor = 'rgba(15, 23, 42, 0.15)';
-  ctx.shadowBlur = 35;
-  ctx.shadowOffsetX = 0;
-  ctx.shadowOffsetY = 15;
-
-  ctx.fillStyle = 'rgba(255, 255, 255, 0.97)';
-  drawRoundedRect(ctx, cardX, cardY, cardW, cardH, 24);
+  // 3. Draw Glow effects (Screen blend)
+  ctx.save();
+  ctx.globalCompositeOperation = 'screen';
+  
+  // Cyan neon glow at top-right
+  const cyanGlow = ctx.createRadialGradient(1050, 150, 0, 1050, 150, 500);
+  cyanGlow.addColorStop(0, 'rgba(6, 182, 212, 0.12)'); // Cyan 500
+  cyanGlow.addColorStop(1, 'rgba(6, 182, 212, 0)');
+  ctx.fillStyle = cyanGlow;
+  ctx.beginPath();
+  ctx.arc(1050, 150, 500, 0, Math.PI * 2);
   ctx.fill();
 
-  // Disable shadow for text/inner elements
-  ctx.shadowBlur = 0;
-  ctx.shadowOffsetY = 0;
+  // Violet neon glow at bottom-left
+  const violetGlow = ctx.createRadialGradient(150, 480, 0, 150, 480, 500);
+  violetGlow.addColorStop(0, 'rgba(168, 85, 247, 0.15)'); // Purple 500
+  violetGlow.addColorStop(1, 'rgba(168, 85, 247, 0)');
+  ctx.fillStyle = violetGlow;
+  ctx.beginPath();
+  ctx.arc(150, 480, 500, 0, Math.PI * 2);
+  ctx.fill();
+  
+  ctx.restore();
 
-  // Add subtle border to the card
-  ctx.strokeStyle = 'rgba(99, 102, 241, 0.08)';
+  // 4. Draw Central Glassmorphism Card
+  const cardW = 980;
+  const cardH = 440;
+  const cardX = (1200 - cardW) / 2;
+  const cardY = (630 - cardH) / 2;
+
+  // Card shadow
+  ctx.save();
+  ctx.shadowColor = 'rgba(0, 0, 0, 0.45)';
+  ctx.shadowBlur = 40;
+  ctx.shadowOffsetX = 0;
+  ctx.shadowOffsetY = 20;
+
+  // Semi-transparent card fill
+  ctx.fillStyle = 'rgba(15, 23, 42, 0.65)'; // Dark Slate semi-transparent
+  drawRoundedRect(ctx, cardX, cardY, cardW, cardH, 32);
+  ctx.fill();
+  ctx.restore();
+
+  // Subtle gradient border on card
+  const borderGrad = ctx.createLinearGradient(cardX, cardY, cardX + cardW, cardY + cardH);
+  borderGrad.addColorStop(0, 'rgba(255, 255, 255, 0.2)');
+  borderGrad.addColorStop(0.5, 'rgba(99, 102, 241, 0.1)'); // Indigo
+  borderGrad.addColorStop(1, 'rgba(6, 182, 212, 0.35)');   // Cyan
+  ctx.strokeStyle = borderGrad;
   ctx.lineWidth = 2;
-  drawRoundedRect(ctx, cardX, cardY, cardW, cardH, 24);
+  drawRoundedRect(ctx, cardX, cardY, cardW, cardH, 32);
   ctx.stroke();
 
   // 5. Draw Category Pill
-  ctx.font = 'bold 20px SawarabiGothic';
   const catText = category.trim();
+  
+  // Set font temporarily to measure
+  ctx.font = 'bold 18px ZenKakuGothicNew';
   const textWidth = ctx.measureText(catText).width;
   const pillW = textWidth + 36;
-  const pillH = 40;
+  const pillH = 38;
   const pillX = 600 - pillW / 2;
-  const pillY = cardY + 40;
+  const pillY = cardY + 45;
 
-  ctx.fillStyle = 'rgba(99, 102, 241, 0.1)'; // Light indigo
-  drawRoundedRect(ctx, pillX, pillY, pillW, pillH, 20);
+  // Pill background
+  ctx.fillStyle = 'rgba(99, 102, 241, 0.15)';
+  drawRoundedRect(ctx, pillX, pillY, pillW, pillH, 19);
   ctx.fill();
+  
+  // Pill border (Cyan)
+  ctx.strokeStyle = 'rgba(34, 211, 238, 0.4)';
+  ctx.lineWidth = 1.5;
+  drawRoundedRect(ctx, pillX, pillY, pillW, pillH, 19);
+  ctx.stroke();
 
-  ctx.fillStyle = 'rgb(79, 70, 229)'; // Indigo 600
+  // Pill text
+  ctx.fillStyle = '#22d3ee'; // Cyan 400
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
   ctx.fillText(catText, 600, pillY + pillH / 2);
 
-  // 6. Draw Catchphrase Text lines
-  const lines = text.split('\n').map(l => l.trim()).filter(Boolean);
+  // 6. Draw Catchphrase Text with Wrapping & Auto-scaling
+  const rawLines = text.split('\n').map(l => l.trim()).filter(Boolean);
+  const maxWidth = 860; // Max width for text lines inside card
+  let fontSize = 48;
+  ctx.font = `bold ${fontSize}px ZenKakuGothicNew`;
+
+  let processedLines = [];
   
-  if (lines.length === 3) {
-    // Line 1: Sub-header (Amber)
-    ctx.font = 'bold 28px SawarabiGothic';
-    ctx.fillStyle = 'rgb(217, 119, 6)'; // Amber 600
-    ctx.fillText(lines[0], 600, cardY + 145);
+  // Wrapping logic
+  function computeWrappedLines(linesArray, size) {
+    ctx.font = `bold ${size}px ZenKakuGothicNew`;
+    const wrapped = [];
+    for (const rawLine of linesArray) {
+      const chars = rawLine.split('');
+      let line = '';
+      for (let n = 0; n < chars.length; n++) {
+        let testLine = line + chars[n];
+        let testWidth = ctx.measureText(testLine).width;
+        if (testWidth > maxWidth && n > 0) {
+          wrapped.push(line);
+          line = chars[n];
+        } else {
+          line = testLine;
+        }
+      }
+      wrapped.push(line);
+    }
+    return wrapped;
+  }
 
-    // Line 2: Main title (Slate)
-    ctx.font = 'bold 46px SawarabiGothic';
-    ctx.fillStyle = 'rgb(15, 23, 42)'; // Slate 900
-    ctx.fillText(lines[1], 600, cardY + 225);
+  processedLines = computeWrappedLines(rawLines, fontSize);
 
-    // Line 3: Main title (Slate)
-    ctx.fillText(lines[2], 600, cardY + 300);
-  } 
-  else if (lines.length === 2) {
-    // Line 1: Sub-header (Amber)
-    ctx.font = 'bold 28px SawarabiGothic';
-    ctx.fillStyle = 'rgb(217, 119, 6)'; // Amber 600
-    ctx.fillText(lines[0], 600, cardY + 160);
+  // Dynamically shrink font size if text takes too many lines
+  if (processedLines.length > 3) {
+    fontSize = 40;
+    processedLines = computeWrappedLines(rawLines, fontSize);
+  }
+  if (processedLines.length > 4) {
+    fontSize = 32;
+    processedLines = computeWrappedLines(rawLines, fontSize);
+  }
 
-    // Line 2: Main title (Slate)
-    ctx.font = 'bold 50px SawarabiGothic';
-    ctx.fillStyle = 'rgb(15, 23, 42)'; // Slate 900
-    ctx.fillText(lines[1], 600, cardY + 255);
-  } 
-  else if (lines.length > 0) {
-    // Single line or default: Center it vertically (Slate)
-    ctx.font = 'bold 50px SawarabiGothic';
-    ctx.fillStyle = 'rgb(15, 23, 42)'; // Slate 900
-    ctx.fillText(lines[0], 600, cardY + 215);
+  // Draw final wrapped lines
+  ctx.font = `bold ${fontSize}px ZenKakuGothicNew`;
+  ctx.fillStyle = '#ffffff';
+  
+  const lineHeight = fontSize * 1.45;
+  const totalHeight = processedLines.length * lineHeight;
+  
+  // Vertical center of the remaining space in the card
+  const textSpaceTop = pillY + pillH + 25;
+  const textSpaceBottom = cardY + cardH - 45;
+  const textSpaceCenter = textSpaceTop + (textSpaceBottom - textSpaceTop) / 2;
+  const startY = textSpaceCenter - (totalHeight / 2) + lineHeight / 2;
+
+  for (let i = 0; i < processedLines.length; i++) {
+    const lineY = startY + i * lineHeight;
+    ctx.fillText(processedLines[i], 600, lineY);
   }
 
   // 7. Write output file
