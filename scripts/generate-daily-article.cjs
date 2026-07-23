@@ -32,7 +32,7 @@ const genAI = new GoogleGenerativeAI(apiKey);
 const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
 
 function getExistingArticles() {
-  const articlesDir = path.join(__dirname, '..', 'src', 'content', 'posts');
+  const articlesDir = path.join(__dirname, '..', 'src', 'content', 'articles');
   if (!fs.existsSync(articlesDir)) {
     return [];
   }
@@ -48,7 +48,7 @@ function getExistingArticles() {
 
 async function main() {
   const dateStr = new Date().toISOString().split('T')[0];
-  const articlesDir = path.join(__dirname, '..', 'src', 'content', 'posts');
+  const articlesDir = path.join(__dirname, '..', 'src', 'content', 'articles');
   
   const existingArticles = getExistingArticles();
   
